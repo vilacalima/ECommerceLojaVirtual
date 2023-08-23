@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4aadeb64-cbb5-4a56-a394-b3857ee9ccf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../senac/senac/src/main/java/com/lojavirtual/senac/service/AdministradorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../senac/senac/src/main/java/com/lojavirtual/senac/model/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/../senac/senac/src/main/java/com/lojavirtual/senac/model/Administrador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../senac/senac/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../senac/senac/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../senac/senac/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../senac/senac/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../senac/senac/src/test/java/com/lojavirtual/senac/SenacApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/../senac/senac/src/test/java/com/lojavirtual/senac/SenacApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
