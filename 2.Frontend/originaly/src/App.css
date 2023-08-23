@@ -41,15 +41,17 @@
 
 .form-container button {
   margin-top: 20px;
+
 }
 
 .form-row {
-  margin-bottom: 1 0px;
+  margin-bottom: 10px;
 }
 
 .form-column {
   display: inline-block;
   margin-right: 10px;
+  padding: 10px;
 }
 .app-footer {
   background-color: #282c34;
