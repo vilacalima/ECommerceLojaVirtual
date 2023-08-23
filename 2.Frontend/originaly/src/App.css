@@ -24,10 +24,24 @@
 }
 
 .form-container {
-  background-color: rgba(255, 0, 0, 0.2); /* Fundo colorido com opacidade */
+  background-color: rgba(255, 241, 241, 0.616); /* Fundo colorido com opacidade */
   padding: 20px;
   max-width: 600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+}
+
+.form-container h2{
+  color: #6e6565;
+  margin-bottom: 20px;
+}
+
+.form-container button {
+  margin-top: 20px;
+
 }
 
 .form-row {
@@ -37,6 +51,7 @@
 .form-column {
   display: inline-block;
   margin-right: 10px;
+  padding: 10px;
 }
 .app-footer {
   background-color: #282c34;
