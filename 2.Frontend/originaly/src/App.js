@@ -104,7 +104,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>&copy; 2023 Minha Empresa</p>
+        <p>RODAPE - FAZER</p>
       </footer>
     </div>
   );
