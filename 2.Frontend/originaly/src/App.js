@@ -47,7 +47,7 @@ function App() {
               <div className="form-row">
     <div className="form-column">
     <label>Tipo de Usuário:</label>
-    <div>
+    <div> 
       <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
       <label htmlFor="tipoCliente">Cliente</label>
     </div>

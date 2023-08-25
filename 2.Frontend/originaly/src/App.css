@@ -40,7 +40,8 @@
 }
 
 .form-container button {
-  margin-top: 20px;
+  display: flex;
+  margin: 0 auto;
 
 }
 
