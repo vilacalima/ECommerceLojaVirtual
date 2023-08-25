@@ -1,6 +1,6 @@
 import React from 'react';
 import InputMask from 'react-input-mask';
-import './App.css';
+import './cadastroUsuario.css';
 
 function App() {
   const handleSubmit = (event) => {
