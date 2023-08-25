@@ -13,12 +13,12 @@ function App() {
       alert("A confirmação de senha não corresponde à senha digitada.");
       return;
     }
- };
+  };
 
- return (
-  <div className="app">
-    <main className="app-main">
-      <div className="form-container">
+  return (
+    <div className="app">
+      <main className="app-main">
+        <div className="form-container">
           <h2>Cadastro de usuário</h2>
           <form onSubmit={handleSubmit}>
 
@@ -45,36 +45,36 @@ function App() {
                 <input type="text" id="name" name="name" />
               </div>
               <div className="form-row">
-    <div className="form-column">
-    <label>Tipo de Usuário:</label>
-    <div> 
-      <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
-      <label htmlFor="tipoCliente">Cliente</label>
-    </div>
-    <div>
-      <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
-      <label htmlFor="tipoFuncionario">Funcionário</label>
-    </div>
-    <div>
-      <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
-      <label htmlFor="tipoAdmin">Administrador</label>
-    </div>
-  </div>
-</div>
-<div className="form-row">
-  <div className="form-column">
-    <label htmlFor="password">Senha:</label>
-    <input type="password" id="password" name="password" required />
-  </div>
-</div>
-<div className="form-row">
-  <div className="form-column">
-    <label htmlFor="confirmPassword">Confirmar Senha:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required />
-  </div>
-</div>
+                <div className="form-column">
+                  <label>Tipo de Usuário:</label>
+                  <div>
+                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
+                    <label htmlFor="tipoCliente">Cliente</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
+                    <label htmlFor="tipoFuncionario">Funcionário</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
+                    <label htmlFor="tipoAdmin">Administrador</label>
+                  </div>
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-column">
+                  <label htmlFor="password">Senha:</label>
+                  <input type="password" id="password" name="password" required />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-column">
+                  <label htmlFor="confirmPassword">Confirmar Senha:</label>
+                  <input type="password" id="confirmPassword" name="confirmPassword" required />
+                </div>
+              </div>
 
-              
+
 
               <button type="submit">Cadastrar</button>
             </div>
