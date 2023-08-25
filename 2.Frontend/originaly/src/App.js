@@ -83,7 +83,7 @@ function App() {
       </main>
 
       <footer className="app-footer">
-        <p>RODAPE - FAZER</p>
+        <p>RODAPE - FAZERrr</p>
       </footer>
     </div>
   );
