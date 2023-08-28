@@ -1,6 +1,3 @@
-import React from 'react';
-import './loginUsuario.css';
-
 function LoginUsuario() {
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -10,31 +7,35 @@ function LoginUsuario() {
     };
   
     return (
-      <div className="container">
-      <div className="login-section">
-        <h2>Entrar</h2>
-        <p>Por favor, entre na sua conta.</p>
-        <form onSubmit={handleSubmit}></form>
-        <form className="login-form">
-          <label htmlFor="email">Email</label>
-          <input type="email" id="email" placeholder="Seu email" required />
-          <label htmlFor="password">Senha</label>
-          <input type="password" id="password" placeholder="Sua senha" required />
-          <button type="submit" className='login'>Entrar</button>
-        </form>
-        <a href="#" className="forgot-password">Esqueceu sua senha? <span className="icon">➜</span></a>
-      </div>
 
-      <div className="divider"></div>
+      <div className="app">
 
-      <div className="create-account-section">
-        <h2>Crie a sua conta aqui</h2>
-        <p>Economize tempo na finalização da compra, visualize sua sacola de compras e itens salvos em qualquer dispositivo e acesse seu histórico de pedidos.</p>
-        <button className="create-account-button">Criar uma nova conta</button>
+        <main className="app-main">
+          <div className="form-container">
+            <h2>Login</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="form-row">
+                <div className="form-column">
+                  <label htmlFor="username">Usuário:</label>
+                  <input type="text" id="username" name="username" required />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="form-column">
+                  <label htmlFor="password">Senha:</label>
+                  <input type="password" id="password" name="password" required />
+                </div>
+              </div>
+              <button type="submit">Entrar</button>
+            </form>
+          </div>
+        </main>
+        <footer className="app-footer">
+          <p>fazer </p>
+        </footer>
+
       </div>
-      
-    </div>
-  );
-}
+    );
+  }
   
   export default LoginUsuario;
