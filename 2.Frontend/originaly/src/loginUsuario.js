@@ -30,7 +30,7 @@ function LoginUsuario() {
           </div>
         </main>
         <footer className="app-footer">
-          <p>&copy; 2023 Minha Empresa</p>
+          <p>fazer </p>
         </footer>
       </div>
     );
