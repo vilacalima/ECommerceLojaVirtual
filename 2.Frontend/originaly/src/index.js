@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
+import AlterarUsuario from './alterarUsuario';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -15,7 +16,9 @@ ReactDOM.render(
       <Route path="/cadastro">
         <CadastroUsuario />
       </Route>
-      <Route path="/">
+      <Route path="/alterar">
+        <AlterarUsuario/>
+        
         {/* A página inicial aqui (por exemplo, informações sobre o aplicativo) */}
       </Route>
     </Switch>
