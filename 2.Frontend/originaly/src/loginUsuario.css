@@ -1,60 +1,101 @@
-.app {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-image: url('../src/images/background-image.jpg'); /* Caminho para a imagem */
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-  }
-  
-  .app-header {
-    background-color: #0149da;
-    padding: 20px;
-    color: white;
-    text-align: center;
-  }
-  
-  .app-main {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .form-container {
-    background-color: rgba(255, 241, 241, 0.616); /* Fundo colorido com opacidade */
-    padding: 20px;
-    max-width: 400px; /* Reduzindo a largura para um tamanho mais compacto */
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    justify-content: center; 
-  }
-  
-  .form-container h2 {
-    color: #6e6565;
-    margin-bottom: 20px;
-  }
-  
-  .form-container button {
-    margin-top: 10px; /* Espaçamento acima do botão */
-  }
-  
-  .form-row {
-    margin-bottom: 10px;
-  }
-  
-  .form-column {
-    display: inline-block;
-    margin-right: 10px;
-    padding: 10px;
-  }
-  .app-footer {
-    background-color: #282c34;
-    padding: 10px;
-    color: white;
-    text-align: center;
-  }
-  
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('../src/images/background-image.jpg');
+  background-color: #f7d4e8; /* Cor de fundo rose */
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-section,
+.create-account-section {
+  padding: 20px;
+  background-color: transparent;
+  width: 400px;
+  height: 60vh;
+  margin: 0 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.login-section h2,
+.create-account-section h2 {
+  margin-bottom: 10px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-bottom: 5px;
+}
+
+.login-form input,
+.create-account-button,
+.login-form button {
+  margin: 5px 0;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.login {
+  text-align: center;
+  background-color: #1C1C1C;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  border: none;
+}
+
+.login:hover {
+  background-color: #008BBF;
+}
+
+
+.create-account-button {
+  text-align: center;
+  background-color: #1C1C1C;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  border: none;
+}
+
+.create-account-button:hover {
+  background-color: #008BBF;
+}
+
+.forgot-password {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 14px;
+  text-decoration: none;
+  color: #000000;
+  margin-top: 20px;
+}
+
+.icon {
+  margin-left: 5px;
+}
+
+.divider {
+  width: 1px;
+  height: 80%;
+  background-color: #ccc;
+  margin: 0 20px;
+}
+
