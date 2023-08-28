@@ -7,6 +7,7 @@ function LoginUsuario() {
     };
   
     return (
+
       <div className="app">
 
         <main className="app-main">
@@ -32,6 +33,7 @@ function LoginUsuario() {
         <footer className="app-footer">
           <p>fazer </p>
         </footer>
+
       </div>
     );
   }
