@@ -27,10 +27,8 @@ function LoginUsuario() {
 
       <div className="divider"></div>
 
-      <div className="create-account-section">
-        <h2>Crie a sua conta aqui</h2>
-        <p>Economize tempo na finalização da compra, visualize sua sacola de compras e itens salvos em qualquer dispositivo e acesse seu histórico de pedidos.</p>
-        <button className="create-account-button">Criar uma nova conta</button>
+
+Master
       </div>
       
     </div>
