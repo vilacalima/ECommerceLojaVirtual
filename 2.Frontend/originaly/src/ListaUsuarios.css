@@ -1,0 +1,66 @@
+body{
+
+    background-image: url('../src/images/background-image.jpg');
+    background-color: #f7d4e8; /* Cor de fundo rose */
+    display: flex;
+    flex-direction: column;
+     height: 100vh;
+     background-size: cover;
+     background-repeat: no-repeat;
+    position: relative;
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    text-align: center;
+    
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+
+  }
+
+  th {
+    background-color: #f9e9f6;
+  }
+  input[type="text"] {
+    padding: 20px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+
+  }
+  label {
+    font-weight: bold;
+  }
+
+  .botao-adicionar {
+    margin: 0 auto;
+    width: 10%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #f9e9f6;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+}
+
+.botao-adicionar:hover {
+    background-color: #edd2e8;
+}
