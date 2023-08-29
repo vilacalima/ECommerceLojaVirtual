@@ -37,10 +37,11 @@ table {
     background-color: #f9e9f6;
   }
   input[type="text"] {
-    padding: 20px;
+    padding: 18px;
     box-sizing: border-box;
+    border: 2px solid black;
     margin: 0 auto;
-    width: 50%;
+    width: 47%;
     text-align: center;
 
   }
@@ -59,8 +60,16 @@ table {
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s;
+    position: absolute; /* Define a posição absoluta */
+    top: 75px; /* Define a distância do topo */
+    right: 200px; /* Define a distância da esquerda */
 }
 
 .botao-adicionar:hover {
-    background-color: #edd2e8;
+    background-color: #73576b;
+}
+
+.btn-search {
+
+
 }
