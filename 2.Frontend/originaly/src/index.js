@@ -5,22 +5,24 @@ import './index.css';
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
+// import AlterarUsuario from './listarUsuario';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/login">
+      <Route path="/loginUsuarios"> {/*login para funcionarios */}
         <LoginUsuario />
       </Route>
-      <Route path="/cadastro">
+      <Route path="/cadastrarUsuarios"> {/*Cadastro de funcionarios para quem tem acesso admin */}
         <CadastroUsuario />
       </Route>
-      <Route path="/alterar">
+      <Route path="/alterarUsuarios"> {/*Alteração de dados funcionarios para quem tem acesso admin */}
         <AlterarUsuario/>
-        
-        {/* A página inicial aqui (por exemplo, informações sobre o aplicativo) */}
       </Route>
+      {/* <Route path="/listarUsuarios"> Listagem de usuarios para quem é admin e para quem não é tambem */}
+        {/* <ListarUsuario/>
+      </Route> */}
     </Switch>
   </Router>,
   document.getElementById('root')
