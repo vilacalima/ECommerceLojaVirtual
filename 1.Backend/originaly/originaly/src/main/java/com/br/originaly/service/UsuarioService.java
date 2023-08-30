@@ -1,18 +1,18 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.AdministradorDTO;
+import com.br.originaly.dto.UsuarioDTO;
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.model.Administrador;
-import com.br.originaly.repository.AdministradorDao;
+import com.br.originaly.model.Usuario;
+import com.br.originaly.repository.UsuarioDao;
 import com.lojavirtual.senac.validator.ValidaCPF;
 import com.lojavirtual.senac.validator.ValidaEmail;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.SQLException;
 
-public class AdministradorService {
+public class UsuarioService {
 
-    public static MensagemDTO inserirAdministrador(AdministradorDTO dto) throws SQLException {
+    public static MensagemDTO inserirAdministrador(UsuarioDTO dto) throws SQLException {
 
         MensagemDTO mensagem;
 
@@ -25,7 +25,7 @@ public class AdministradorService {
             return mensagem;
         }
 
-        if(AdministradorDao.salvar(dto)){
+        if(UsuarioDao.salvar(dto)){
             mensagem = new MensagemDTO("Administrador inserido com Sucesso",true);
             return mensagem;
         } else{
@@ -38,7 +38,7 @@ public class AdministradorService {
      * Atualiza um Administrador no banco de dados
      * @param request AdministradorDTO
      * */
-    public MensagemDTO UpdateAluno(@NotNull AdministradorDTO request) throws SQLException {
+    public MensagemDTO UpdateAluno(@NotNull UsuarioDTO request) throws SQLException {
 
         MensagemDTO mensagem;
         if(new ValidaCPF().validarCPF(request.getCpf()) == false) {
@@ -51,7 +51,7 @@ public class AdministradorService {
             return mensagem;
         }
 
-        if(new AdministradorDao().atualizar(request)){
+        if(new UsuarioDao().atualizar(request)){
             mensagem = new MensagemDTO("Cadastro do Administrador atualizado com Sucesso",true);
             return mensagem;
         } else{
@@ -66,11 +66,11 @@ public class AdministradorService {
      * */
     public MensagemDTO DeletarAluno(String cpf) throws SQLException {
 
-        Administrador administrador = new Administrador();
+        Usuario administrador = new Usuario();
 
         MensagemDTO mensagem;
         if(administrador.Id != 0){
-            new AdministradorDao().excluir(administrador.Id);
+            new UsuarioDao().excluir(administrador.Id);
 
             return mensagem = new MensagemDTO("Administrador Deletado com Sucesso",true);
         } else{

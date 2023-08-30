@@ -1,9 +1,8 @@
 package com.br.originaly.controller;
 
-import com.br.originaly.dto.AdministradorDTO;
+import com.br.originaly.dto.UsuarioDTO;
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.service.AdministradorService;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.br.originaly.service.UsuarioService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,13 +11,13 @@ import java.sql.SQLException;
 
 @RestController
 @RequestMapping("/api")
-public class AdministradorController {
+public class UsuarioController {
 
     @PostMapping("/novoAdministrador")
-    public AdministradorDTO novoAdministrador(AdministradorDTO dto) throws SQLException {
+    public UsuarioDTO novoAdministrador(UsuarioDTO dto) throws SQLException {
 
         try{
-            MensagemDTO salvar = AdministradorService.inserirAdministrador(dto);
+            MensagemDTO salvar = UsuarioService.inserirAdministrador(dto);
 
             if(salvar.isSuccess)
                 return dto;

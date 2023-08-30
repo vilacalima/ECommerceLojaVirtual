@@ -1,11 +1,11 @@
 package com.br.originaly.repository;
 
-import com.br.originaly.dto.AdministradorDTO;
-import com.br.originaly.model.Administrador;
+import com.br.originaly.dto.UsuarioDTO;
+import com.br.originaly.model.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class AdministradorDao {
+public class UsuarioDao {
 
     /**
      * Url para consulta no banco de dados
@@ -28,7 +28,7 @@ public class AdministradorDao {
      * @return
      * @throws SQLException
      */
-    public static boolean salvar(AdministradorDTO obj)throws SQLException {
+    public static boolean salvar(UsuarioDTO obj)throws SQLException {
         Connection conexao = null;
         boolean retorno = false;
 
@@ -37,16 +37,12 @@ public class AdministradorDao {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection(url,login,senha);
 
-            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO administrador (nome, cpf, email, telefone, ativo, cep, rua, bairro, grupo) VALUES(?,?,?,?,?,?,?,?,?)");
+            PreparedStatement comandoSQL = conexao.prepareStatement("INSERT INTO usuario (nome, cpf, email, ativo, grupo) VALUES(?,?,?,?,?)");
             comandoSQL.setString(1, obj.getNome());
             comandoSQL.setString(2, obj.getCpf());
             comandoSQL.setString(3, obj.getEmail());
-            comandoSQL.setString(4, obj.getTelefone());
-            comandoSQL.setBoolean(5, obj.getAtivo());
-            comandoSQL.setString(6, obj.getCep());
-            comandoSQL.setString(7, obj.getRua());
-            comandoSQL.setString(8, obj.getBairro());
-            comandoSQL.setString(9, obj.getGrupo());
+            comandoSQL.setBoolean(4, obj.getAtivo());
+            comandoSQL.setString(5, obj.getGrupo());
 
             int linhasAfetadas = comandoSQL.executeUpdate();
             if(linhasAfetadas>0){
@@ -64,31 +60,27 @@ public class AdministradorDao {
      * @return
      * @throws SQLException
      */
-    public static ArrayList<Administrador> listarPorCpf(Administrador obj) throws SQLException{
+    public static ArrayList<Usuario> listarPorCpf(Usuario obj) throws SQLException{
         Connection conexao = null;
-        ArrayList<Administrador> lista = new ArrayList<Administrador>();
+        ArrayList<Usuario> lista = new ArrayList<Usuario>();
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection(url,login,senha);
 
             PreparedStatement comandoSQL =
-                    conexao.prepareStatement("SELECT * FROM Administrador WHERE cpf=?");
+                    conexao.prepareStatement("SELECT * FROM usuario WHERE cpf=?");
             comandoSQL.setString(1, obj.getCpf());
 
             ResultSet rs = comandoSQL.executeQuery();
 
             if(rs!=null){
                 while(rs.next()){
-                    Administrador dto = new Administrador();
+                    Usuario dto = new Usuario();
                     dto.setNome(rs.getString("nome"));
                     dto.setCpf(rs.getString("cpf"));
                     dto.setEmail(rs.getString("email"));
-                    dto.setTelefone(rs.getString("telefone"));
                     dto.setAtivo(rs.getBoolean("ativo"));
-                    dto.setCep(rs.getString("cep"));
-                    dto.setRua(rs.getString("rua"));
-                    dto.setBairro(rs.getString("bairro"));
                     dto.setGrupo(rs.getString("grupo"));
 
                     lista.add(dto);
@@ -106,9 +98,9 @@ public class AdministradorDao {
      * @return
      * @throws SQLException
      */
-    public static ArrayList<Administrador> listar(Administrador obj) throws SQLException{
+    public static ArrayList<Usuario> listar(Usuario obj) throws SQLException{
         Connection conexao = null;
-        ArrayList<Administrador> lista = new ArrayList<Administrador>();
+        ArrayList<Usuario> lista = new ArrayList<Usuario>();
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -121,15 +113,11 @@ public class AdministradorDao {
 
             if(rs!=null){
                 while(rs.next()){
-                    Administrador dto = new Administrador();
+                    Usuario dto = new Usuario();
                     dto.setNome(rs.getString("nome"));
                     dto.setCpf(rs.getString("cpf"));
                     dto.setEmail(rs.getString("email"));
-                    dto.setTelefone(rs.getString("telefone"));
                     dto.setAtivo(rs.getBoolean("ativo"));
-                    dto.setCep(rs.getString("cep"));
-                    dto.setRua(rs.getString("rua"));
-                    dto.setBairro(rs.getString("bairro"));
                     dto.setGrupo(rs.getString("grupo"));
 
                     lista.add(dto);
@@ -146,7 +134,7 @@ public class AdministradorDao {
      * @param obj
      * @return
      */
-    public static boolean atualizar(AdministradorDTO obj){
+    public static boolean atualizar(UsuarioDTO obj){
         Connection conexao = null;
         boolean retorno = false;
 
@@ -154,17 +142,13 @@ public class AdministradorDao {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection(url, login, senha);
 
-            PreparedStatement comandoSQL = conexao.prepareStatement("UPDATE administrador SET nome=?, cpf=?, email=?, telefone=?, ativo=?, cep=?, rua=?, bairro=?, grupo=? WHERE id=?");
+            PreparedStatement comandoSQL = conexao.prepareStatement("UPDATE usuario SET nome=?, cpf=?, email=?, ativo=?, grupo=? WHERE id=?");
             comandoSQL.setString(1, obj.getNome());
-            comandoSQL.setString(2, obj.getCep());
+            comandoSQL.setString(2, obj.getCpf());
             comandoSQL.setString(3, obj.getEmail());
-            comandoSQL.setString(4, obj.getTelefone());
-            comandoSQL.setBoolean(5, obj.getAtivo());
-            comandoSQL.setString(6, obj.getCep());
-            comandoSQL.setString(7, obj.getRua());
-            comandoSQL.setString(8, obj.getBairro());
-            comandoSQL.setString(9, obj.getGrupo());
-            comandoSQL.setInt(10, obj.getId());
+            comandoSQL.setBoolean(4, obj.getAtivo());
+            comandoSQL.setString(5, obj.getGrupo());
+            comandoSQL.setInt(6, obj.getId());
 
             int linhasAfetadas = comandoSQL.executeUpdate();
             if(linhasAfetadas>0){
@@ -191,7 +175,7 @@ public class AdministradorDao {
 
             conexao = DriverManager.getConnection(url,login,senha);
 
-            PreparedStatement comandoSQL = conexao.prepareStatement("DELETE FROM Administrador WHERE id=?");
+            PreparedStatement comandoSQL = conexao.prepareStatement("DELETE FROM usuario WHERE id=?");
             comandoSQL.setInt(1,id);
 
             int linhasAfetadas = comandoSQL.executeUpdate();
