@@ -1,13 +1,21 @@
 package com.br.originaly.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Usuario {
 
-    public int Id;
-    public String Nome;
-    public String Cpf;
-    public String Email;
-    public boolean Ativo;
-    public String Grupo;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int Id;
+    private String Nome;
+    private String Cpf;
+    private String Email;
+    private boolean Ativo;
+    private String Grupo;
 
     /**
      * Objeto que instancia um perfil de Administrador

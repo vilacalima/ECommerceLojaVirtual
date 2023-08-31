@@ -1,4 +1,5 @@
 /*create database originaly;*/
+create database originaly;
 
 use originaly;
 
@@ -9,8 +10,5 @@ create table Administrador(
     email varchar(70) not null,
     telefone varchar(11),
     ativo boolean not null,
-    cep varchar(8) not null,
-    rua varchar(50) not null,
-    bairro varchar(30) not null,
     grupo varchar(10) not null
 );

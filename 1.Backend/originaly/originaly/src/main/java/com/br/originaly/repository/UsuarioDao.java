@@ -2,9 +2,12 @@ package com.br.originaly.repository;
 
 import com.br.originaly.dto.UsuarioDTO;
 import com.br.originaly.model.Usuario;
+import org.springframework.stereotype.Repository;
+
 import java.sql.*;
 import java.util.ArrayList;
 
+@Repository
 public class UsuarioDao {
 
     /**

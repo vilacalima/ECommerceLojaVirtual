@@ -1,5 +1,8 @@
-package com.lojavirtual.senac.validator;
+package com.br.originaly.validator;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ValidaCPF {
 
     /**
