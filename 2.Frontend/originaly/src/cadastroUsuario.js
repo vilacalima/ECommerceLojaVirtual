@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
+import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import './cadastroUsuario.css';
 
 function App() {
+  const [cpfValue, setCpfValue] = useState('');
+  const [isCpfValid, setIsCpfValid] = useState(true);
+
+  const handleCpfChange = (event) => {
+    const newCpfValue = event.target.value;
+    setCpfValue(newCpfValue);
+    setIsCpfValid(cpfValidator.isValid(newCpfValue));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -19,9 +29,8 @@ function App() {
     <div className="app">
       <main className="app-main">
         <div className="form-container">
-          <h2>Alterar usuário</h2>
+          <h2>Cadastrar usuário</h2>
           <form onSubmit={handleSubmit}>
-
             <div className="form-row">
               <div className="form-column">
                 <label htmlFor="name">Nome:</label>
@@ -42,49 +51,53 @@ function App() {
             <div className="form-row">
               <div className="form-column">
                 <label htmlFor="cpf">CPF:</label>
-                <input type="text" id="name" name="name" />
+                <InputMask
+                  type="text"
+                  id="cpf"
+                  name="cpf"
+                  mask="999.999.999-99"
+                  value={cpfValue}
+                  onChange={handleCpfChange}
+                  style={{ borderColor: isCpfValid ? 'initial' : 'red' }}
+                />
+                {!isCpfValid && <p className="error-message">CPF inválido</p>}
               </div>
-              <div className="form-row">
-                <div className="form-column">
-                  <label>Tipo de Usuário:</label>
-                  <div>
-                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
-                    <label htmlFor="tipoCliente">Cliente</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
-                    <label htmlFor="tipoFuncionario">Funcionário</label>
-                  </div>
-                  <div>
-                    <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
-                    <label htmlFor="tipoAdmin">Administrador</label>
-                  </div>
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="password">Senha:</label>
-                  <input type="password" id="password" name="password" required />
-                </div>
-              </div>
-              <div className="form-row">
-                <div className="form-column">
-                  <label htmlFor="confirmPassword">Confirmar Senha:</label>
-                  <input type="password" id="confirmPassword" name="confirmPassword" required />
-                </div>
-              </div>
-
-
-
-              <button type="submit">Confirmar</button>
             </div>
+            <div className="form-row">
+              <div className="form-column">
+                <label>Tipo de Usuário:</label>
+                <div>
+                  <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
+                  <label htmlFor="tipoCliente">Cliente</label>
+                </div>
+                <div>
+                  <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
+                  <label htmlFor="tipoFuncionario">Funcionário</label>
+                </div>
+                <div>
+                  <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
+                  <label htmlFor="tipoAdmin">Administrador</label>
+                </div>
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-column">
+                <label htmlFor="password">Senha:</label>
+                <input type="password" id="password" name="password" required />
+              </div>
+            </div>
+            <div className="form-row">
+              <div className="form-column">
+                <label htmlFor="confirmPassword">Confirmar Senha:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required />
+              </div>
+            </div>
+            <button type="submit">Confirmar</button>
           </form>
         </div>
       </main>
-
-      <footer className="app-footer">
-        <p>RODAPE - FAZERrr</p>
-      </footer>
     </div>
   );
-} export default App;
+}
+
+export default App;
