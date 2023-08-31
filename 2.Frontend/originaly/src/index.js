@@ -2,27 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
+import './listarUsuarios.css';
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
-// import AlterarUsuario from './listarUsuario';
+import ListarUsuarios from './listarUsuarios';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/loginUsuarios"> {/*login para funcionarios */}
+      <Route path="/loginUsuario"> {/*login para funcionarios */}
         <LoginUsuario />
       </Route>
-      <Route path="/cadastrarUsuarios"> {/*Cadastro de funcionarios para quem tem acesso admin */}
+      <Route path="/cadastrarUsuario"> {/*Cadastro de funcionarios para quem tem acesso admin */}
         <CadastroUsuario />
       </Route>
-      <Route path="/alterarUsuarios"> {/*Alteração de dados funcionarios para quem tem acesso admin */}
+      <Route path="/alterarUsuario"> {/*Alteração de dados funcionarios para quem tem acesso admin */}
         <AlterarUsuario/>
       </Route>
-      {/* <Route path="/listarUsuarios"> Listagem de usuarios para quem é admin e para quem não é tambem */}
-        {/* <ListarUsuario/>
-      </Route> */}
+      <Route path="/listarUsuario"> {/*Listagem de usuarios para quem é admin e para quem não é tambem */}
+        <ListarUsuarios/>
+      </Route>
     </Switch>
   </Router>,
   document.getElementById('root')

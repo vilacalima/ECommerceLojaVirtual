@@ -19,7 +19,7 @@ function App() {
     <div className="app">
       <main className="app-main">
         <div className="form-container">
-          <h2>Cadastro de usuário</h2>
+          <h2>Alterar usuário</h2>
           <form onSubmit={handleSubmit}>
 
             <div className="form-row">
@@ -76,7 +76,7 @@ function App() {
 
 
 
-              <button type="submit">Cadastrar</button>
+              <button type="submit">Confirmar</button>
             </div>
           </form>
         </div>

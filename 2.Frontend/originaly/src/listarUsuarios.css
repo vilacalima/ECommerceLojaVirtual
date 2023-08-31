@@ -37,7 +37,7 @@ table {
     background-color: #f9e9f6;
   }
   input[type="text"] {
-    padding: 18px;
+    padding: 10px;
     box-sizing: border-box;
     border: 2px solid black;
     margin: 0 auto;
@@ -50,26 +50,41 @@ table {
   }
 
   .botao-adicionar {
+
     margin: 0 auto;
     width: 10%;
     padding: 10px;
     font-size: 16px;
     border: none;
-    background-color: #f9e9f6;
-    color: rgb(0, 0, 0);
+    background-color: #be84b3;
+    color: rgb(255, 255, 255);
     cursor: pointer;
     border-radius: 20px;
     transition: background-color 0.3s;
-    position: absolute; /* Define a posição absoluta */
-    top: 75px; /* Define a distância do topo */
-    right: 200px; /* Define a distância da esquerda */
+    /* position: absolute;  */
+    
 }
 
 .botao-adicionar:hover {
     background-color: #73576b;
 }
 
-.btn-search {
+.adicionar{
+  margin-top: 20px;
+}
 
+.botao-alterar {
+  margin: 0 auto;
+  width: 10%;
+  padding: 6px;
+  font-size: 16px;
+  border: none;
+  background-color: #cc82bd;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  border-radius: 20px;
+}
 
+.botao-alterar:hover{
+  background-color: #73576b;
 }
