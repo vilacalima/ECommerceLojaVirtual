@@ -2,24 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
+import './listarUsuarios.css';
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
+import ListarUsuarios from './listarUsuarios';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/login">
+      <Route path="/loginUsuario"> {/*login para funcionarios */}
         <LoginUsuario />
       </Route>
-      <Route path="/cadastro">
+      <Route path="/cadastrarUsuario"> {/*Cadastro de funcionarios para quem tem acesso admin */}
         <CadastroUsuario />
       </Route>
-      <Route path="/alterar">
+      <Route path="/alterarUsuario"> {/*Alteração de dados funcionarios para quem tem acesso admin */}
         <AlterarUsuario/>
-        
-        {/* A página inicial aqui (por exemplo, informações sobre o aplicativo) */}
+      </Route>
+      <Route path="/listarUsuario"> {/*Listagem de usuarios para quem é admin e para quem não é tambem */}
+        <ListarUsuarios/>
       </Route>
     </Switch>
   </Router>,

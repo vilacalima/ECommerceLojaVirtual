@@ -34,6 +34,7 @@ function App() {
                   type="email"
                   id="email"
                   name="email"
+                  disabled={true} ///AQUI O CAMPO ESTA DESABILITADO, PARA QUE NAO POSSA ALTERAR NADA 
                   required
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                 />
@@ -48,7 +49,7 @@ function App() {
                 <div className="form-column">
                   <label>Tipo de Usuário:</label>
                   <div>
-                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
+                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente"  />
                     <label htmlFor="tipoCliente">Cliente</label>
                   </div>
                   <div>
