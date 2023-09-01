@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import './listarUsuarios.css';
-import './listarUsuariosAdmin.css'; // 
+import './listarUsuariosAdmin.css'; 
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';

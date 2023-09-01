@@ -49,15 +49,15 @@ function App() {
                 <div className="form-column">
                   <label>Tipo de Usuário:</label>
                   <div>
-                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente"  />
+                    <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" disabled={true}></input> 
                     <label htmlFor="tipoCliente">Cliente</label>
                   </div>
                   <div>
-                    <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
+                    <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" disabled={true} />
                     <label htmlFor="tipoFuncionario">Funcionário</label>
                   </div>
                   <div>
-                    <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
+                    <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" disabled={true} />
                     <label htmlFor="tipoAdmin">Administrador</label>
                   </div>
                 </div>
