@@ -1,3 +1,6 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 function LoginUsuario() {
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -26,7 +29,8 @@ function LoginUsuario() {
                   <input type="password" id="password" name="password" required />
                 </div>
               </div>
-              <button type="submit">Entrar</button>
+              {/* <button type="submit" href="inicial">Entrar</button> */}
+              <Link to="inicial"> Entrar</Link>
             </form>
           </div>
         </main>
