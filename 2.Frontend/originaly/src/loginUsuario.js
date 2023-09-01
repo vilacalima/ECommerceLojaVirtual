@@ -29,7 +29,7 @@ function LoginUsuario() {
                   <input type="password" id="password" name="password" required />
                 </div>
               </div>
-              {/* <button type="submit" href="inicial">Entrar</button> */}
+
               <Link to="inicial"> Entrar</Link>
             </form>
           </div>
