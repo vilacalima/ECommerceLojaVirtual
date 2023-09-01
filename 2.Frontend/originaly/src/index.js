@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './index.css';
 import './listarUsuarios.css';
 import './listarUsuariosAdmin.css'; 
+import './home';
+import Home from './home';
 import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
@@ -14,6 +16,9 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <Router>
     <Switch>
+    <Route path="/" exact>
+          <Home />
+        </Route>
       <Route path="/loginUsuario">
         <LoginUsuario />
       </Route>
