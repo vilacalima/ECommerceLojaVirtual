@@ -1,5 +1,8 @@
 package com.br.originaly.dto;
 
+import lombok.ToString;
+
+@ToString
 public class UsuarioDTO {
 
     public int Id;
@@ -21,4 +24,5 @@ public class UsuarioDTO {
     public void setAtivo(boolean ativo) { Ativo = ativo; }
     public String getGrupo() { return Grupo; }
     public void setGrupo(String grupo) { Grupo = grupo; }
+
 }

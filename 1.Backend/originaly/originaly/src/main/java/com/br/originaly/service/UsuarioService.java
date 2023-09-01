@@ -1,13 +1,10 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.UsuarioDTO;
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.repository.UsuarioRepository;
-import com.br.originaly.repository.UsuarioDao;
 import com.br.originaly.validator.ValidaCPF;
 import com.br.originaly.validator.ValidaEmail;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,20 +24,20 @@ public class UsuarioService {
         _usuarioRepository = usuarioRepository;
     }
 
-    public MensagemDTO inserirUsuario(UsuarioDTO dto) throws SQLException {
+    public MensagemDTO inserirUsuario(com.br.originaly.controller.Usuario dto) throws SQLException {
 
         MensagemDTO mensagem;
 
-//        if(_validarCPF.validarCPF(dto.Cpf) == false){
-//            mensagem = new MensagemDTO("O CPF é invalido.",false);
-//            return mensagem;
-//        }
-//        if(_validarEmail.emailValidator(dto.Email) == false){
-//            mensagem = new MensagemDTO("O email é invalido.",false);
-//            return mensagem;
-//        }
+        if(_validarCPF.validarCPF(dto.cpf()) == false){
+            mensagem = new MensagemDTO("O CPF é invalido.",false);
+            return mensagem;
+        }
+        if(_validarEmail.emailValidator(dto.email()) == false){
+            mensagem = new MensagemDTO("O email é invalido.",false);
+            return mensagem;
+        }
 
-        Usuario novoUsuario = new Usuario(dto.Nome, dto.Cpf, dto.Email, dto.Ativo, dto.Grupo);
+        Usuario novoUsuario = new Usuario(dto.nome(), dto.cpf(), dto.email(), dto.ativo(), dto.grupo(), dto.senha());
 
         salvarUsuario(novoUsuario);
 //        if(){

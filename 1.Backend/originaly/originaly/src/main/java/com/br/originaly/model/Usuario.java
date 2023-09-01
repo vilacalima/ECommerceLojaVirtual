@@ -16,16 +16,18 @@ public class Usuario {
     private String Email;
     private boolean Ativo;
     private String Grupo;
+    private String Senha;
 
     /**
      * Objeto que instancia um perfil de Administrador
      * */
-    public Usuario(String nome, String cpf, String email, boolean ativo, String grupo) {
+    public Usuario(String nome, String cpf, String email, boolean ativo, String grupo, String senha) {
         Nome = nome;
         Cpf = cpf;
         Email = email;
         Ativo = ativo;
         Grupo = grupo;
+        Senha = senha;
     }
 
     /**
