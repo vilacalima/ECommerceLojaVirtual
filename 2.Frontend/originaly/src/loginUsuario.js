@@ -1,9 +1,11 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 function LoginUsuario() {
     const handleSubmit = (event) => {
       event.preventDefault();
   
-      // Aqui você pode adicionar a lógica de autenticação
-      // Verificar o usuário, senha, etc.
+
     };
   
     return (
@@ -26,13 +28,12 @@ function LoginUsuario() {
                   <input type="password" id="password" name="password" required />
                 </div>
               </div>
-              <button type="submit">Entrar</button>
+
+              <Link to="inicial"> Entrar</Link>
             </form>
           </div>
         </main>
-        <footer className="app-footer">
-          <p>fazer </p>
-        </footer>
+
 
       </div>
     );
