@@ -1,6 +1,7 @@
 package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.dto.UsuarioDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.repository.UsuarioRepository;
 import com.br.originaly.validator.ValidaCPF;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -24,11 +26,12 @@ public class UsuarioService {
         _usuarioRepository = usuarioRepository;
     }
 
-    public MensagemDTO inserirUsuario(com.br.originaly.controller.Usuario dto) throws SQLException {
+    public MensagemDTO inserirUsuario(UsuarioDTO dto) throws SQLException {
 
         MensagemDTO mensagem;
+        String cpf = _validarCPF.repleaceCpf(dto.cpf());
 
-        if(_validarCPF.validarCPF(dto.cpf()) == false){
+        if(_validarCPF.validarCPF(cpf) == false){
             mensagem = new MensagemDTO("O CPF é invalido.",false);
             return mensagem;
         }
@@ -37,8 +40,9 @@ public class UsuarioService {
             return mensagem;
         }
 
-        Usuario novoUsuario = new Usuario(dto.nome(), dto.cpf(), dto.email(), dto.ativo(), dto.grupo(), dto.senha());
+        Usuario novoUsuario = new Usuario(dto.nome(), cpf, dto.email(), dto.ativo(), dto.grupo(), dto.senha());
 
+        System.out.println("Chegou aqui");
         salvarUsuario(novoUsuario);
 //        if(){
             mensagem = new MensagemDTO("Usuario inserido com Sucesso",true);
@@ -47,6 +51,14 @@ public class UsuarioService {
 //            mensagem = new MensagemDTO("Houve algum erro desconhecido ao salvar o novo usuario.",false);
 //            return mensagem;
 //        }
+    }
+
+    /**
+     * Recebe o usuário do banco de dados
+     * @return List<Usuario>
+     * */
+    public List<Usuario> getUsuario(){
+        return getAllUser();
     }
 
     /**
@@ -77,7 +89,6 @@ public class UsuarioService {
 
     /**
      * Deleta um Usuario do banco de dados
-     * @param cpf String
      * */
 //    public MensagemDTO deletarUsuario(String cpf) throws SQLException {
 //
@@ -93,8 +104,12 @@ public class UsuarioService {
 //        }
 //    }
 
-    public Usuario buscarUsuarioPorId(Long id) {
-        return _usuarioRepository.findById(id).orElse(null);
+//    public List<Usuario> getUserByCpf(String cpf) {
+//        return _usuarioRepository.findByCpf(cpf);
+//    }
+
+    public List<Usuario> getAllUser(){
+        return _usuarioRepository.findAll();
     }
 
     public Usuario salvarUsuario(Usuario usuario) {
