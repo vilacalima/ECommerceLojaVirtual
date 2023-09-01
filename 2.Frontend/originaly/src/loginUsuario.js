@@ -5,8 +5,7 @@ function LoginUsuario() {
     const handleSubmit = (event) => {
       event.preventDefault();
   
-      // Aqui você pode adicionar a lógica de autenticação
-      // Verificar o usuário, senha, etc.
+
     };
   
     return (
@@ -34,9 +33,7 @@ function LoginUsuario() {
             </form>
           </div>
         </main>
-        <footer className="app-footer">
-          <p>fazer </p>
-        </footer>
+
 
       </div>
     );
