@@ -59,4 +59,8 @@ public class ValidaCPF {
             return false;
         }
     }
+
+    public String repleaceCpf(String cpf){
+        return cpf.replaceAll("\\D", "");
+    }
 }

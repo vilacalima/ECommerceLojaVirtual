@@ -1,13 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios'; // Importe o Axios
 import './listarUsuariosAdmin.css'; 
+
 
 function ListaUsuariosAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [users, setUsers] = useState([]);
+
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
+
+  useEffect(() => {
+    // Substitua 'URL_DO_BACKEND' pela URL real do seu endpoint GET no backend
+    axios.get('http://localhost:8080/api/getUsuario')
+      .then(response => {
+        setUsers(response.data); // Atualize o estado com os dados recebidos do backend
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <div>
@@ -37,34 +52,19 @@ function ListaUsuariosAdmin() {
           </tr>
         </thead>
 
-        <tbody id="userTable">
-          <tr>
-            <td className="text-center">
-              <a className='btn btn-info btn-xs' href="#">
-                
-      <Link to="/alterarUsuario" className="botao-alterar"> Alterar</Link>
-              </a>
-            </td>
-            <td>João</td>
-            <td>joao@example.com</td>
-            <td>Ativo</td>
-            <td>--</td>
-            <td><input type="checkbox" checked /></td>
-          </tr>
-          <tr>
-          <td className="text-center">
-              <a className='btn btn-info btn-xs' href="#">
-                
-      <Link to="/alterarUsuario" className="botao-alterar"> Alterar</Link>
-              </a>
-            </td>
-            <td>Maria</td>
-            <td>maria@example.com</td>
-            <td>Inativo</td>
-            <td>--</td>
-            <td><input type="checkbox" /></td>
-          </tr>
-          {/* Mais linhas de usuário podem ser adicionadas aqui */}
+        <tbody>
+          {users.map(user => (
+            <tr key={user.id}>
+              <td className="text-center">
+                <Link to="/alterarUsuario" className="botao-alterar"> Alterar</Link>
+              </td>
+              <td>{user.nome}</td>
+              <td>{user.email}</td>
+              <td>{user.ativo}</td>
+              <td>{user.grupo}</td>
+              <td><input type="checkbox" checked={user.habilitado} /></td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
+import axios from 'axios';
 import './cadastroUsuario.css';
 
 function App() {
@@ -13,6 +14,16 @@ function App() {
     setIsCpfValid(cpfValidator.isValid(newCpfValue));
   };
 
+  const sendUserData = async (userData) => {
+    try {
+      // Substitua 'URL_DO_BACKEND' pela URL real do seu endpoint POST no backend
+      const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
+      console.log('Dados enviados com sucesso:', response.data);
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -23,6 +34,18 @@ function App() {
       alert("A confirmação de senha não corresponde à senha digitada.");
       return;
     }
+
+    const userData = {
+      nome: event.target.name.value,
+      email: event.target.email.value,
+      cpf: cpfValue,
+      ativo: true,
+      grupo: event.target.tipoUsuario.value,
+      senha: password,
+    };
+  
+    // Chame a função para enviar os dados para o backend
+    sendUserData(userData);
   };
 
   return (

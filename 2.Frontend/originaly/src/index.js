@@ -16,10 +16,10 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <Router>
     <Switch>
-    <Route path="/inicial">
+    <Route path="/" exact>
           <Home />
         </Route>
-      <Route path="/">
+      <Route path="/LoginUsuario">
         <LoginUsuario />
       </Route>
       <Route path="/cadastrarUsuario">
