@@ -2,6 +2,7 @@ package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.UsuarioDTO;
+import com.br.originaly.dto.UsuarioUpdateDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ public class UsuarioController {
     @PostMapping("/novoUsuario")
     public MensagemDTO novoUsuario(@RequestBody UsuarioDTO dto) throws SQLException {
 
-        System.out.println(dto);
-
         MensagemDTO mensagem = null;
 
         try{
@@ -35,8 +34,42 @@ public class UsuarioController {
         return mensagem;
     }
 
+    @PutMapping("/atualizarUsuario")
+    public MensagemDTO atualizarUsuario(@RequestBody UsuarioUpdateDTO dto){
+
+        MensagemDTO mensagem = null;
+
+        try{
+            mensagem = _usuario.updateUsuario(dto);
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new MensagemDTO(e.getMessage().toString(), false);
+        }
+        return mensagem;
+    }
+
+    @PutMapping("/usuarioAtivo/{id}/{isActive}")
+    public MensagemDTO usuarioAtivo(@PathVariable int id, @PathVariable boolean isActive){
+        MensagemDTO mensagem = null;
+
+        try{
+            mensagem = _usuario.isUserActive(id, isActive);
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new MensagemDTO(e.getMessage().toString(), false);
+        }
+        return mensagem;
+    }
+
+    @GetMapping("/getUsuarioById/{id}")
+    public Usuario getUsuarioById(@PathVariable int id){
+        return _usuario.getUsuarioById(id);
+    }
+
     @GetMapping("/getUsuario")
     public List<Usuario> getUsuario(){
-        return _usuario.getAllUser();
+        return _usuario.getUsuario();
     }
 }

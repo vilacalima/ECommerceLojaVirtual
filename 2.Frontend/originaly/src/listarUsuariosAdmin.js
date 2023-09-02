@@ -14,15 +14,63 @@ function ListaUsuariosAdmin() {
   };
 
   useEffect(() => {
-    // Substitua 'URL_DO_BACKEND' pela URL real do seu endpoint GET no backend
     axios.get('http://localhost:8080/api/getUsuario')
       .then(response => {
-        setUsers(response.data); // Atualize o estado com os dados recebidos do backend
+        setUsers(response.data);
       })
       .catch(error => {
         console.error(error);
       });
+      
+    loadUsers();
+
+    // atualiza automaticamente a cada 15 segundos
+    const refreshInterval = 15000;
+    const intervalId = setInterval(loadUsers, refreshInterval);
+
+    // Limpa o intervalo
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
+
+  const loadUsers = () => {
+    axios.get('http://localhost:8080/api/getUsuario')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+ 
+  const handleCheckboxChange = async (userId, isChecked) => {
+    try {
+      const url = `http://localhost:8080/api/usuarioAtivo/${userId}/${isChecked}`;
+
+      const response = await fetch(url, {
+        method: 'PUT',
+      });
+
+      if (response.ok) {
+        
+        console.log('Atualização bem-sucedida');
+        
+        const updatedUsers = users.map(user => {
+          if (user.id === userId) {
+            return { ...user, habilitado: isChecked };
+          }
+          return user;
+        });
+        setUsers(updatedUsers);
+      } else {
+        
+        console.error('Falha na atualização');
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar no banco de dados:', error);
+    }
+  };
 
   return (
     <div>
@@ -56,13 +104,19 @@ function ListaUsuariosAdmin() {
           {users.map(user => (
             <tr key={user.id}>
               <td className="text-center">
-                <Link to="/alterarUsuario" className="botao-alterar"> Alterar</Link>
+                <Link to={`/alterarUsuario/${user.id}`} className="botao-alterar"> Alterar</Link>
               </td>
               <td>{user.nome}</td>
               <td>{user.email}</td>
-              <td>{user.ativo}</td>
+              <td>{user.ativo ? 'Ativo' : 'Inativo'}</td>
               <td>{user.grupo}</td>
-              <td><input type="checkbox" checked={user.habilitado} /></td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={user.ativo}
+                  onChange={(e) => handleCheckboxChange(user.id, e.target.checked)}
+                /> 
+              </td>
             </tr>
           ))}
         </tbody>
