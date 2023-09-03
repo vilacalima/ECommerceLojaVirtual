@@ -16,7 +16,6 @@ function App() {
 
   const sendUserData = async (userData) => {
     try {
-      // Substitua 'URL_DO_BACKEND' pela URL real do seu endpoint POST no backend
       const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
       console.log('Dados enviados com sucesso:', response.data);
     } catch (error) {
@@ -98,7 +97,7 @@ function App() {
                   <label htmlFor="tipoFuncionario">Funcionário</label>
                 </div>
                 <div>
-                  <input type="radio" id="tipoAdmin" name="tipoUsuario" value="admin" />
+                  <input type="radio" id="tipoAdmin" name="tipoUsuario" value="administrador" />
                   <label htmlFor="tipoAdmin">Administrador</label>
                 </div>
               </div>

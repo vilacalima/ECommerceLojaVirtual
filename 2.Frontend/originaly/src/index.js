@@ -25,9 +25,7 @@ ReactDOM.render(
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
       </Route>
-      <Route path="/alterarUsuario">
-        <AlterarUsuario />
-      </Route>
+      <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
         <ListarUsuarios />
       </Route>
