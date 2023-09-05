@@ -1,7 +1,10 @@
 package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.dto.UsuarioDTO;
+import com.br.originaly.dto.UsuarioUpdateDTO;
 import com.br.originaly.model.Usuario;
+import com.br.originaly.repository.IUsuarioRepository;
 import com.br.originaly.repository.UsuarioRepository;
 import com.br.originaly.validator.ValidaCPF;
 import com.br.originaly.validator.ValidaEmail;
@@ -9,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -16,6 +20,7 @@ public class UsuarioService {
     private final ValidaCPF _validarCPF;
     private final ValidaEmail _validarEmail;
     private final UsuarioRepository _usuarioRepository;
+    private MensagemDTO mensagem;
 
     @Autowired
     public UsuarioService(ValidaCPF validaCPF, ValidaEmail validaEmail, UsuarioRepository usuarioRepository){
@@ -24,11 +29,11 @@ public class UsuarioService {
         _usuarioRepository = usuarioRepository;
     }
 
-    public MensagemDTO inserirUsuario(com.br.originaly.controller.Usuario dto) throws SQLException {
+    public MensagemDTO inserirUsuario(UsuarioDTO dto) throws SQLException {
 
-        MensagemDTO mensagem;
+        String cpf = _validarCPF.repleaceCpf(dto.cpf());
 
-        if(_validarCPF.validarCPF(dto.cpf()) == false){
+        if(_validarCPF.validarCPF(cpf) == false){
             mensagem = new MensagemDTO("O CPF é invalido.",false);
             return mensagem;
         }
@@ -37,71 +42,70 @@ public class UsuarioService {
             return mensagem;
         }
 
-        Usuario novoUsuario = new Usuario(dto.nome(), dto.cpf(), dto.email(), dto.ativo(), dto.grupo(), dto.senha());
+        Usuario novoUsuario = new Usuario(dto.nome(), cpf, dto.email(), dto.ativo(), dto.grupo(), dto.senha());
 
-        salvarUsuario(novoUsuario);
-//        if(){
+        if(_usuarioRepository.save(novoUsuario)){
             mensagem = new MensagemDTO("Usuario inserido com Sucesso",true);
             return mensagem;
-//        } else{
-//            mensagem = new MensagemDTO("Houve algum erro desconhecido ao salvar o novo usuario.",false);
-//            return mensagem;
-//        }
+        } else{
+            mensagem = new MensagemDTO("Houve algum erro desconhecido ao salvar o novo usuario.",false);
+            return mensagem;
+        }
+    }
+
+    /**
+     * Recebe o usuário do banco de dados
+     * @return List<Usuario>
+     * */
+    public List<Usuario> getUsuario(){
+        return _usuarioRepository.getAllUser();
+    }
+
+    /**
+     * Recebe o usuário do banco de dados
+     * @return Usuario
+     * */
+    public Usuario getUsuarioById(int id){
+        return _usuarioRepository.getUserById(id);
     }
 
     /**
      * Atualiza um Usuario no banco de dados
      * @param request AdministradorDTO
      * */
-//    public MensagemDTO atualizarUsuario(@NotNull UsuarioDTO request) throws SQLException {
-//
-//        MensagemDTO mensagem;
-//        if(_validarCPF.validarCPF(request.Cpf) == false) {
-//            mensagem = new MensagemDTO("O CPF é invalido.",false);
-//            return mensagem;
-//        }
-//
-//        if(_validarEmail.emailValidator(request.Email) == false){
-//            mensagem = new MensagemDTO("O email é invalido.",false);
-//            return mensagem;
-//        }
-//
-//        if(_usuarioDao.atualizar(request)){
-//            mensagem = new MensagemDTO("Cadastro do Administrador atualizado com Sucesso",true);
-//            return mensagem;
-//        } else{
-//            mensagem = new MensagemDTO("Houve algum erro desconhecido ao salvar aluno.",false);
-//            return mensagem;
-//        }
-//    }
+    public MensagemDTO updateUsuario(UsuarioUpdateDTO request) throws SQLException {
+
+        String cpf = _validarCPF.repleaceCpf(request.cpf());
+
+        if(_validarCPF.validarCPF(cpf) == false) {
+            mensagem = new MensagemDTO("O CPF é invalido.",false);
+            return mensagem;
+        }
+
+        Usuario usuario = new Usuario(request.id(), request.nome(), cpf, request.email(), request.ativo(), request.grupo(), request.senha());
+
+        if(_usuarioRepository.update(usuario)){
+            mensagem = new MensagemDTO("Cadastro do usuario atualizado com Sucesso",true);
+            return mensagem;
+        } else{
+            mensagem = new MensagemDTO("Houve algum erro desconhecido ao atualiza o usuario.",false);
+            return mensagem;
+        }
+    }
 
     /**
-     * Deleta um Usuario do banco de dados
-     * @param cpf String
+     * Marca no banco de dados se o usuário está ativo
+     * @param id, isActive
+     * @return MensagemDTO
      * */
-//    public MensagemDTO deletarUsuario(String cpf) throws SQLException {
-//
-//        Usuario administrador = new Usuario();
-//
-//        MensagemDTO mensagem;
-//        if(administrador.Id != 0){
-//            _usuarioDao.excluir(administrador.Id);
-//
-//            return mensagem = new MensagemDTO("Administrador Deletado com Sucesso",true);
-//        } else{
-//            return mensagem = new MensagemDTO("Houve um erro ao deletar o administrador",false);
-//        }
-//    }
+    public MensagemDTO isUserActive(int id, boolean isActive){
 
-    public Usuario buscarUsuarioPorId(Long id) {
-        return _usuarioRepository.findById(id).orElse(null);
-    }
-
-    public Usuario salvarUsuario(Usuario usuario) {
-        return _usuarioRepository.save(usuario);
-    }
-
-    public void deletarUsuario(Long id) {
-        _usuarioRepository.deleteById(id);
+        if(_usuarioRepository.saveIsActive(id, isActive)){
+            mensagem = new MensagemDTO("Usuário atualizado",true);
+            return mensagem;
+        } else{
+            mensagem = new MensagemDTO("Usuário não atualizado.",false);
+            return mensagem;
+        }
     }
 }
