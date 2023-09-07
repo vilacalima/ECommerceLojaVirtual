@@ -37,3 +37,8 @@ h2 {
     background-color: #f0f0f0;
   }
   
+  .espaco {
+    margin-left: 10px; /* Ajuste esse valor para controlar o espaço desejado */
+    margin-right: 10px; /* Pode definir margem direita também se preferir */
+  }
+  
