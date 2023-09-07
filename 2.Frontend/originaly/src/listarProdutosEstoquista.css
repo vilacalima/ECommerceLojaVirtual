@@ -1,0 +1,63 @@
+/* listarProdutos.css */
+
+/* Estilos para o título da página */
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para o campo de busca */
+  input[type="text"] {
+    padding: 10px;
+    box-sizing: border-box;
+    border: 2px solid black;
+    margin: 0 auto;
+    width: 47%;
+    text-align: center;
+
+  }
+  /* Estilos para a lista de produtos */
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilos para os itens da lista */
+  ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .espaco {
+    margin-left: 10px; /* Ajuste esse valor para controlar o espaço desejado */
+    margin-right: 10px; /* Pode definir margem direita também se preferir */
+  }
+  .botao-adicionar {
+
+    margin: 0 auto;
+    width: 10%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #be84b3;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    /* position: absolute;  */
+    
+}
+
+.botao-adicionar:hover {
+    background-color: #73576b;
+}
+

@@ -9,6 +9,7 @@ import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
 import ListarUsuariosAdmin from './listarUsuariosAdmin'; 
+import ListarProdutosEstoquista from './listarProdutosEstoquista'; 
 import reportWebVitals from './reportWebVitals';
 import ListarProdutos from './listarProdutos';
 
@@ -23,6 +24,9 @@ ReactDOM.render(
       </Route>
       <Route path="/listarProdutos">
         <ListarProdutos />
+      </Route>
+      <Route path="/listarProdutosEstoquista">
+        <ListarProdutosEstoquista />
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
