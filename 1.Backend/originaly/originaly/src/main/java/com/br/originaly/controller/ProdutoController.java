@@ -1,11 +1,10 @@
 package com.br.originaly.controller;
 
+import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.dto.ProdutoDTO;
 import com.br.originaly.service.ImageService;
 import com.br.originaly.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.google.cloud.storage.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,27 +25,27 @@ public class ProdutoController {
         _image = image;
     }
 
-//    @Value("${firebase.storageBucket}")
-//    private String storageBucket;
-
-    @PostMapping("/image")
-    public String uploadImage(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/novoProduto")
+    public MensagemDTO novoProduto(@RequestParam("file") MultipartFile file,
+                                   @RequestParam String nome,
+                                   @RequestParam String descricao,
+                                   @RequestParam int quantidade,
+                                   @RequestParam double valor,
+                                   @RequestParam boolean ativo,
+                                   @RequestParam double avaliacao) {
+        MensagemDTO message;
         if (!file.isEmpty()) {
             try {
 
-                System.out.println("Entrou na controller");
+                message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, file);
+                return message;
 
-                String url = _image.uploadImagem(file);
-
-                return url;
             } catch (IOException e) {
                 e.printStackTrace();
-                // Trate qualquer erro que possa ocorrer durante o upload
-                return "Erro durante o upload da imagem.";
+                return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
             }
         } else {
-            // Lidar com o caso em que nenhum arquivo foi enviado
-            return "Nenhum arquivo enviado.";
+            return new MensagemDTO("Nenhum arquivo enviado", false);
         }
     }
 }

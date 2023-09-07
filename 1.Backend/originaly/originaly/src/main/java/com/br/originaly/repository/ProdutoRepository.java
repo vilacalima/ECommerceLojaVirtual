@@ -21,9 +21,13 @@ public class ProdutoRepository {
         _mostruarioRepository = mostruarioRepository;
     }
 
-    public boolean saveProduto(Produto produto) {
-        Produto debug = _produtoRepository.save(produto);
-        return debug != null;
+    public int saveProduto(Produto produto) {
+        Produto savedProduto = _produtoRepository.save(produto);
+        if (savedProduto != null) {
+            return savedProduto.getId();
+        } else {
+            return 0;
+        }
     }
 
     public boolean saveMonstruario(Monstruario monstruario) {
