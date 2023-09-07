@@ -43,11 +43,12 @@ function ListarProdutos() {
           onChange={(e) => setBuscaParcial(e.target.value)}
         />
 
-              {/* Botão para chamar a tela de cadastro */}
-              <Link to="/cadastrarUsuario" className="botao-adicionar">
-  <span>+</span> Cadastrar Produto
-</Link>
-      
+        {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
+        <Link to="/cadastrarUsuario" className="botao-adicionar">
+          <span>+</span> Cadastrar Produto 
+        </Link> 
+
+  
       </div>
       <table className="tabela-produtos">
         <thead>
