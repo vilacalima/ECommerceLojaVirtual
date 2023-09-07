@@ -26,7 +26,7 @@ function ListarProdutos() {
   
     useEffect(() => {
       // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
-      axios.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}`)
+      axios.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&sort=-dataInsercao`) //INCLUIR DATA DE INSERCAO NO BANDO DE DADOS PARA ELE PODER ORNDENAR DO MAIS ANTIGO PARA O MAIS RECENTE
         .then((response) => {
           setProdutos(response.data);
         })
