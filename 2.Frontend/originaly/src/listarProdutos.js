@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutos.css';
+import { Link } from 'react-router-dom'; // Importe o Link corretamente
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([
@@ -33,6 +34,7 @@ function ListarProdutos() {
   return (
     <div>
       <h2>Listagem de Produtos</h2>
+
       <div className="filtro">
         <input
           type="text"
@@ -40,6 +42,12 @@ function ListarProdutos() {
           value={buscaParcial}
           onChange={(e) => setBuscaParcial(e.target.value)}
         />
+
+              {/* Botão para chamar a tela de cadastro */}
+              <Link to="/cadastrarUsuario" className="botao-adicionar">
+  <span>+</span> Cadastrar Produto
+</Link>
+      
       </div>
       <table className="tabela-produtos">
         <thead>

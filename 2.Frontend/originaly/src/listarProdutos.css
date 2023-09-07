@@ -41,4 +41,23 @@ h2 {
     margin-left: 10px; /* Ajuste esse valor para controlar o espaço desejado */
     margin-right: 10px; /* Pode definir margem direita também se preferir */
   }
-  
+  .botao-adicionar {
+
+    margin: 0 auto;
+    width: 10%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #be84b3;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    /* position: absolute;  */
+    
+}
+
+.botao-adicionar:hover {
+    background-color: #73576b;
+}
+
