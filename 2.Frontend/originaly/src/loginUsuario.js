@@ -29,7 +29,7 @@ function LoginUsuario() {
                 </div>
               </div>
 
-              <Link to="inicial"> Entrar</Link>
+              <Link to="home"> Entrar</Link>
             </form>
           </div>
         </main>

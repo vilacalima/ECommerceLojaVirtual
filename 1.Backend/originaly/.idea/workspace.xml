@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="043ac24f-27f9-4218-bf4d-83ba85c103ab" name="Changes" comment="" />
+    <list default="true" id="a092bc7c-89f6-405a-85c8-e88bbe3ed9da" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProjectId" id="2UFUcB6lDWkZXe8c5rvpX05rrTw" />
+  <component name="ProjectId" id="2UzjA4VhobxUroOOfIrvPB5nsNI" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -25,17 +21,17 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/isabe/OneDrive/Documentos/FACULDADE 4 SEM/Projeto/ECommerceLojaVirtual/1.Backend/originaly"
+    "last_opened_file_path": "C:/Users/isabe/OneDrive/Documentos/FACULDADE 4 SEM/Projeto/ECommerceLojaVirtual/1.Backend"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="043ac24f-27f9-4218-bf4d-83ba85c103ab" name="Changes" comment="" />
-      <created>1692534898384</created>
+      <changelist id="a092bc7c-89f6-405a-85c8-e88bbe3ed9da" name="Changes" comment="" />
+      <created>1693949155374</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1692534898384</updated>
+      <updated>1693949155374</updated>
     </task>
     <servers />
   </component>
