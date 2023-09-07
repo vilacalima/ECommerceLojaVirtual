@@ -1,6 +1,7 @@
 package com.br.originaly.service;
 
-import com.br.originaly.repository.MonstruarioRepository;
+import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.dto.ProdutoDTO;
 import com.br.originaly.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Service;
 public class ProdutoService {
 
     private final ProdutoRepository _produtoRepository;
-    private final MonstruarioRepository _mostruarioRepository;
 
     @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository, MonstruarioRepository mostruarioRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository) {
         _produtoRepository = produtoRepository;
-        _mostruarioRepository = mostruarioRepository;
     }
 
-
+//    public MensagemDTO newProduto(ProdutoDTO product){
+//
+//        return new MensagemDTO();
+//    }
 }
