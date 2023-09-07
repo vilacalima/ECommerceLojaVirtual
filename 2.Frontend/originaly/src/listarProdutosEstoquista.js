@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './listarProdutos.css';
+import './listarProdutosEstoquista.css';
 import { Link } from 'react-router-dom'; // Importe o Link corretamente
 
 function ListarProdutos() {
@@ -43,12 +43,7 @@ function ListarProdutos() {
           onChange={(e) => setBuscaParcial(e.target.value)}
         />
 
-        {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
-        <Link to="/cadastrarUsuario" className="botao-adicionar">
-          <span>+</span> Cadastrar Produto 
-        </Link> 
-
-  
+ 
       </div>
       <table className="tabela-produtos">
         <thead>
@@ -71,12 +66,8 @@ function ListarProdutos() {
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
                 <a href={`#alterar/${produto.id}`}>Alterar</a>
-                <span className="espaco">|</span>
-                <a href={`#inativar/${produto.id}`}>Inativar</a>
-                <span className="espaco">|</span>
-                <a href={`#reativar/${produto.id}`}>Reativar</a>
-                <span className="espaco">|</span>
-                <a href={`#visualizar/${produto.id}`}>Visualizar</a>
+                <span className="espaco"></span>
+
               </td>
             </tr>
           ))}
