@@ -5,6 +5,7 @@ import com.br.originaly.model.Produto;
 import com.br.originaly.model.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,17 +23,32 @@ public class ProdutoRepository {
     }
 
     public int saveProduto(Produto produto) {
-        Produto savedProduto = _produtoRepository.save(produto);
-        if (savedProduto != null) {
-            return savedProduto.getId();
-        } else {
-            return 0;
-        }
+        Produto newProduto = _produtoRepository.save(produto);
+        return produto.getId();
     }
 
     public boolean saveMonstruario(Monstruario monstruario) {
         Monstruario debug = _mostruarioRepository.save(monstruario);
         return debug != null;
+    }
+
+    public List<Produto> getAllProduct(){
+        return _produtoRepository.findAll();
+    }
+
+    public int getIdProduct(int id){
+        Produto produto =  _produtoRepository.getById((long)id);
+        return produto.getId();
+    }
+
+    /**
+     * Retorna a url da Imagem
+     * @param id
+     * @return rota
+     * */
+    public String getUrlImage(int id){
+        Monstruario monstruario = _mostruarioRepository.findByIdProduto(id);
+        return monstruario.getRota();
     }
 
 }

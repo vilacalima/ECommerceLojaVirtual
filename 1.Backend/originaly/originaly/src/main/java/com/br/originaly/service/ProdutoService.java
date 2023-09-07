@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 public class ProdutoService {
@@ -24,6 +25,17 @@ public class ProdutoService {
         _image = image;
     }
 
+    /**
+     * Serviço para salvar um novo produto
+     * @param nome
+     * @param descricao
+     * @param quantidade
+     * @param  valor
+     * @param ativo
+     * @param avaliacao
+     * @param file
+     * @return MensagemDTO
+     * */
     public MensagemDTO newProduto(String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile file) throws IOException {
 
         //pegar dados do produto e mapear
@@ -43,7 +55,7 @@ public class ProdutoService {
         int idProduct = _produtoRepository.saveProduto(dtoProduct);
 
         if(idProduct != 0){
-
+            System.out.println("entrou aqui");
             Monstruario dtoMonstruario = new Monstruario(
                 idProduct,
                 url,
@@ -63,6 +75,18 @@ public class ProdutoService {
         }
     }
 
+    public List<Produto> getProduct(){
+        return _produtoRepository.getAllProduct();
+    }
+
+    public String getImage(int id){
+        int idProduct = _produtoRepository.getIdProduct(id);
+        System.out.println("retornoou o produto " + idProduct);
+        String image = _produtoRepository.getUrlImage(idProduct);
+
+        System.out.println("retornou o url " + image);
+        return _image.getUrlDaImagem(image);
+    }
 //    public Monstruario getMonstruario(int image){
 //
 //    }

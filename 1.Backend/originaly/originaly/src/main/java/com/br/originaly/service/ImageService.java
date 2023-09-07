@@ -41,6 +41,7 @@ public class ImageService {
 
         Bucket bucket = StorageClient.getInstance().bucket();
 
+        System.out.println("entrou no método");
         Blob blob = bucket.get(nomeArquivo);
         if (blob != null) {
             return blob.getMediaLink();

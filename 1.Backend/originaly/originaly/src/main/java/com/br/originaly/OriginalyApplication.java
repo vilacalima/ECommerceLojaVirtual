@@ -8,7 +8,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
 @EnableSwagger2
-@EntityScan("com.br.originaly.model")
+@EntityScan(basePackages = "com.br.originaly.model")
 @EnableConfigurationProperties
 public class OriginalyApplication {
 

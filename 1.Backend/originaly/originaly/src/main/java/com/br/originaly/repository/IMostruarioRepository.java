@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface IMostruarioRepository extends JpaRepository<Monstruario, Long> {
 
+    Monstruario findByIdProduto(int idProduto);
 }
