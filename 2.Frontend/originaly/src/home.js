@@ -9,7 +9,7 @@ function Home() {
     <h2>Bem-vindo à Página Inicial</h2>
     <div className="home-links">
       <Link to="/listarUsuariosAdmin" className="button">Lista Usuário Admin</Link>
-      <Link to="/listarProdutos" className="button" disabled={true}>Lista Produto</Link>
+      <Link to="/listarProdutos" className="button">Lista Produto</Link>
     </div>
   </div>
 </div>

@@ -10,6 +10,7 @@ import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
 import ListarUsuariosAdmin from './listarUsuariosAdmin'; 
 import reportWebVitals from './reportWebVitals';
+import ListarProdutos from './listarProdutos';
 
 ReactDOM.render(
   <Router>
@@ -20,13 +21,19 @@ ReactDOM.render(
       <Route path="/login">
         <LoginUsuario />
       </Route>
+      <Route path="/listarProdutos">
+        <ListarProdutos />
+      </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
       </Route>
-      {/* <Route path="/alterarUsuario/:userId" component={AlterarUsuario} /> */}
+      <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
 
       <Route path="/listarUsuariosAdmin">
         <ListarUsuariosAdmin />
+      </Route>
+      <Route path="/alterarUsuarios">
+        <AlterarUsuario />
       </Route>
     </Switch>
   </Router>,
