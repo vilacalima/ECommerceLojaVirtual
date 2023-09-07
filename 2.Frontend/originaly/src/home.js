@@ -10,6 +10,8 @@ function Home() {
     <div className="home-links">
       <Link to="/listarUsuariosAdmin" className="button">Lista Usuário Admin</Link>
       <Link to="/listarProdutos" className="button">Lista Produto</Link>
+      <Link to="/listarProdutosEstoquista" className="button">Lista Produto Estoquista</Link>
+
     </div>
   </div>
 </div>
