@@ -4,12 +4,7 @@ import './listarProdutosEstoquista.css';
 import { Link } from 'react-router-dom'; // Importe o Link corretamente
 
 function ListarProdutos() {
-  const [produtos, setProdutos] = useState([
-    { id: 1, codigo: 'P001', nome: 'Produto 1', quantidadeEstoque: 10, valor: 100, ativo: true }, //RETIRAR ESSA LINHA QUANDO O BCK FUNCIONAR, ESTA SENDO USADA APENAS PARA VER COMO FICA O LAYOUT
-    { id: 2, codigo: 'P002', nome: 'Produto 2', quantidadeEstoque: 5, valor: 50, ativo: true }, //RETIRAR ESSA LINHA QUANDO O BCK FUNCIONAR, ESTA SENDO USADA APENAS PARA VER COMO FICA O LAYOUT
-    { id: 3, codigo: 'P003', nome: 'Produto 3', quantidadeEstoque: 8, valor: 80, ativo: false }, //RETIRAR ESSA LINHA QUANDO O BCK FUNCIONAR, ESTA SENDO USADA APENAS PARA VER COMO FICA O LAYOUT
-    // Adicione mais dados fictícios aqui
-  ]);
+  const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState('');
   const [pagina, setPagina] = useState(1);
   const produtosPorPagina = 10;
@@ -18,7 +13,8 @@ function ListarProdutos() {
   useEffect(() => {
     // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
     axios
-      .get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&buscaParcial=${buscaParcial}&sort=-dataInsercao`)
+    .get('http://localhost:8080/api/product/getAllProduct')  
+    //.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&buscaParcial=${buscaParcial}&sort=-dataInsercao`)
       .then((response) => {
         setProdutos(response.data);
       })
@@ -59,9 +55,9 @@ function ListarProdutos() {
         <tbody>
           {produtos.map((produto) => (
             <tr key={produto.id}>
-              <td>{produto.codigo}</td>
+              <td>{produto.id}</td>
               <td>{produto.nome}</td>
-              <td>{produto.quantidadeEstoque}</td>
+              <td>{produto.quantidade}</td>
               <td>R${produto.valor}</td>
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
