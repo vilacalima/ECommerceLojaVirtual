@@ -21,9 +21,11 @@ function ListaUsuariosAdmin() {
 
     loadUsers();
 
+     // atualiza automaticamente a cada 15 segundos
     const refreshInterval = 15000;
     const intervalId = setInterval(loadUsers, refreshInterval);
 
+    // Limpa o intervalo
     return () => {
       clearInterval(intervalId);
     };
