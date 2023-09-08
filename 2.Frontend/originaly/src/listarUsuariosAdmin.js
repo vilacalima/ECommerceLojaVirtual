@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'; // Importe o Axios
-import './listarUsuariosAdmin.css'; 
-
+import axios from 'axios';
+import './listarUsuariosAdmin.css';
 
 function ListaUsuariosAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
-
   const [users, setUsers] = useState([]);
-
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
@@ -21,10 +18,10 @@ function ListaUsuariosAdmin() {
       .catch(error => {
         console.error(error);
       });
-      
+
     loadUsers();
 
-    // atualiza automaticamente a cada 15 segundos
+     // atualiza automaticamente a cada 15 segundos
     const refreshInterval = 15000;
     const intervalId = setInterval(loadUsers, refreshInterval);
 
@@ -43,7 +40,7 @@ function ListaUsuariosAdmin() {
         console.error(error);
       });
   };
- 
+
   const handleCheckboxChange = async (userId, isChecked) => {
     try {
       const url = `http://localhost:8080/api/usuarioAtivo/${userId}/${isChecked}`;
@@ -53,7 +50,6 @@ function ListaUsuariosAdmin() {
       });
 
       if (response.ok) {
-        
         console.log('Atualização bem-sucedida');
         
         const updatedUsers = users.map(user => {
@@ -64,7 +60,6 @@ function ListaUsuariosAdmin() {
         });
         setUsers(updatedUsers);
       } else {
-        
         console.error('Falha na atualização');
       }
     } catch (error) {
@@ -72,10 +67,12 @@ function ListaUsuariosAdmin() {
     }
   };
 
+  // Aplicar filtro de busca
+  const filteredUsers = users.filter(user => user.nome.toLowerCase().includes(searchTerm));
+
   return (
     <div>
       <h2>Procurar Usuário</h2>
-
 
       <input
         type="text"
@@ -86,7 +83,7 @@ function ListaUsuariosAdmin() {
       />
 
       <div className='adicionar'>
-      <Link to="/cadastrarUsuario" className="botao-adicionar"> Adicionar Usuário</Link>
+        <Link to="/cadastrarUsuario" className="botao-adicionar"> Adicionar Usuário</Link>
       </div>
       <table>
         <thead>
@@ -101,7 +98,7 @@ function ListaUsuariosAdmin() {
         </thead>
 
         <tbody>
-          {users.map(user => (
+          {filteredUsers.map(user => (
             <tr key={user.id}>
               <td className="text-center">
                 <Link to={`/alterarUsuario/${user.id}`} className="botao-alterar"> Alterar</Link>

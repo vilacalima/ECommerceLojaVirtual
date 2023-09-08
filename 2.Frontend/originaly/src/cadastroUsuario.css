@@ -93,6 +93,20 @@ button[type="submit"] {
   /* ... outras configurações ... */
 }
 
+/* Estilos para a mensagem de sucesso */
+.success-message {
+  position: fixed;
+  top: 50%; /* Coloca a mensagem no centro verticalmente */
+  left: 50%; /* Coloca a mensagem no centro horizontalmente */
+  transform: translate(-50%, -50%); /* Centraliza a mensagem no meio da tela */
+  background-color: #af4c8e; /* Cor de fundo verde (ou a cor desejada) */
+  color: white; /* Cor do texto */
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 5px; /* Cantos arredondados */
+  z-index: 1000; /* Garante que a mensagem esteja acima de outros elementos */
+  /* display: none; Inicialmente, a mensagem está oculta */
+}
+
 
 .app-footer {
   background-color: #282c34;
