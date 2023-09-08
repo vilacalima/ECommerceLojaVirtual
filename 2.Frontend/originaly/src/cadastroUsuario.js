@@ -7,6 +7,7 @@ import './cadastroUsuario.css';
 function App() {
   const [cpfValue, setCpfValue] = useState('');
   const [isCpfValid, setIsCpfValid] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleCpfChange = (event) => {
     const newCpfValue = event.target.value;
@@ -18,6 +19,16 @@ function App() {
     try {
       const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
       console.log('Dados enviados com sucesso:', response.data);
+
+            // Após o cadastro bem-sucedido, defina showSuccessMessage para true
+            setShowSuccessMessage(true);
+
+            // Use setTimeout para ocultar a mensagem após 3 segundos
+            setTimeout(() => {
+              setShowSuccessMessage(false);
+            }, 3000); // 3000 milissegundos = 3 segundos
+
+
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
     }
@@ -118,6 +129,12 @@ function App() {
           </form>
         </div>
       </main>
+      {/* Mensagem de sucesso (será exibida quando showSuccessMessage for verdadeira) */}
+    {showSuccessMessage && (
+      <div className="success-message">
+        Usuário cadastrado com sucesso!
+      </div>
+    )}
     </div>
   );
 }
