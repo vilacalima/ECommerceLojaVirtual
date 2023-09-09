@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import './produtoForm.css';
 
 function ProdutoForm() {
+
   const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    rating: 0.5,
-    price: 0.0,
-    stock: 0,
-    images: [],
-    mainImage: '',
+    name: 'Digite o nome do produto',
+    description: 'Descrição do Produto',
+    rating: 3.5,
+    price: 50.0,
+    stock: 20,
+    image: null, // Alterado para uma única imagem em vez de uma array
   });
 
   const [errors, setErrors] = useState({});
@@ -19,14 +19,9 @@ function ProdutoForm() {
     setProduct({ ...product, [name]: value });
   };
 
-  const handleImageUpload = (acceptedFiles) => {
-    const uploadedImages = product.images.concat(acceptedFiles);
-    setProduct({ ...product, images: uploadedImages });
-  };
-
-  const handleMainImageSelect = (index) => {
-    const selectedImage = product.images[index];
-    setProduct({ ...product, mainImage: selectedImage });
+  const handleImageUpload = (e) => {
+    const selectedImage = e.target.files[0];
+    setProduct({ ...product, image: URL.createObjectURL(selectedImage) });
   };
 
   const handleSubmit = async (e) => {
@@ -42,7 +37,7 @@ function ProdutoForm() {
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      // Envie os dados do produto e imagens para o servidor (backend) aqui
+      // Envie os dados atualizados do produto e imagem para o servidor (backend) aqui
     } else {
       setErrors(validationErrors);
     }
@@ -50,7 +45,7 @@ function ProdutoForm() {
 
   return (
     <div className="container">
-      <h2>Cadastrar Novo Produto</h2>
+      <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Nome do Produto:</label>
@@ -121,31 +116,19 @@ function ProdutoForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="images">Imagens do Produto:</label>
+          <label htmlFor="image">Imagem do Produto:</label>
+          {product.image && <img src={product.image} alt="Imagem do Produto" />}
           <input
             type="file"
-            id="images"
-            name="images"
+            id="image"
+            name="image"
             accept="image/*"
-            multiple
-            onChange={(e) => handleImageUpload(e.target.files)}
+            onChange={handleImageUpload}
             required
           />
         </div>
 
-        <div className="form-group">
-          <label htmlFor="main-image">Imagem Principal:</label>
-          <select
-            id="main-image"
-            name="main-image"
-            onChange={(e) => handleMainImageSelect(e.target.value)}
-            required
-          >
-            {/* Preencha as opções com base nas imagens carregadas */}
-          </select>
-        </div>
-
-        <button type="submit">Salvar</button>
+        <button type="submit">Salvar Produto</button>
         <button type="button">Cancelar</button>
       </form>
     </div>
@@ -153,3 +136,4 @@ function ProdutoForm() {
 }
 
 export default ProdutoForm;
+
