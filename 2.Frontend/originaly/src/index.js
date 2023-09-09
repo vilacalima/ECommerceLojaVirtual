@@ -43,7 +43,7 @@ ReactDOM.render(
       <Route path="/alterarUsuarios">
         <AlterarUsuario />
       </Route>
-      <Route path="/produtoForm">
+      <Route path="/cadastrarProduto">
         <ProdutoForm />
       </Route>
       <Route path="/editarProduto">

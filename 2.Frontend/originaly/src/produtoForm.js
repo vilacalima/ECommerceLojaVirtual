@@ -117,7 +117,11 @@ function ProdutoForm() {
 
         <div className="form-group">
           <label htmlFor="image">Imagem do Produto:</label>
-          {product.image && <img src={product.image} alt="Imagem do Produto" />}
+          {product.image && (
+            <div className='image-container'> 
+              <img src={product.image} alt="Imagem do Produto" className="image"/>
+            </div>
+          )}
           <input
             type="file"
             id="image"

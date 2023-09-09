@@ -68,7 +68,7 @@ function ListarProdutos() {
         />
         <div className='botao'>
         {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
-        <Link to="/cadastrarUsuario" className="botao-adicionar">
+        <Link to="/cadastrarProduto" className="botao-adicionar">
           <span>+</span> Cadastrar Produto 
         </Link> 
         </div>
