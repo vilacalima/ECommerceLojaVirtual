@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './productForm.css';
+import './produtoForm.css';
 
-function ProductForm() {
+function ProdutoForm() {
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -152,4 +152,4 @@ function ProductForm() {
   );
 }
 
-export default ProductForm;
+export default ProdutoForm;
