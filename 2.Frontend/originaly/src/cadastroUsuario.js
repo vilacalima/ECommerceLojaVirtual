@@ -14,7 +14,7 @@ function App() {
     setCpfValue(newCpfValue);
     setIsCpfValid(cpfValidator.isValid(newCpfValue));
   };
-
+  
   const sendUserData = async (userData) => {
     try {
       const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
