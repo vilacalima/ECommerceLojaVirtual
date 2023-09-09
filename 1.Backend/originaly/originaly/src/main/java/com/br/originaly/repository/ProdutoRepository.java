@@ -35,7 +35,8 @@ public class ProdutoRepository {
     }
 
     public List<Produto> getAllProduct(){
-        return _produtoRepository.findAll();
+        Sort sortByUpdateAt = Sort.by(Sort.Direction.DESC, "updateAt");
+        return _produtoRepository.findAll(sortByUpdateAt);
     }
 
     public int getIdProduct(int id){

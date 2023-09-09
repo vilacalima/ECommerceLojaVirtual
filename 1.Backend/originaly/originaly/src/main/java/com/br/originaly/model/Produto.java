@@ -12,12 +12,19 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "nome")
     private String nome;
+    @Column(name = "descricao")
     private String descricao;
+    @Column(name = "quantidade")
     private int quantidade;
+    @Column(name = "valor")
     private double valor;
+    @Column(name = "ativo")
     private boolean ativo;
+    @Column(name = "avaliacao")
     private double avaliacao;
+    @Column(name = "update_at")
     private Date updateAt;
 
     /**
