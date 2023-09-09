@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +20,8 @@ public class ProdutoService {
 
     private final ProdutoRepository _produtoRepository;
     private ImageService _image;
+    private MensagemDTO mensagem;
+    private Date default_hora_atual = new Date();
 
     @Autowired
     public ProdutoService(ProdutoRepository produtoRepository, ImageService image) {
@@ -45,7 +49,8 @@ public class ProdutoService {
             quantidade,
             valor,
             ativo,
-            avaliacao
+            avaliacao,
+            default_hora_atual
         );
 
         //pegar imagem salvar no banco de imagens e pegar a url
@@ -87,7 +92,20 @@ public class ProdutoService {
         System.out.println("retornou o url " + image);
         return _image.getUrlDaImagem(image);
     }
-//    public Monstruario getMonstruario(int image){
-//
-//    }
+
+    /**
+     * Marca no banco de dados se o produto está ativo
+     * @param id, isActive
+     * @return MensagemDTO
+     * */
+    public MensagemDTO isUserActive(int id, boolean isActive){
+
+        if(_produtoRepository.saveIsActive(id, isActive)){
+            mensagem = new MensagemDTO("Produto atualizado",true);
+            return mensagem;
+        } else{
+            mensagem = new MensagemDTO("Produto não atualizado.",false);
+            return mensagem;
+        }
+    }
 }
