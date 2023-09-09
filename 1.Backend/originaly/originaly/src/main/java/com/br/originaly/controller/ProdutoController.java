@@ -62,4 +62,18 @@ public class ProdutoController {
     public String getImage(@RequestParam int id){
         return _produto.getImage(id);
     }
+
+    @PutMapping("/produtoAtivo/{id}/{isActive}")
+    public MensagemDTO produtoAtivo(@PathVariable int id, @PathVariable boolean isActive){
+        MensagemDTO mensagem = null;
+
+        try{
+            mensagem = _produto.isUserActive(id, isActive);
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new MensagemDTO(e.getMessage().toString(), false);
+        }
+        return mensagem;
+    }
 }
