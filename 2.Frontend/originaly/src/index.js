@@ -12,6 +12,10 @@ import ListarUsuariosAdmin from './listarUsuariosAdmin';
 import ListarProdutosEstoquista from './listarProdutosEstoquista'; 
 import reportWebVitals from './reportWebVitals';
 import ListarProdutos from './listarProdutos';
+import ProdutoForm from './produtoForm';
+import EditarProduto from './editarProduto';
+
+
 
 ReactDOM.render(
   <Router>
@@ -38,6 +42,12 @@ ReactDOM.render(
       </Route>
       <Route path="/alterarUsuarios">
         <AlterarUsuario />
+      </Route>
+      <Route path="/produtoForm">
+        <ProdutoForm />
+      </Route>
+      <Route path="/editarProduto">
+        <EditarProduto />
       </Route>
     </Switch>
   </Router>,
