@@ -9,6 +9,7 @@ import CadastroUsuario from './cadastroUsuario';
 import LoginUsuario from './loginUsuario';
 import AlterarUsuario from './alterarUsuario';
 import ListarUsuariosAdmin from './listarUsuariosAdmin'; 
+import ListarProdutosAdmin from './listarProdutosAdmin';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -22,6 +23,9 @@ ReactDOM.render(
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
+      </Route>
+      <Route path="/listarProdutosAdmin">
+        <ListarProdutosAdmin />
       </Route>
       {/* <Route path="/alterarUsuario/:userId" component={AlterarUsuario} /> */}
 
