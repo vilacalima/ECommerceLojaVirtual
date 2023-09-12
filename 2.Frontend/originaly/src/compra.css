@@ -1,0 +1,88 @@
+
+/* Estilos para o componente ProductPage */
+.product-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+    background-color: #e2cdb0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+  }
+  
+   
+  
+  .image-carousel {
+    overflow: hidden;
+    border-radius: 5px;
+    width: 500px; /* Define a largura da imagem como 300 pixels */
+     height: 500px; /* Mantém a proporção original da imagem */
+
+  }
+  
+   
+  
+  .image-carousel img {
+    width: 100%;
+    height: 500px; /* Mantém a proporção original da imagem */
+    transform: scale(0);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+   
+  
+  .image-carousel img.active {
+    transform: scale(1);
+
+  }
+  
+   
+  
+  .product-info {
+    width: 50%;
+    padding: 50px;
+    text-align: left;
+  }
+  
+   
+  
+  .product-info h2 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+   
+  
+  .product-info p {
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 20px;
+  }
+  
+   
+  
+  .product-info h3 {
+    margin-top: 20px;
+    font-size: 18px;
+  }
+  
+   
+  
+  button#comprar-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: not-allowed;
+  }
+  
+   
+  
+  button#comprar-button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
