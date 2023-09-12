@@ -55,7 +55,7 @@ public class ProdutoService {
         );
 
         //pegar imagem salvar no banco de imagens e pegar a url
-        String url = _image.uploadImagem(file);
+        String url = _image.uploadNewImage(file);
 
         //salvar o produto no banco de dados e pegar o id do produto
         int idProduct = _produtoRepository.saveProduto(dtoProduct);
