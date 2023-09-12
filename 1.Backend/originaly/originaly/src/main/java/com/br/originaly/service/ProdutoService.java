@@ -2,6 +2,7 @@ package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.ProdutoDTO;
+import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Monstruario;
 import com.br.originaly.model.Produto;
 import com.br.originaly.repository.ProdutoRepository;
@@ -86,11 +87,25 @@ public class ProdutoService {
 
     public String getImage(int id){
         int idProduct = _produtoRepository.getIdProduct(id);
-        System.out.println("retornoou o produto " + idProduct);
         String image = _produtoRepository.getUrlImage(idProduct);
-
-        System.out.println("retornou o url " + image);
         return _image.getUrlDaImagem(image);
+    }
+
+    public EnvProdutoDTO getProductById(int id){
+        Produto produto = _produtoRepository.getProductById(id);
+        String file = _produtoRepository.getUrlImage(produto.getId());
+
+        EnvProdutoDTO envProduto = new EnvProdutoDTO(
+            produto.getNome(),
+            produto.getDescricao(),
+            produto.getQuantidade(),
+            produto.getValor(),
+            produto.isAtivo(),
+            produto.getAvaliacao(),
+            file
+        );
+
+        return envProduto;
     }
 
     /**

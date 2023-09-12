@@ -43,7 +43,7 @@ function AlterarUsuario() {
       .catch(error => {
         console.error('Erro ao buscar dados do usuário:', error);
       });
-  }, [userData, userId]);
+  }, [, userId]);
 
   const handleNomeChange = (event) => {
     setNome(event.target.value);

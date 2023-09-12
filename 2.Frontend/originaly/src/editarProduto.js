@@ -1,18 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
+import axios from 'axios';
 
 function EditarProduto() {
+  const { productId } = useParams();
+
   const [product, setProduct] = useState({
-    name: 'Produto Existente',
-    description: 'Descrição do Produto',
-    rating: 3.5,
-    price: 50.0,
-    stock: 20,
+    name: '',
+    description: '',
+    rating: null,
+    price: null,
+    stock: null,
     images: [],
     mainImage: '',
   });
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    // Busque os dados do produto pelo productId
+    axios.get(`http://localhost:8080/api/product/getProductById/${productId}`)
+      .then(response => {
+        const productData = response.data;
+        setProduct({
+          ...productData,
+          name: productData.nome,
+          description: productData.descricao,
+          rating: productData.avaliacao,
+          price: productData.preco,
+          stock: productData.quantidade,
+          images: productData.file,
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar dados do Produto:', error);
+      });
+  }, [productId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +44,7 @@ function EditarProduto() {
   };
 
   const handleImageUpload = (acceptedFiles) => {
-    const uploadedImages = product.images.concat(acceptedFiles);
+    const uploadedImages = [...product.images, ...acceptedFiles];
     setProduct({ ...product, images: uploadedImages });
   };
 
@@ -43,6 +67,13 @@ function EditarProduto() {
 
     if (Object.keys(validationErrors).length === 0) {
       // Envie os dados atualizados do produto e imagens para o servidor (backend) aqui
+      // Use axios ou outra biblioteca para fazer a solicitação ao servidor
+      try {
+        const response = await axios.put(`http://localhost:8080/api/product/editProduct/${productId}`, product);
+        console.log('Dados do produto atualizados com sucesso:', response.data);
+      } catch (error) {
+        console.error('Erro ao atualizar os dados do Produto:', error);
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -140,9 +171,16 @@ function EditarProduto() {
             name="main-image"
             onChange={(e) => handleMainImageSelect(e.target.value)}
             required
+            value={product.mainImage}
           >
-            {/* Preencha as opções com base nas imagens carregadas */}
+            <option value="">Escolha a imagem principal</option>
+            {Array.isArray(product.images) && product.images.map((image, index) => (
+              <option key={index} value={image}>
+                {image}
+              </option>
+            ))}
           </select>
+
         </div>
 
         <button type="submit">Salvar Alterações</button>

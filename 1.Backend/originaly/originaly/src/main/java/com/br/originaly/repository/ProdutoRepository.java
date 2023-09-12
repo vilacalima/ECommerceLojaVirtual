@@ -35,12 +35,22 @@ public class ProdutoRepository {
     }
 
     public List<Produto> getAllProduct(){
-        return _produtoRepository.findAll();
+        Sort sortByUpdateAt = Sort.by(Sort.Direction.DESC, "updateAt");
+        return _produtoRepository.findAll(sortByUpdateAt);
     }
 
     public int getIdProduct(int id){
         Produto produto =  _produtoRepository.getById((long)id);
         return produto.getId();
+    }
+
+    /**
+     * Pega produto pelo Id
+     * @param id
+     * @return Produto
+     * */
+    public Produto getProductById(int id){
+        return _produtoRepository.getById((long)id);
     }
 
     /**

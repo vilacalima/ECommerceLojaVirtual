@@ -2,6 +2,7 @@ package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.ProdutoDTO;
+import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Produto;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.ImageService;
@@ -54,14 +55,25 @@ public class ProdutoController {
     }
 
     @GetMapping("/getAllProduct")
-    public List<Produto> getUsuario(){
+    public List<Produto> getAllProduct(){
         return _produto.getProduct();
+    }
+
+    @GetMapping("/getProductById/{id}")
+    public EnvProdutoDTO getProductById(@PathVariable int id){
+        return _produto.getProductById(id);
     }
 
     @GetMapping("/getImage")
     public String getImage(@RequestParam int id){
         return _produto.getImage(id);
     }
+
+    @GetMapping("/getImagee")
+    public void getImagee() throws IOException {
+        _image.downloadObjectIntoMemory();
+    }
+
 
     @PutMapping("/produtoAtivo/{id}/{isActive}")
     public MensagemDTO produtoAtivo(@PathVariable int id, @PathVariable boolean isActive){

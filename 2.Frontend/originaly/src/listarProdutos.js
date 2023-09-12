@@ -23,6 +23,34 @@ function ListarProdutos() {
       });
   }, [pagina, busca, buscaParcial]);
 
+  const handleStatusProduto = async (productId, isChecked) => {
+    try {
+      // Faça a solicitação ao seu backend para inativar o produto
+      const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+      });
+  
+      if (response.ok) {
+        console.log('Produto inativado com sucesso');
+        
+        // Atualize o estado local ou faça outra ação necessária
+        const updatedProductList = produtos.map(product => {
+          if (product.id === productId) {
+            return { ...product, ativo: false };
+          }
+          return product;
+        });
+        setProdutos(updatedProductList);
+      } else {
+        console.error('Falha ao inativar o produto');
+      }
+    } catch (error) {
+      console.error('Erro ao inativar o produto:', error);
+    }
+  };
+  
   const handlePaginacao = (novaPagina) => {
     setPagina(novaPagina);
   };
@@ -40,7 +68,7 @@ function ListarProdutos() {
         />
         <div className='botao'>
         {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
-        <Link to="/cadastrarUsuario" className="botao-adicionar">
+        <Link to="/cadastrarProduto" className="botao-adicionar">
           <span>+</span> Cadastrar Produto 
         </Link> 
         </div>
@@ -67,11 +95,23 @@ function ListarProdutos() {
               <td>R${produto.valor}</td>
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
-                <a href={`#alterar/${produto.id}`}>Alterar</a>
+                <a href={`/alterarProduto/${produto.id}`}>Alterar</a>
+                <span className="espaco">|</span>                
+                <a href={`#inativar/${produto.id}`}>
+                  <span
+                    className="link-inativar"
+                    onClick={() => handleStatusProduto(produto.id, false)}>
+                    Inativar
+                  </span>
+                </a>
                 <span className="espaco">|</span>
-                <a href={`#inativar/${produto.id}`}>Inativar</a>
-                <span className="espaco">|</span>
-                <a href={`#reativar/${produto.id}`}>Reativar</a>
+                <a href={`#reativar/${produto.id}`}>
+                  <span
+                    className="link-inativar"
+                    onClick={() => handleStatusProduto(produto.id, true)}>
+                    Reativar
+                  </span>
+                </a>
                 <span className="espaco">|</span>
                 <a href={`#visualizar/${produto.id}`}>Visualizar</a>
               </td>

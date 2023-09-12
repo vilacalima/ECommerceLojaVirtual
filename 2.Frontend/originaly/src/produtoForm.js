@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import './produtoForm.css';
+import axios from 'axios';
 
 function ProdutoForm() {
 
   const [product, setProduct] = useState({
-    name: 'Digite o nome do produto',
-    description: 'Descrição do Produto',
-    rating: 3.5,
-    price: 50.0,
-    stock: 20,
-    image: null, // Alterado para uma única imagem em vez de uma array
+    name: '',
+    description: '',
+    rating: null,
+    price: null,
+    stock: null,
+    image: null,
   });
 
   const [errors, setErrors] = useState({});
@@ -21,7 +22,7 @@ function ProdutoForm() {
 
   const handleImageUpload = (e) => {
     const selectedImage = e.target.files[0];
-    setProduct({ ...product, image: URL.createObjectURL(selectedImage) });
+    setProduct({ ...product, image: selectedImage, displayImage: URL.createObjectURL(selectedImage) });
   };
 
   const handleSubmit = async (e) => {
@@ -38,6 +39,34 @@ function ProdutoForm() {
 
     if (Object.keys(validationErrors).length === 0) {
       // Envie os dados atualizados do produto e imagem para o servidor (backend) aqui
+    } else {
+      setErrors(validationErrors);
+    }
+
+    if (Object.keys(validationErrors).length === 0) {
+      // Crie um objeto FormData e adicione todos os dados, incluindo a imagem
+      const formData = new FormData();
+      formData.append('file', product.image);
+      formData.append('nome', product.name);
+      formData.append('descricao', product.description);
+      formData.append('quantidade', product.stock);
+      formData.append('valor', product.price);
+      formData.append('ativo', true);
+      formData.append('avaliacao', product.rating);
+  
+      // Envie os dados para o servidor
+      try {
+        const response = await axios.post('http://localhost:8080/api/product/newProduct', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+  
+        // Trate a resposta da controller aqui, por exemplo, exibindo uma mensagem de sucesso ou erro
+        console.log(response.data);
+      } catch (error) {
+        console.error('Erro ao enviar dados para a controller:', error);
+      }
     } else {
       setErrors(validationErrors);
     }
@@ -117,7 +146,11 @@ function ProdutoForm() {
 
         <div className="form-group">
           <label htmlFor="image">Imagem do Produto:</label>
-          {product.image && <img src={product.image} alt="Imagem do Produto" />}
+          {product.image && (
+            <div className='image-container'> 
+              <img src={product.displayImage} alt="Imagem do Produto" className="image"/>
+            </div>
+          )}
           <input
             type="file"
             id="image"
@@ -127,7 +160,6 @@ function ProdutoForm() {
             required
           />
         </div>
-
         <button type="submit">Salvar Produto</button>
         <button type="button">Cancelar</button>
       </form>

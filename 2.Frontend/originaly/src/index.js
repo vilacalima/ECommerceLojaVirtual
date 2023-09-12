@@ -43,11 +43,10 @@ ReactDOM.render(
       <Route path="/alterarUsuarios">
         <AlterarUsuario />
       </Route>
-      <Route path="/produtoForm">
+      <Route path="/cadastrarProduto">
         <ProdutoForm />
       </Route>
-      <Route path="/editarProduto">
-        <EditarProduto />
+      <Route path="/alterarProduto/:productId" component={EditarProduto}>
       </Route>
     </Switch>
   </Router>,
