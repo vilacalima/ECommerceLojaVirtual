@@ -14,12 +14,17 @@ import reportWebVitals from './reportWebVitals';
 import ListarProdutos from './listarProdutos';
 import ProdutoForm from './produtoForm';
 import EditarProduto from './editarProduto';
+import Compra from './compra';
+
 
 
 
 ReactDOM.render(
   <Router>
     <Switch>
+    <Route path="/compra" exact>
+          <Compra />
+        </Route>
     <Route path="/home" exact>
           <Home />
         </Route>
