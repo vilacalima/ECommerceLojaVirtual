@@ -46,8 +46,7 @@ ReactDOM.render(
       <Route path="/cadastrarProduto">
         <ProdutoForm />
       </Route>
-      <Route path="/editarProduto">
-        <EditarProduto />
+      <Route path="/alterarProduto/:productId" component={EditarProduto}>
       </Route>
     </Switch>
   </Router>,

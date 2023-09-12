@@ -45,6 +45,15 @@ public class ProdutoRepository {
     }
 
     /**
+     * Pega produto pelo Id
+     * @param id
+     * @return Produto
+     * */
+    public Produto getProductById(int id){
+        return _produtoRepository.getById((long)id);
+    }
+
+    /**
      * Retorna a url da Imagem
      * @param id
      * @return rota
