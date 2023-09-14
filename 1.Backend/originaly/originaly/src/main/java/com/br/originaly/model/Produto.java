@@ -34,7 +34,7 @@ public class Produto {
 
     }
 
-    public Produto(int id, String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao) {
+    public Produto(int id, String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, Date updateAt) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -42,6 +42,7 @@ public class Produto {
         this.valor = valor;
         this.ativo = ativo;
         this.avaliacao = avaliacao;
+        this.updateAt = updateAt;
     }
 
     public Produto(String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, Date updateAt ) {

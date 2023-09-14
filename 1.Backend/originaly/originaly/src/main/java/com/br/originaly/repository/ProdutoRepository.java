@@ -29,8 +29,33 @@ public class ProdutoRepository {
         return produto.getId();
     }
 
+    public boolean updateProduto(Produto produto){
+        Produto debug = _produtoRepository.findById((long) produto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
+
+        debug.setNome(produto.getNome());
+        debug.setDescricao(produto.getDescricao());
+        debug.setQuantidade(produto.getQuantidade());
+        debug.setAvaliacao(produto.getAvaliacao());
+        debug.setUpdateAt(produto.getUpdateAt());
+        debug.setValor(produto.getValor());
+        _produtoRepository.save(debug);
+
+        return debug != null;
+    }
+
     public boolean saveMonstruario(Monstruario monstruario) {
         Monstruario debug = _mostruarioRepository.save(monstruario);
+        return debug != null;
+    }
+
+    public boolean updateMonstruario(int id, String rota){
+        Monstruario debug = _mostruarioRepository.findById((long) id)
+                .orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado"));
+
+        debug.setRota(rota);
+        _mostruarioRepository.save(debug);
+
         return debug != null;
     }
 
@@ -64,6 +89,15 @@ public class ProdutoRepository {
     }
 
     /**
+     * Retorna uma lista do objeto de produto
+     * @param productId
+     * @return Monstruario
+     * */
+    public List<Monstruario> getMonstruarioByProductId(int productId){
+        return _mostruarioRepository.findListByIdProduto(productId);
+    }
+
+    /**
      * Atualiza se um produto é ativo ou inativo no banco de dados
      * @param id
      * @param isActive
@@ -78,6 +112,12 @@ public class ProdutoRepository {
         _produtoRepository.save(debug);
 
         return debug != null;
+    }
+
+    public int getIdByRota(String rota){
+        Monstruario debug = _mostruarioRepository.getMonstruarioByRota(rota);
+
+        return debug.getId();
     }
 
 }

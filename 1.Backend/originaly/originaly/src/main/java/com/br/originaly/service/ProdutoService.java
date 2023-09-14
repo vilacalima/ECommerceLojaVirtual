@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -79,6 +80,61 @@ public class ProdutoService {
         } else{
             return new MensagemDTO("Erro ao salvar produto no banco de dados", false);
         }
+    }
+
+    public MensagemDTO updateProduto(int id, String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile[] files, List<String> rotaAntiga) throws IOException {
+
+        Produto produto = _produtoRepository.getProductById(id);
+
+        if(produto != null) {
+            //pegar dados do produto e mapear
+            Produto dtoProduct = new Produto(
+                    id,
+                    nome,
+                    descricao,
+                    quantidade,
+                    valor,
+                    ativo,
+                    avaliacao,
+                    default_hora_atual
+            );
+
+            List<String> novaRota = new ArrayList<>();
+
+            //pegar a nova imagem e salvar no banco de imagens e gerar nova rota
+            if (files != null) {
+                for (MultipartFile file : files) {
+                    String rota = _image.uploadNewImage(file);
+
+                    novaRota.add(rota);
+                }
+            }
+
+            //fazer update do produto no banco de dados
+            boolean updateProduto = _produtoRepository.updateProduto(dtoProduct);
+
+            if (updateProduto) {
+                for (String rota : rotaAntiga) {
+                    int i = 0;
+                    int idMonstruario = _produtoRepository.getIdByRota(rota);
+
+
+                    _produtoRepository.updateMonstruario(idMonstruario, novaRota.get(i));
+
+                    i++; //A cada passagem no foreach vai incrementando mai um
+
+                    //tenho que bater a rota antiga e salvar a nota
+                    //deletar arquivo antigo
+
+                }
+            } else {
+                return new MensagemDTO("Falha ao atualizar Produto", false);
+            }
+        } else{
+            return new MensagemDTO("Produto não encontrado, id: " + id, false);
+        }
+
+        return new MensagemDTO("Produto atualizado com sucesso", true);
     }
 
     public List<Produto> getProduct(){
