@@ -133,7 +133,7 @@ function App() {
     {showSuccessMessage && (
       <div className="success-message">
         Usuário cadastrado com sucesso!
-      </div>
+      </div>  
     )}
     </div>
   );
