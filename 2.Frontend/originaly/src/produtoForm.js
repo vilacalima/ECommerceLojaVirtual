@@ -3,16 +3,16 @@ import './produtoForm.css';
 import axios from 'axios';
 
 function ProdutoForm() {
-
   const [product, setProduct] = useState({
     name: '',
     description: '',
     rating: null,
     price: null,
     stock: null,
-    image: null,
+    images: [],
+    filePrimary: null,
   });
-
+  
   const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
@@ -21,8 +21,29 @@ function ProdutoForm() {
   };
 
   const handleImageUpload = (e) => {
-    const selectedImage = e.target.files[0];
-    setProduct({ ...product, image: selectedImage, displayImage: URL.createObjectURL(selectedImage) });
+    const selectedImages = Array.from(e.target.files);
+    
+    const newImages = selectedImages.map((image) => ({
+      file: image,
+      displayImage: URL.createObjectURL(image),
+    }));
+  
+    setProduct({ ...product, images: [...product.images, ...newImages] });
+  };
+  
+
+  const toggleIsPrimary = (index) => {
+    const updatedImages = [...product.images];
+
+    if (index >= 0 && index < updatedImages.length) {
+      const selectedImage = updatedImages[index];
+      selectedImage.isPrimary = true;
+      setProduct({
+        ...product,
+        images: updatedImages.filter((_, i) => i !== index),
+        filePrimary: selectedImage,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -34,35 +55,45 @@ function ProdutoForm() {
     }
 
     if (product.description.length > 2000) {
-      validationErrors.description = 'A descrição deve ter no máximo 2000 caracteres';
+      validationErrors.description =
+        'A descrição deve ter no máximo 2000 caracteres';
+    }
+
+    if (!product.filePrimary) {
+      validationErrors.primaryImage = 'Selecione uma imagem principal';
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      // Envie os dados atualizados do produto e imagem para o servidor (backend) aqui
-    } else {
-      setErrors(validationErrors);
-    }
-
-    if (Object.keys(validationErrors).length === 0) {
-      // Crie um objeto FormData e adicione todos os dados, incluindo a imagem
       const formData = new FormData();
-      formData.append('file', product.image);
       formData.append('nome', product.name);
       formData.append('descricao', product.description);
       formData.append('quantidade', product.stock);
       formData.append('valor', product.price);
       formData.append('ativo', true);
       formData.append('avaliacao', product.rating);
-  
-      // Envie os dados para o servidor
+            
+      // // Anexe as imagens
+      // product.images.forEach((image, index) => {
+      //   formData.append(`file[${index}]`, image.file, `image${index}.jpg`);
+      // });
+
+      // Anexe a imagem principal
+      formData.append('filePrimary', product.filePrimary.file, 'primaryImage.jpg');
+
+      formData.append('file', product.filePrimary.file, 'primaryImage.jpg');
+
+      
       try {
-        const response = await axios.post('http://localhost:8080/api/product/newProduct', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-  
-        // Trate a resposta da controller aqui, por exemplo, exibindo uma mensagem de sucesso ou erro
+        const response = await axios.post(
+          'http://localhost:8080/api/product/newProduct',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
         console.log(response.data);
       } catch (error) {
         console.error('Erro ao enviar dados para a controller:', error);
@@ -145,20 +176,43 @@ function ProdutoForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">Imagem do Produto:</label>
-          {product.image && (
-            <div className='image-container'> 
-              <img src={product.displayImage} alt="Imagem do Produto" className="image"/>
-            </div>
-          )}
+          <label htmlFor="images">Imagens do Produto:</label>
+          <div className="image-container">
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                className={`image ${image.isPrimary ? 'selected' : ''}`}
+              >
+                <img src={image.displayImage} alt={`Imagem do Produto ${index}`} />
+                <button onClick={() => toggleIsPrimary(index)}>
+                  Marcar como principal
+                </button>
+              </div>
+            ))}
+          </div>
           <input
             type="file"
-            id="image"
-            name="image"
+            id="images"
+            name="file"
             accept="image/*"
             onChange={handleImageUpload}
+            multiple
             required
           />
+          {errors.primaryImage && (
+            <div className="error">{errors.primaryImage}</div>
+          )}
+        </div>
+        <div className="form-group">
+          <label>Imagem Principal:</label>
+          {product.filePrimary && (
+            <div className="image">
+              <img
+                src={product.filePrimary.displayImage}
+                alt="Imagem Principal"
+              />
+            </div>
+          )}
         </div>
         <button type="submit">Salvar Produto</button>
         <button type="button">Cancelar</button>
@@ -168,4 +222,3 @@ function ProdutoForm() {
 }
 
 export default ProdutoForm;
-
