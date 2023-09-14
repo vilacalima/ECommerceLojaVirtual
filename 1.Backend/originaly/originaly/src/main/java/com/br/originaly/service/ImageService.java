@@ -1,4 +1,5 @@
 package com.br.originaly.service;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.storage.*;
 import com.google.firebase.cloud.StorageClient;
@@ -11,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -33,6 +36,34 @@ public class ImageService {
         String url = blob.getMediaLink();
 
         System.out.println("Enviou");
+
+        return url;
+    }
+
+    public String uploadNewImage(MultipartFile imagem) throws IOException{
+        FileInputStream serviceAccount = new FileInputStream("C:/Users/robso/workspace/ECommerceLojaVirtual/1.Backend/originaly/originaly/src/main/resources/firebase-config.json");
+        Storage storage = StorageOptions.newBuilder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setProjectId("originaly-dfcf1")
+                .build()
+                .getService();
+
+        // Nome do seu bucket no Firebase Storage
+        String bucketName = "originaly-dfcf1.appspot.com";
+
+        // Nome do arquivo que você deseja fazer o upload
+        String nomeArquivo = UUID.randomUUID().toString() + "_" + imagem.getOriginalFilename();
+
+        // Carregue o arquivo para o Firebase Storage
+        BlobId blobId = BlobId.of(bucketName, nomeArquivo);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("image/png").build();
+        Blob blob = storage.create(blobInfo, imagem.getBytes());
+
+        // Recupere a URL de download do arquivo
+        String url = "https://firebasestorage.googleapis.com/v0/b/" + bucketName + "/o/" + nomeArquivo + "?alt=media&token=" + blob.getGeneration();
+
+        // Imprima a URL
+        System.out.println("URL da imagem: " + url);
 
         return url;
     }
