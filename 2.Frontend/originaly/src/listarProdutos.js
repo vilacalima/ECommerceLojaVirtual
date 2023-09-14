@@ -7,8 +7,9 @@ function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState('');
   const [pagina, setPagina] = useState(1);
-  const produtosPorPagina = 10;
+  const [produtosPorPagina, setProdutosPorPagina] = useState(10); // Defina a quantidade de produtos por página aqui
   const [buscaParcial, setBuscaParcial] = useState('');
+  
 
   useEffect(() => {
     // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
@@ -50,7 +51,7 @@ function ListarProdutos() {
       console.error('Erro ao inativar o produto:', error);
     }
   };
-  
+  const produtosDaPagina = produtos.slice((pagina - 1) * produtosPorPagina, pagina * produtosPorPagina);
   const handlePaginacao = (novaPagina) => {
     setPagina(novaPagina);
   };
@@ -87,7 +88,7 @@ function ListarProdutos() {
           </tr>
         </thead>
         <tbody>
-          {produtos.map((produto) => (
+        {produtosDaPagina.map((produto) => (
             <tr key={produto.id}>
               <td>{produto.id}</td>
               <td>{produto.nome}</td>
