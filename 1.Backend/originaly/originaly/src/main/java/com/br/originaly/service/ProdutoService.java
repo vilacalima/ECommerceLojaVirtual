@@ -42,8 +42,9 @@ public class ProdutoService {
      * @param file
      * @return MensagemDTO
      * */
-    public MensagemDTO newProduto(String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile file) throws IOException {
+    public MensagemDTO newProduto(String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile filePrimary, MultipartFile[] files) throws IOException {
 
+        System.out.println("Entrou aqui no metodo de criação de produto");
         //pegar dados do produto e mapear
         Produto dtoProduct = new Produto(
             nome,
@@ -55,31 +56,28 @@ public class ProdutoService {
             default_hora_atual
         );
 
-        //pegar imagem salvar no banco de imagens e pegar a url
-        String url = _image.uploadNewImage(file);
-
         //salvar o produto no banco de dados e pegar o id do produto
         int idProduct = _produtoRepository.saveProduto(dtoProduct);
 
         if(idProduct != 0){
-            System.out.println("entrou aqui");
-            Monstruario dtoMonstruario = new Monstruario(
-                idProduct,
-                url,
-                1
-            );
 
-            boolean saveMonstruario = _produtoRepository.saveMonstruario(dtoMonstruario);
+            //salvando imagem principal
+            String imagePrimary = _image.uploadNewImage(filePrimary);
+            _produtoRepository.saveMonstruario(new Monstruario(idProduct, imagePrimary, 1));
 
-            if(saveMonstruario){
-                return new MensagemDTO("Produtos salvo com sucesso", true);
-            } else{
-                return new MensagemDTO("Erro no processo de salvar a imagem no repositorio", true);
+            //Salvando as outras imagens
+            for (MultipartFile file : files) {
+                System.out.println("Entrou aqui no for");
+                String rota = _image.uploadNewImage(file);
+
+                _produtoRepository.saveMonstruario(new Monstruario(idProduct, rota, 0));
             }
 
         } else{
             return new MensagemDTO("Erro ao salvar produto no banco de dados", false);
         }
+
+        return new MensagemDTO("Produtos salvo com sucesso", true);
     }
 
     public MensagemDTO updateProduto(int id, String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile[] files, List<String> rotaAntiga) throws IOException {

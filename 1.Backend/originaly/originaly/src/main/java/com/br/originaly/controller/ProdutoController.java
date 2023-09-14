@@ -31,27 +31,28 @@ public class ProdutoController {
     }
 
     @PostMapping("/newProduct")
-    public MensagemDTO novoProduto(@RequestParam("file") MultipartFile file,
-                                   @RequestParam String nome,
+    public MensagemDTO novoProduto(@RequestParam String nome,
                                    @RequestParam String descricao,
                                    @RequestParam int quantidade,
                                    @RequestParam double valor,
                                    @RequestParam boolean ativo,
-                                   @RequestParam double avaliacao) {
+                                   @RequestParam double avaliacao,
+                                   @RequestParam("filePrimary") MultipartFile filePrimary,
+                                   @RequestParam("file") MultipartFile[] file) {
         MensagemDTO message;
-        if (!file.isEmpty()) {
+//        if (!file.isEmpty()) {
             try {
 
-                message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, file);
+                message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, filePrimary, file);
                 return message;
 
             } catch (IOException e) {
                 e.printStackTrace();
                 return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
             }
-        } else {
-            return new MensagemDTO("Nenhum arquivo enviado", false);
-        }
+//        } else {
+//            return new MensagemDTO("Nenhum arquivo enviado", false);
+//        }
     }
 
     @PutMapping("/updateProduct")
@@ -63,7 +64,7 @@ public class ProdutoController {
                                    @RequestParam double valor,
                                    @RequestParam boolean ativo,
                                    @RequestParam double avaliacao,
-                                @RequestParam List<String> rota) {
+                                    @RequestParam List<String> rota) {
         MensagemDTO message;
 
         try {
