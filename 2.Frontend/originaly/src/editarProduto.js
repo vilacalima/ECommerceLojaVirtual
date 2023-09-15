@@ -12,7 +12,7 @@ function EditarProduto() {
     rating: null,
     price: null,
     stock: null,
-    images: [],
+    image: null,
     mainImage: '',
   });
 
@@ -30,7 +30,7 @@ function EditarProduto() {
           rating: productData.avaliacao,
           price: productData.preco,
           stock: productData.quantidade,
-          images: productData.file,
+          image: productData.file,
         });
       })
       .catch((error) => {
@@ -151,7 +151,7 @@ function EditarProduto() {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="images">Imagens do Produto:</label>
           <input
             type="file"
@@ -162,9 +162,9 @@ function EditarProduto() {
             onChange={(e) => handleImageUpload(e.target.files)}
             required
           />
-        </div>
+        </div> */}
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="main-image">Imagem Principal:</label>
           <select
             id="main-image"
@@ -174,13 +174,35 @@ function EditarProduto() {
             value={product.mainImage}
           >
             <option value="">Escolha a imagem principal</option>
-            {Array.isArray(product.images) && product.images.map((image, index) => (
+            {product.image && (
+            <div className='image-container'> 
+              <img src={"product.image"} alt="Imagem do Produto" className="image"/>
+            </div>
+          )}
+            {Array.isArray(product.image) && product.image.map((image, index) => (
               <option key={index} value={image}>
                 {image}
               </option>
             ))}
           </select>
 
+        </div> */}
+
+        <div className="form-group">
+          <label htmlFor="image">Imagem do Produto:</label>
+          {product.image && (
+            <div className='image-container'> 
+              <img src={product.image} alt="Imagem do Produto" className="image"/>
+            </div>
+          )}
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageUpload}
+            required
+          />
         </div>
 
         <button type="submit">Salvar Alterações</button>
