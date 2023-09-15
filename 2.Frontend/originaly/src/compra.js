@@ -1,64 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import InputMask from 'react-input-mask';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './compra.css';
 import Carousel from 'react-bootstrap/Carousel';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Importe o CSS do Bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ProductPage() {
-  // Constantes para propriedades do botão de compra
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Botão inicialmente desabilitado
-  const buttonText = 'Comprar 🛒';
+  const [product, setProduct] = useState({});
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
-  // Constantes para URLs das imagens
-  const imageUrls = [
-    '/2.Frontend/originaly/src/images/teste.jpg',
-    '/2.Frontend/originaly/src/images/teste.jpg',
-    '/2.Frontend/originaly/src/images/teste.jpg',
-  ];
-
-  // Função para lidar com o clique no botão de compra
-  const handleSubmit = async () => {
-    // Simulação de uma requisição de compra (substitua por lógica real)
-    try {
-      // Aqui você pode adicionar a lógica de integração com o banco de dados
-      // Por exemplo, enviar uma solicitação POST para registrar a compra
-      // Utilize a biblioteca axios ou outra de sua preferência
-      // Exemplo:
-      // const response = await axios.post('/api/compras', { produtoId: 'ID_DO_PRODUTO' });
-
-      // Se a compra for bem-sucedida, você pode habilitar o botão novamente
-      setIsButtonDisabled(true);
-
-      // Exemplo de tratamento de resposta
-      // if (response.data.success) {
-      //   setIsButtonDisabled(true); // Desabilitar o botão após a compra
-      //   alert('Compra realizada com sucesso!');
-      // } else {
-      //   alert('Erro ao processar a compra.');
-      // }
-    } catch (error) {
-      console.error('Erro ao processar a compra:', error);
-    }
-  };
+  useEffect(() => {
+    // Fazer uma solicitação HTTP para buscar informações do produto
+    fetch('/api/produto') // Certifique-se de que a rota está correta
+      .then((response) => response.json())
+      .then((data) => {
+        setProduct(data); // Atualize o estado com os dados do produto
+        setIsButtonDisabled(false); // Habilite o botão após carregar os dados
+      })
+      .catch((error) => {
+        console.error('Erro ao buscar informações do produto:', error);
+      });
+  }, []);
 
   return (
     <div className="product-container">
       <Carousel>
-        {imageUrls.map((imageUrl, index) => (
-          <Carousel.Item key={index}>
-            <img className="d-block w-100" src={imageUrl} alt={`Produto ${index + 1}`} />
-          </Carousel.Item>
-        ))}
+        {/* Renderize as imagens do produto aqui */}
       </Carousel>
       <div className="product-info">
-        <h2>Colar de Pérolas</h2>
-        <p>Colar de Pérolas puro, moderno, elegante e sofisticado. Produto importado.</p>
-        <h3>Avaliação: ★★★★☆</h3>
-        <p>Por: R$ 399,99</p>
-        <button id="comprar-button" disabled={isButtonDisabled} onClick={handleSubmit}>
-          {buttonText}
+        <h2>{product.nome}</h2>
+        <p>{product.descricao}</p>
+        <h3>Avaliação: {product.avaliacao}</h3>
+        <p>Por: R$ {product.preco}</p>
+        <button id="comprar-button" disabled={isButtonDisabled}>
+          Comprar 🛒
         </button>
       </div>
     </div>
@@ -66,3 +39,4 @@ function ProductPage() {
 }
 
 export default ProductPage;
+
