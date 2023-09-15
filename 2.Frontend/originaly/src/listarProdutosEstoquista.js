@@ -66,7 +66,7 @@ function ListarProdutos() {
               <td>R${produto.valor}</td>
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
-                <a href={`#alterar/${produto.id}`}>Alterar</a>
+                <a href={`/alterarProduto/${produto.id}`}>Alterar</a>
                 <span className="espaco"></span>
 
               </td>

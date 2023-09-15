@@ -93,7 +93,6 @@ function ProdutoForm() {
             },
           }
         );
-
         console.log(response.data);
       } catch (error) {
         console.error('Erro ao enviar dados para a controller:', error);
