@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @EnableJpaRepositories
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
+    Usuario getUserByEmailAndSenha(String email, String senha);
 }
 
