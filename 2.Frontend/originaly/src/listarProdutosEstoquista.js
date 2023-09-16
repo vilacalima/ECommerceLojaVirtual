@@ -7,7 +7,7 @@ function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
   const [busca, setBusca] = useState('');
   const [pagina, setPagina] = useState(1);
-  const produtosPorPagina = 10;
+  const [produtosPorPagina, setProdutosPorPagina] = useState(10); // Defina a quantidade de produtos por página aqui
   const [buscaParcial, setBuscaParcial] = useState('');
 
   useEffect(() => {
@@ -23,6 +23,11 @@ function ListarProdutos() {
       });
   }, [pagina, busca, buscaParcial]);
 
+  // const handlePaginacao = (novaPagina) => {
+  //   setPagina(novaPagina);
+  // };
+
+  const produtosDaPagina = produtos.slice((pagina - 1) * produtosPorPagina, pagina * produtosPorPagina);
   const handlePaginacao = (novaPagina) => {
     setPagina(novaPagina);
   };
@@ -53,7 +58,7 @@ function ListarProdutos() {
           </tr>
         </thead>
         <tbody>
-          {produtos.map((produto) => (
+          {produtosDaPagina.map((produto) => (
             <tr key={produto.id}>
               <td>{produto.id}</td>
               <td>{produto.nome}</td>
@@ -61,7 +66,7 @@ function ListarProdutos() {
               <td>R${produto.valor}</td>
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
-                <a href={`#alterar/${produto.id}`}>Alterar</a>
+                <a href={`/alterarProduto/${produto.id}`}>Alterar</a>
                 <span className="espaco"></span>
 
               </td>
