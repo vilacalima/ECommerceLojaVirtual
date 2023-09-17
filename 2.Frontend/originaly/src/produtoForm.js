@@ -71,17 +71,16 @@ function ProdutoForm() {
       formData.append('valor', product.price);
       formData.append('ativo', true);
       formData.append('avaliacao', product.rating);
-            
-      // // Anexe as imagens
-      // product.images.forEach((image, index) => {
-      //   formData.append(`file[${index}]`, image.file, `image${index}.jpg`);
-      // });
+      
+      //pega as imagens e salva no banco de dados
+      for (let i = 0; i < product.images.length; i++) {
+        formData.append('file', product.images[i].file);
+      }
 
       // Anexe a imagem principal
-      formData.append('filePrimary', product.filePrimary.file, 'primaryImage.jpg');
-
-      formData.append('file', product.filePrimary.file, 'primaryImage.jpg');
-
+      if (product.filePrimary) {
+        formData.append('filePrimary', product.filePrimary.file, 'primaryImage.jpg');
+      }
       
       try {
         const response = await axios.post(
