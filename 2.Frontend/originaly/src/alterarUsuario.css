@@ -60,3 +60,16 @@
     color: white;
     text-align: center;
   }
+
+  .botao-confirmar {
+    background-color: #af4c8e; /* Define a cor de fundo como rosa */
+    color: white; /* Define a cor do texto como branca para contrastar */
+    padding: 10px 20px; /* Adiciona preenchimento para melhor aparência */
+    border: none; /* Remove a borda */
+    border-radius: 5px; /* Adiciona cantos arredondados */
+    cursor: pointer; /* Altera o cursor ao passar o mouse */
+  }
+  
+  .botao-confirmar:hover {
+    background-color: #bb1c6c; /* Altera a cor de fundo ao passar o mouse */
+  }
