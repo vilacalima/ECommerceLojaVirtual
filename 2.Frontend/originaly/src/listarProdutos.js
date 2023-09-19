@@ -21,6 +21,13 @@ function ListarProdutos() {
   }, [pagina, buscaParcial]);
 
   const handleStatusProduto = async (productId, isChecked) => {
+    // Exibir mensagem de confirmação
+    const confirmacao = window.confirm(`Tem certeza de que deseja ${isChecked ? 'reativar' : 'inativar'} este produto?`);
+
+    if (!confirmacao) {
+      return; // Cancela a ação se o usuário não confirmar
+    }
+
     try {
       const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
       
@@ -33,7 +40,7 @@ function ListarProdutos() {
         
         const updatedProductList = produtos.map(product => {
           if (product.id === productId) {
-            return { ...product, ativo: false };
+            return { ...product, ativo: isChecked };
           }
           return product;
         });
