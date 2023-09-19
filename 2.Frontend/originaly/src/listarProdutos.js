@@ -1,32 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutos.css';
-import { Link } from 'react-router-dom'; // Importe o Link corretamente
+import { Link } from 'react-router-dom'; 
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
-  const [busca, setBusca] = useState('');
-  const [pagina, setPagina] = useState(1);
-  const [produtosPorPagina, setProdutosPorPagina] = useState(10); // Defina a quantidade de produtos por página aqui
   const [buscaParcial, setBuscaParcial] = useState('');
-  
+  const [pagina, setPagina] = useState(1);
+  const [produtosPorPagina, setProdutosPorPagina] = useState(10);
 
   useEffect(() => {
-    // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
     axios
-    .get('http://localhost:8080/api/product/getAllProduct')  
-    //.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&buscaParcial=${buscaParcial}&sort=-dataInsercao`)
+      .get('http://localhost:8080/api/product/getAllProduct')
       .then((response) => {
         setProdutos(response.data);
       })
       .catch((error) => {
         console.error('Erro ao buscar produtos:', error);
       });
-  }, [pagina, busca, buscaParcial]);
+  }, [pagina, buscaParcial]);
 
   const handleStatusProduto = async (productId, isChecked) => {
     try {
-      // Faça a solicitação ao seu backend para inativar o produto
       const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
       
       const response = await fetch(url, {
@@ -36,7 +31,6 @@ function ListarProdutos() {
       if (response.ok) {
         console.log('Produto inativado com sucesso');
         
-        // Atualize o estado local ou faça outra ação necessária
         const updatedProductList = produtos.map(product => {
           if (product.id === productId) {
             return { ...product, ativo: false };
@@ -51,10 +45,26 @@ function ListarProdutos() {
       console.error('Erro ao inativar o produto:', error);
     }
   };
-  const produtosDaPagina = produtos.slice((pagina - 1) * produtosPorPagina, pagina * produtosPorPagina);
+
   const handlePaginacao = (novaPagina) => {
     setPagina(novaPagina);
   };
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setBuscaParcial(searchTerm);
+  };
+
+  // Filtrar produtos com base no termo de busca
+  const produtosFiltrados = produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(buscaParcial)
+  );
+
+  // Calcular os produtos a serem exibidos na página atual
+  const produtosDaPagina = produtosFiltrados.slice(
+    (pagina - 1) * produtosPorPagina,
+    pagina * produtosPorPagina
+  );
 
   return (
     <div>
@@ -65,16 +75,13 @@ function ListarProdutos() {
           type="text"
           placeholder="Buscar produto"
           value={buscaParcial}
-          onChange={(e) => setBuscaParcial(e.target.value)}
+          onChange={handleSearchChange}
         />
         <div className='botao'>
-        {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
-        <Link to="/cadastrarProduto" className="botao-adicionar">
-          <span>+</span> Cadastrar Produto 
-        </Link> 
+          <Link to="/cadastrarProduto" className="botao-adicionar">
+            <span>+</span> Cadastrar Produto
+          </Link> 
         </div>
-
-  
       </div>
       <table className="tabela-produtos">
         <thead>
@@ -88,7 +95,7 @@ function ListarProdutos() {
           </tr>
         </thead>
         <tbody>
-        {produtosDaPagina.map((produto) => (
+          {produtosDaPagina.map((produto) => (
             <tr key={produto.id}>
               <td>{produto.id}</td>
               <td>{produto.nome}</td>
@@ -130,7 +137,7 @@ function ListarProdutos() {
         <span>Página {pagina}</span>
         <button
           onClick={() => handlePaginacao(pagina + 1)}
-          disabled={produtos.length < produtosPorPagina}
+          disabled={produtosFiltrados.length < produtosPorPagina}
         >
           Próxima
         </button>
