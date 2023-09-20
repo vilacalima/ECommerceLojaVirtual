@@ -189,15 +189,13 @@ function AlterarUsuario() {
                 </div>
               </div>
 
-              <button type="submit">Confirmar</button>
+              <button type="submit" className='botao-confirmar'>Confirmar</button>
             </div>
           </form>
         </div>
       </main>
 
-      <footer className="app-footer">
-        <p>RODAPE - FAZERrr</p>
-      </footer>
+      
     </div>
   );
 } export default AlterarUsuario;
