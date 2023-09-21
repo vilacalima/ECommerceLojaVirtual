@@ -2,28 +2,29 @@ import axios from 'axios';
 
 const UsuarioService = {
 
-    getLogin: async (UserDTO) => {
+    getAllUser: async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/login/getLogin', UserDTO);
-            console.log('Dados enviados com sucesso: ', response.data);
-            
+            const response = await axios.get('http://localhost:8080/api/getUsuario');
             return response.data;
-            
         } catch (error) {
-            console.error('Erro ao enviar dados:', error);
+            console.error('Erro ao receber dados: ', error);
+            throw error; // Rejeita a promessa para que o erro seja tratado corretamente
         }
     },
 
-    // getUsers: () => {
-    //     axios.get('http://localhost:8080/api/getUsuario')
-    //     .then(response => {
-    //         setUsers(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error(error);
-    //     });
-    // }
+    isChecked: async (userId, isChecked) => {
+        try {
+            const url = `http://localhost:8080/api/usuarioAtivo/${userId}/${isChecked}`;
 
+            const response = await fetch(url, {
+                method: 'PUT',
+            });
+
+            return response.data;            
+        } catch (error) {
+          console.error('Erro ao enviar dados:', error);
+        }
+    }
 };
 
 export default UsuarioService;

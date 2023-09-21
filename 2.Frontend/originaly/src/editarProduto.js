@@ -12,7 +12,8 @@ function EditarProduto() {
     rating: null,
     price: null,
     stock: null,
-    image: null,
+    image: [],
+    filePrimary: null,
     mainImage: '',
   });
 
@@ -28,9 +29,10 @@ function EditarProduto() {
           name: productData.nome,
           description: productData.descricao,
           rating: productData.avaliacao,
-          price: productData.preco,
+          price: productData.valor,
           stock: productData.quantidade,
           image: productData.file,
+          filePrimary: productData.filePrimary,
         });
       })
       .catch((error) => {
@@ -151,50 +153,13 @@ function EditarProduto() {
           />
         </div>
 
-        {/* <div className="form-group">
-          <label htmlFor="images">Imagens do Produto:</label>
-          <input
-            type="file"
-            id="images"
-            name="images"
-            accept="image/*"
-            multiple
-            onChange={(e) => handleImageUpload(e.target.files)}
-            required
-          />
-        </div> */}
-
-        {/* <div className="form-group">
-          <label htmlFor="main-image">Imagem Principal:</label>
-          <select
-            id="main-image"
-            name="main-image"
-            onChange={(e) => handleMainImageSelect(e.target.value)}
-            required
-            value={product.mainImage}
-          >
-            <option value="">Escolha a imagem principal</option>
-            {product.image && (
-            <div className='image-container'> 
-              <img src={"product.image"} alt="Imagem do Produto" className="image"/>
-            </div>
-          )}
-            {Array.isArray(product.image) && product.image.map((image, index) => (
-              <option key={index} value={image}>
-                {image}
-              </option>
-            ))}
-          </select>
-
-        </div> */}
-
         <div className="form-group">
           <label htmlFor="image">Imagem do Produto:</label>
-          {product.image && (
-            <div className='image-container'> 
-              <img src={product.image} alt="Imagem do Produto" className="image"/>
+          {Array.isArray(product.image) && product.image.map((imageUrl, index) => (
+            <div key={index} className='image-container'>
+              <img src={imageUrl} alt={`Imagem do Produto ${index}`} className="image" />
             </div>
-          )}
+          ))}
           <input
             type="file"
             id="image"
@@ -204,6 +169,18 @@ function EditarProduto() {
             required
           />
         </div>
+        <div className="form-group">
+          <label>Imagem Principal:</label>
+          {product.filePrimary && (
+            <div className="image">
+              <img
+                src={product.filePrimary}
+                alt="Imagem Principal"
+              />
+            </div>
+          )}
+        </div>
+
 
         <button type="submit">Salvar Alterações</button>
         <button type="button">Cancelar</button>

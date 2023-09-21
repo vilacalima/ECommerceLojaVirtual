@@ -19,7 +19,7 @@ function LoginUsuario() {
 
         if (login === 'ADMINISTRADOR') {
           // Lógica para administrador
-        } else if (login === 'FUNCIONARIO') {
+        } else if (login === 'ESTOQUISTA') {
           // Lógica para funcionário
         } else if (login === '') {
           // Lógica para outros casos
