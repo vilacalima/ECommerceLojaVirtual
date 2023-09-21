@@ -64,6 +64,9 @@ public class UsuarioRepository {
     public String getGroup(String email, String senha){
         Usuario debug = _usuarioRepository.getUserByEmailAndSenha(email, senha);
 
-        return debug.getGrupo();
+        if(debug.isAtivo())
+            return debug.getGrupo();
+
+        return null;
     }
 }
