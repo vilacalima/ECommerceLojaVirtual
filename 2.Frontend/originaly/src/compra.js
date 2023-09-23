@@ -6,6 +6,7 @@ import './compra.css';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Importe o CSS do Bootstrap
 
+
 function ProductPage() {
   // Constantes para propriedades do botão de compra
   const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Botão inicialmente desabilitado

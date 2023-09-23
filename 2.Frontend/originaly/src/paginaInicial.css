@@ -1,0 +1,106 @@
+.home-page {
+  max-width: 1200px; /* Largura máxima da página */
+  margin: 0 auto; /* Centraliza a página na tela */
+  padding: 20px;
+  background-color: #ddd;
+  min-height: 100vh; /* Garante que a página ocupe pelo menos a altura da tela */
+  background-color: #e2cdb0db;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Resto dos estilos permanecem os mesmos */
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  padding: 50px;
+}
+
+header {
+  background-color: #f0d6b1fb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-section a {
+  color: rgba(14, 14, 14, 0.423); /* Cor do texto no rodapé */
+  text-decoration: none;
+  margin-right: 120px;
+  font-size: 25x;
+}
+
+main {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.product-card {
+  width: calc(33.33% - 20px);
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.product-card img {
+  max-width: 100%;
+}
+
+.detail-button {
+  background-color: #be84b3;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+.detail-button:hover {
+  background-color: #be84b355;
+}
+
+.carousel {
+  margin-top: 20px;
+  overflow: hidden;
+}
+.footer {
+  background-color: #f0d6b1fb; /* Cor de fundo do rodapé */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: rgba(14, 14, 14, 0.423); /* Cor do texto no rodapé */
+  padding: 20px 0; /* Espaçamento interno no rodapé */
+  text-align: center;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  color: rgba(14, 14, 14, 0.423); /* Cor do texto no rodapé */
+  text-decoration: none;
+}
+
+/* Estilos para links */
+a {
+  color: rgba(14, 14, 14, 0.423); /* Cor dos links */
+  text-decoration: none; /* Remova a sublinhado dos links */
+}
+
+a:hover {
+  text-decoration: underline; 
+}

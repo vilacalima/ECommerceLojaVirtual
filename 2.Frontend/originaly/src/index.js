@@ -15,8 +15,8 @@ import ListarProdutos from './listarProdutos';
 import ProdutoForm from './produtoForm';
 import EditarProduto from './editarProduto';
 import Compra from './compra';
-
-
+import PaginaInicial from './paginaInicial';
+import App from './app';
 
 
 ReactDOM.render(
@@ -31,11 +31,17 @@ ReactDOM.render(
       <Route path="/login">
         <LoginUsuario />
       </Route>
+      <Route path="/app">
+        <App />
+      </Route>
       <Route path="/listarProdutos">
         <ListarProdutos />
       </Route>
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
+      </Route>
+      <Route path="/paginainicial">
+        <PaginaInicial />
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
