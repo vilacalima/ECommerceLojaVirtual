@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
+import UsuarioService from './service/usuarioService';
 import axios from 'axios';
 import './cadastroUsuario.css';
 
@@ -17,8 +18,8 @@ function App() {
   
   const sendUserData = async (userData) => {
     try {
-      const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
-      console.log('Dados enviados com sucesso:', response.data);
+      const response = UsuarioService.newUser(userData);
+      console.log('Dados enviados com sucesso:', response);
 
             // Após o cadastro bem-sucedido, defina showSuccessMessage para true
             setShowSuccessMessage(true);
