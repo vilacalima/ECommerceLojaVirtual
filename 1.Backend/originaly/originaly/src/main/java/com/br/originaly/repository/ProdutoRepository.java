@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,8 +94,25 @@ public class ProdutoRepository {
      * @param productId
      * @return Monstruario
      * */
-    public List<Monstruario> getMonstruarioByProductId(int productId){
-        return _mostruarioRepository.findListByIdProduto(productId);
+    public List<String> getMonstruarioByProductId(int productId){
+        List<Monstruario> monstruarios = _mostruarioRepository.findListByIdProdutoAndIdOrdem(productId, 0);
+        List<String> newList = new ArrayList<>();
+
+        for (Monstruario monstruario : monstruarios){
+            newList.add(monstruario.getRota());
+        }
+
+        return newList;
+    }
+
+    /**
+     * Retorna uma url de produto
+     * @param productId
+     * @return Monstruario
+     * */
+    public String getIPrimaryFileByProductId(int productId){
+        Monstruario monstruario = _mostruarioRepository.findByIdProdutoAndIdOrdem(productId, 1);
+        return monstruario.getRota();
     }
 
     /**

@@ -2,6 +2,7 @@ package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.ProdutoDTO;
+import com.br.originaly.dto.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Produto;
 import com.br.originaly.model.Usuario;
@@ -40,36 +41,25 @@ public class ProdutoController {
                                    @RequestParam("filePrimary") MultipartFile filePrimary,
                                    @RequestParam("file") MultipartFile[] file) {
         MensagemDTO message;
-//        if (!file.isEmpty()) {
-            try {
 
-                message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, filePrimary, file);
-                return message;
+        try {
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
-            }
-//        } else {
-//            return new MensagemDTO("Nenhum arquivo enviado", false);
-//        }
+            message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, filePrimary, file);
+            return message;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
+        }
     }
 
     @PutMapping("/updateProduct")
-    public MensagemDTO atualizarProduto(@RequestParam("file") MultipartFile[] file,
-                                   @RequestParam int id,
-                                   @RequestParam String nome,
-                                   @RequestParam String descricao,
-                                   @RequestParam int quantidade,
-                                   @RequestParam double valor,
-                                   @RequestParam boolean ativo,
-                                   @RequestParam double avaliacao,
-                                    @RequestParam List<String> rota) {
+    public MensagemDTO atualizarProduto(@RequestBody UpdateProdutoRecord product) {
         MensagemDTO message;
 
         try {
 
-            message = _produto.updateProduto(id, nome, descricao, quantidade, valor, ativo, avaliacao, file, rota);
+            message = _produto.updateProduto(product);
             return message;
 
         } catch (IOException e) {

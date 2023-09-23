@@ -68,6 +68,36 @@ public class ImageService {
         return url;
     }
 
+    public void deletImage(String url) throws IOException {
+
+        FileInputStream serviceAccount = new FileInputStream("C:/Users/robso/workspace/ECommerceLojaVirtual/1.Backend/originaly/originaly/src/main/resources/firebase-config.json");
+        Storage storage = StorageOptions.newBuilder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setProjectId("originaly-dfcf1")
+                .build()
+                .getService();
+
+        // Obtenha uma referência para o bucket do Firebase Storage
+        Bucket bucket = StorageClient.getInstance().bucket();
+
+        // Especifique o nome do arquivo que você deseja excluir
+        String nomeArquivo = "nome-da-sua-imagem.jpg";
+
+        // Construa o BlobId para o arquivo que você deseja excluir
+        BlobId blobId = BlobId.of(bucket.getName(), url);
+
+        // Verifique se o arquivo existe antes de tentar excluí-lo
+        Blob blob = bucket.get(String.valueOf(blobId));
+        if (blob != null) {
+            // Exclua o arquivo
+            blob.delete();
+
+            System.out.println("Imagem excluída com sucesso!");
+        } else {
+            System.out.println("A imagem não foi encontrada.");
+        }
+    }
+
     /**
      * Obtém o objeto de armazenamento do Firebase Storage
      * Recupera a URL pública da imagem

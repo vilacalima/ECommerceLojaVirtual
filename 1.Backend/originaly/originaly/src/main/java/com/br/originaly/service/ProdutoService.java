@@ -2,6 +2,7 @@ package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.ProdutoDTO;
+import com.br.originaly.dto.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Monstruario;
 import com.br.originaly.model.Produto;
@@ -80,30 +81,41 @@ public class ProdutoService {
         return new MensagemDTO("Produtos salvo com sucesso", true);
     }
 
-    public MensagemDTO updateProduto(int id, String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile[] files, List<String> rotaAntiga) throws IOException {
+    /**
+     * Faz o Updade de um Produto
+     * @param product
+     * @return MensagemDTO
+     * */
+    public MensagemDTO updateProduto(UpdateProdutoRecord product) throws IOException {
 
-        Produto produto = _produtoRepository.getProductById(id);
+        Produto produto = _produtoRepository.getProductById(product.id());
 
         if(produto != null) {
             //pegar dados do produto e mapear
             Produto dtoProduct = new Produto(
-                    id,
-                    nome,
-                    descricao,
-                    quantidade,
-                    valor,
-                    ativo,
-                    avaliacao,
+                    product.id(),
+                    product.nome(),
+                    product.descricao(),
+                    product.quantidade(),
+                    product.valor(),
+                    product.ativo(),
+                    product.avaliacao(),
                     default_hora_atual
             );
 
             List<String> novaRota = new ArrayList<>();
 
-            //pegar a nova imagem e salvar no banco de imagens e gerar nova rota
-            if (files != null) {
-                for (MultipartFile file : files) {
-                    String rota = _image.uploadNewImage(file);
+            if(product.alterfilePrimary() && product.filePrimary() != null){
+                _image.deletImage(product.rotaFilePrimaryAntiga());
+                int idMonstruario = _produtoRepository.getIdByRota(product.rotaFilePrimaryAntiga());
+                String filePrimary = _image.uploadNewImage(product.filePrimary());
+                _produtoRepository.updateMonstruario(idMonstruario, filePrimary);
+            }
 
+            //pegar a nova imagem e salvar no banco de imagens e gerar nova rota
+            if (product.alterFiles() && product.files() != null) {
+                for (MultipartFile file : product.files()) {
+                    String rota = _image.uploadNewImage(file);
                     novaRota.add(rota);
                 }
             }
@@ -112,24 +124,23 @@ public class ProdutoService {
             boolean updateProduto = _produtoRepository.updateProduto(dtoProduct);
 
             if (updateProduto) {
-                for (String rota : rotaAntiga) {
+                for (String rota : product.rotaAntiga()) {
                     int i = 0;
                     int idMonstruario = _produtoRepository.getIdByRota(rota);
-
 
                     _produtoRepository.updateMonstruario(idMonstruario, novaRota.get(i));
 
                     i++; //A cada passagem no foreach vai incrementando mai um
+                }
 
-                    //tenho que bater a rota antiga e salvar a nota
-                    //deletar arquivo antigo
-
+                for (String rota : product.rotaAntiga()) {
+                    _image.deletImage(rota);
                 }
             } else {
                 return new MensagemDTO("Falha ao atualizar Produto", false);
             }
         } else{
-            return new MensagemDTO("Produto não encontrado, id: " + id, false);
+            return new MensagemDTO("Produto não encontrado, id: " + product.id(), false);
         }
 
         return new MensagemDTO("Produto atualizado com sucesso", true);
@@ -147,7 +158,8 @@ public class ProdutoService {
 
     public EnvProdutoDTO getProductById(int id){
         Produto produto = _produtoRepository.getProductById(id);
-        String file = _produtoRepository.getUrlImage(produto.getId());
+        List<String> file = _produtoRepository.getMonstruarioByProductId(produto.getId());
+        String primaryFile = _produtoRepository.getIPrimaryFileByProductId(produto.getId());
 
         EnvProdutoDTO envProduto = new EnvProdutoDTO(
             produto.getNome(),
@@ -156,7 +168,8 @@ public class ProdutoService {
             produto.getValor(),
             produto.isAtivo(),
             produto.getAvaliacao(),
-            file
+            file,
+            primaryFile
         );
 
         return envProduto;

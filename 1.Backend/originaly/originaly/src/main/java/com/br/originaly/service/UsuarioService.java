@@ -20,6 +20,7 @@ public class UsuarioService {
     private final ValidaCPF _validarCPF;
     private final ValidaEmail _validarEmail;
     private final UsuarioRepository _usuarioRepository;
+    //private final PasswordEncoder _passwordEncoder;
     private MensagemDTO mensagem;
 
     @Autowired
@@ -27,6 +28,7 @@ public class UsuarioService {
         _validarCPF = validaCPF;
         _validarEmail = validaEmail;
         _usuarioRepository = usuarioRepository;
+//        _passwordEncoder = passwordEncoder;
     }
 
     public MensagemDTO inserirUsuario(UsuarioDTO dto) throws SQLException {
@@ -41,6 +43,8 @@ public class UsuarioService {
             mensagem = new MensagemDTO("O email é invalido.",false);
             return mensagem;
         }
+
+//        String senha = _passwordEncoder.encode(dto.senha());
 
         Usuario novoUsuario = new Usuario(dto.nome(), cpf, dto.email(), dto.ativo(), dto.grupo(), dto.senha());
 
@@ -81,6 +85,8 @@ public class UsuarioService {
             mensagem = new MensagemDTO("O CPF é invalido.",false);
             return mensagem;
         }
+
+        //String senha = _passwordEncoder.encode(request.senha());
 
         Usuario usuario = new Usuario(request.id(), request.nome(), cpf, request.email(), request.ativo(), request.grupo(), request.senha());
 
