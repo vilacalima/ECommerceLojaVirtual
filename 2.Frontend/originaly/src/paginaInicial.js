@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Carousel from 'react-bootstrap/Carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
+import { Carousel } from 'react-responsive-carousel';
+import './paginaInicial.css';
+import logo from './images/logo.jpg';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    axios.get('/api/products') // Substitua pelo endpoint correto do seu servidor
+    axios.get('http://localhost:8080/api/product/getAllProductAndImage') // Substitua pelo endpoint correto do seu servidor
       .then((response) => {
         setProducts(response.data);
       })
@@ -15,56 +19,70 @@ function HomePage() {
       });
   }, []);
 
-  return (
-    <div className="home-page">
-      <section className="carousel">
-        <Carousel>
-          <Carousel.Item interval={1500}>
-            <img
-              className="d-block w-100"
-              src="https://t4.ftcdn.net/jpg/05/71/84/53/240_F_571845344_oFDuWnuzdhfUFz6OczITUQ2hHvRKmY4r.jpg"
-              alt="Originaly"
-            />
-            <Carousel.Caption>
-              <h3>Originaly</h3>
-              <p>As melhores joias da América Latina</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-          <Carousel.Item interval={500}>
-            <img
-              className="d-block w-100"
-              src="https://t4.ftcdn.net/jpg/06/10/39/75/240_F_610397523_XStGOcuWQcF8i379fHewrmDUz1kJgp5T.jpg"
-              alt="Image Two"
-            />
-            <Carousel.Caption>
-              <h3>Originaly</h3>
-              <p>As melhores joias da América Latina</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        </Carousel>
-      </section>
+  // Função para dividir a lista de produtos em grupos de até 4
+  const groupProducts = (products) => {
+    const grouped = [];
+    let group = [];
+    for (let i = 0; i < products.length; i++) {
+      if (i % 4 === 0 && i > 0) {
+        grouped.push(group);
+        group = [];
+      }
+      group.push(products[i]);
+    }
+    if (group.length > 0) {
+      grouped.push(group);
+    }
+    return grouped;
+  };
+  
+  // Função para avançar para a próxima página
+  const nextPage = () => {
+    if (currentPage < groupProducts(products).length - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-      <header>
-        <div className="logo"> Img Logo</div>
+  // Função para voltar para a página anterior
+  const prevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const paginatedProducts = groupProducts(products);
+
+  return (
+    
+    <div className="home-page">
+      <header className="top-information">
+        <img src={logo} className="logo"></img>
         <div className="user-section">
           <a href="#"> • 👤 Login</a>
           <a href="#"> • 🛒 Carrinho</a>
           <a href="#"> • Registrar</a>
         </div>
       </header>
-
+      
       <main>
-        {products.map((product) => (
-          <div className="product-card" key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <h2>{product.name}</h2>
-            <p>Por: R${product.price}</p>
-            <a href={`/detalhe-produto/${product.id}`} className="detail-button">
-              Detalhes
-            </a>
-          </div>
-        ))}
-        {/* Adicione mais cards de produtos aqui */}
+        <div className="row">
+          {groupProducts(products).map((productGroup, index) => (
+            <div className="col" key={index}>
+              {productGroup.map((product) => (
+                <div className="product-card" key={product.id}>
+                  <img src={product.primaryFile} alt={product.name} />
+                  <h2>{product.nome}</h2>
+                  <p>Descrição: {product.descricao}</p>
+                  <p>Por: R${product.valor}</p>
+                  <a href={`/compra/${product.id}`} className="detail-button">
+                    Descrição
+                  </a>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+        
       </main>
 
       <footer className="footer">

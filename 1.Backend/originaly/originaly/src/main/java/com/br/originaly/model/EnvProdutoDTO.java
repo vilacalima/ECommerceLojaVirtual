@@ -19,6 +19,17 @@ public class EnvProdutoDTO {
         this.primaryFile = primaryFile;
     }
 
+    public EnvProdutoDTO(int id, String nome, String descricao, double valor, boolean ativo, double avaliacao, String primaryFile) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.ativo = ativo;
+        this.avaliacao = avaliacao;
+        this.primaryFile = primaryFile;
+    }
+
+    private int id;
     private String nome;
     private String descricao;
     private int quantidade;
@@ -26,6 +37,14 @@ public class EnvProdutoDTO {
     private boolean ativo;
     private double avaliacao;
     private List<String> file;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getPrimaryFile() {
         return primaryFile;

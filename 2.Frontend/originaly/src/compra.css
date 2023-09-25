@@ -35,13 +35,13 @@
     transform: scale(1);
 
   }
-  
-   
-  
+    
   .product-info {
-    width: 50%;
+    width: 300px;
     padding: 50px;
     text-align: left;
+    margin-left: auto;
+    margin-right: auto;
   }
   
    

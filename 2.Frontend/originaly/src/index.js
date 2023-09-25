@@ -22,9 +22,7 @@ import App from './app';
 ReactDOM.render(
   <Router>
     <Switch>
-    <Route path="/compra" exact>
-          <Compra />
-        </Route>
+    <Route path="/compra/:productId" component={Compra} />
     <Route path="/home" exact>
           <Home />
         </Route>

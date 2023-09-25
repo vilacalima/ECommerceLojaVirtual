@@ -65,6 +65,31 @@ public class ProdutoRepository {
         return _produtoRepository.findAll(sortByUpdateAt);
     }
 
+    public List<Produto> getAllProductActive(){
+        List<Produto> produtos = _produtoRepository.findAll();
+        List<Produto> newListprodutos = new ArrayList<>();
+
+        for (Produto produto : produtos){
+
+            if(produto.isAtivo()){
+                Produto p = new Produto(
+                    produto.getId(),
+                    produto.getNome(),
+                    produto.getDescricao(),
+                    produto.getQuantidade(),
+                    produto.getValor(),
+                    produto.isAtivo(),
+                    produto.getAvaliacao(),
+                    produto.getUpdateAt()
+                );
+
+                newListprodutos.add(p);
+            }
+
+        }
+        return newListprodutos;
+    }
+
     public int getIdProduct(int id){
         Produto produto =  _produtoRepository.getById((long)id);
         return produto.getId();
@@ -112,7 +137,11 @@ public class ProdutoRepository {
      * */
     public String getIPrimaryFileByProductId(int productId){
         Monstruario monstruario = _mostruarioRepository.findByIdProdutoAndIdOrdem(productId, 1);
-        return monstruario.getRota();
+
+        if(monstruario != null)
+            return monstruario.getRota();
+
+        return " ";
     }
 
     /**

@@ -1,6 +1,6 @@
 import './paginaInicial.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import Carousel from 'react-bootstrap/Carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
+import { Carousel } from 'react-responsive-carousel';
 
 export default function App() {
     return (
