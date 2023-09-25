@@ -146,6 +146,29 @@ public class ProdutoService {
         return new MensagemDTO("Produto atualizado com sucesso", true);
     }
 
+    public List<EnvProdutoDTO> getProductAndImage(){
+        List<Produto> produto = _produtoRepository.getAllProductActive();
+        List<EnvProdutoDTO> listProduto = new ArrayList<>();
+
+        for (Produto newProduto: produto){
+            String primaryFile = _produtoRepository.getIPrimaryFileByProductId(newProduto.getId());
+
+            EnvProdutoDTO envProduto = new EnvProdutoDTO(
+                    newProduto.getId(),
+                    newProduto.getNome(),
+                    newProduto.getDescricao(),
+                    newProduto.getValor(),
+                    newProduto.isAtivo(),
+                    newProduto.getAvaliacao(),
+                    primaryFile
+            );
+
+            listProduto.add(envProduto);
+        }
+
+        return listProduto;
+    }
+
     public List<Produto> getProduct(){
         return _produtoRepository.getAllProduct();
     }

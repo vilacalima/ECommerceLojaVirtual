@@ -5,7 +5,7 @@
 - npm install react-router-dom@5.2.0
 - npm install axios
 - npm install react-helmet-async
-- npm install firebase
+- npm install react-responsive-carousel
 - npm start
 -----------------------------------------------------------------------
 

@@ -55,6 +55,7 @@ table {
     width: 10%;
     padding: 10px;
     font-size: 16px;
+    min-height: 100vh; /* Garante que a página ocupe pelo menos a altura da tela */
     border: none;
     background-color: #be84b3;
     color: rgb(255, 255, 255);
