@@ -4,7 +4,7 @@ body{
     background-color: #f7d4e8; /* Cor de fundo rose */
     display: flex;
     flex-direction: column;
-     /* height: 100vh; */
+     height: 100vh;
      background-size: cover;
      background-repeat: no-repeat;
     position: relative;
