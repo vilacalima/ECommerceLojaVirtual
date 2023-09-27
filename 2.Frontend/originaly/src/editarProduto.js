@@ -54,6 +54,15 @@ function EditarProduto() {
     const selectedImage = product.images[index];
     setProduct({ ...product, mainImage: selectedImage });
   };
+  
+  const sendUserData = async (userData) => {    
+    try {
+      const response = await axios.put("http://localhost:8080/api/product/updateProduct", userData);
+      console.log('Dados enviados com sucesso:', response.data);
+    } catch (error) {
+      console.error('Erro ao enviar dados:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,6 +88,8 @@ function EditarProduto() {
     } else {
       setErrors(validationErrors);
     }
+
+    sendUserData(product);
   };
 
   return (

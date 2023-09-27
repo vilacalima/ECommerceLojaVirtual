@@ -1,27 +1,27 @@
 /* Estilos Globais */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-image: url('../src/images/background-image.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  position: relative; /* Centralizar a imagem no centro da tela */
+  font-family: Arial, sans-serif !important;
+  margin: 0 !important;
+  background-image: url('../src/images/background-image.jpg') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  position: relative !important; /* Centralizar a imagem no centro da tela */
 }
 
 
 /* Estilos do Cabeçalho */
 .top-information {
-  background-color: #f0d6b1fb;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 20px;
+  background-color: #f4ccccfb !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+  color: #fff !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 5px 20px !important;
 }
 
 .logo {
-  max-width: 100%;
+  max-width: 100% ;
   max-height: 200px; /* Defina a altura máxima desejada */
   width: 100px;
   height: 100px;
@@ -55,7 +55,7 @@ main {
 .product-card {
   padding: 10px;
   border: 1px solid #ddd;
-  background-color: #f0d6b1fb;
+  background-color: #f4ccccfb;
   text-align: center;
   margin-bottom: 20px; /* Espaço entre os cards */
   width: calc(25% - 20px); /* Layout de 3 cards por coluna */
@@ -88,7 +88,7 @@ main {
 
 /* Estilos do Rodapé */
 .footer {
-  background-color: #f0d6b1fb;
+  background-color: #f4ccccfb;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   color: rgba(14, 14, 14, 0.423);
   padding: 20px 0;
