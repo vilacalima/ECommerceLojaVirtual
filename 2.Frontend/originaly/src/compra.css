@@ -5,7 +5,7 @@
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    background-color: #e2cdb0;
+    background-color: #f4ccccfb;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
   }
@@ -29,7 +29,9 @@
     transition: transform 0.3s ease-in-out;
   }
   
-   
+  .carousel{
+    background-color: #f4ccccfb;
+  } 
   
   .image-carousel img.active {
     transform: scale(1);

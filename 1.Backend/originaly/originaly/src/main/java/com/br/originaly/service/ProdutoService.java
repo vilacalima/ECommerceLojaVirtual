@@ -34,13 +34,6 @@ public class ProdutoService {
 
     /**
      * Serviço para salvar um novo produto
-     * @param nome
-     * @param descricao
-     * @param quantidade
-     * @param  valor
-     * @param ativo
-     * @param avaliacao
-     * @param file
      * @return MensagemDTO
      * */
     public MensagemDTO newProduto(String nome, String descricao, int quantidade, double valor, boolean ativo, double avaliacao, MultipartFile filePrimary, MultipartFile[] files) throws IOException {
@@ -185,6 +178,7 @@ public class ProdutoService {
         String primaryFile = _produtoRepository.getIPrimaryFileByProductId(produto.getId());
 
         EnvProdutoDTO envProduto = new EnvProdutoDTO(
+            produto.getId(),
             produto.getNome(),
             produto.getDescricao(),
             produto.getQuantidade(),

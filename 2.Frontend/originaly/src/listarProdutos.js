@@ -128,7 +128,7 @@ function ListarProdutos() {
                   </span>
                 </a>
                 <span className="espaco">|</span>
-                <a href={`#visualizar/${produto.id}`}>Visualizar</a>
+                <a href={`/compra/${produto.id}`}>Visualizar</a>
               </td>
             </tr>
           ))}

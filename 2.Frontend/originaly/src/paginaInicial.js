@@ -10,7 +10,7 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/product/getAllProductAndImage') // Substitua pelo endpoint correto do seu servidor
+    axios.get('http://localhost:8080/api/product/getAllProductAndImage') 
       .then((response) => {
         setProducts(response.data);
       })
