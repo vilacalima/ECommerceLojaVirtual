@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 //import LoginRecord from './dto/LoginRecord';
+import { useHistory } from 'react-router-dom';
 
 import LoginService from '../src/service/loginService'
 
@@ -10,6 +11,8 @@ function LoginUsuario() {
         email: '',
         senha: '',
       });
+    
+    const history = useHistory();
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -17,13 +20,13 @@ function LoginUsuario() {
       try {
         const login = await LoginService.getLogin(user);
 
-        if (login === 'ADMINISTRADOR') {
-          // Lógica para administrador
-        } else if (login === 'ESTOQUISTA') {
-          // Lógica para funcionário
-        } else if (login === '') {
-          // Lógica para outros casos
-        }
+        if (login === 'administrador') {
+            history.push(`/home/${false}`);
+        } else if (login === 'estoquista') {
+            history.push(`/home/${true}`);
+        } else {
+          window.postMessage('Sem premissão');
+        } 
       } catch (error) {
         console.error('Erro ao enviar login:', error);
       }

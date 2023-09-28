@@ -151,8 +151,8 @@ function AlterarUsuario() {
                       name="tipoUsuario" 
                       value="funcionario" 
                       disabled={true} 
-                      checked={userData.grupo === 'funcionario'} />
-                    <label htmlFor="tipoFuncionario">Funcionário</label>
+                      checked={userData.grupo === 'estoquista'} />
+                    <label htmlFor="tipoFuncionario">Estoquista</label>
                   </div>
                   <div>
                     <input 

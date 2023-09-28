@@ -105,8 +105,8 @@ function App() {
                   <label htmlFor="tipoCliente">Cliente</label>
                 </div>
                 <div>
-                  <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="funcionario" />
-                  <label htmlFor="tipoFuncionario">Funcionário</label>
+                  <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="estoquista" />
+                  <label htmlFor="tipoFuncionario">Estoquista</label>
                 </div>
                 <div>
                   <input type="radio" id="tipoAdmin" name="tipoUsuario" value="administrador" />
