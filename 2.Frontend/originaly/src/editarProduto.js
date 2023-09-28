@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ProdutoService from './service/produtoService';
+import { useHistory } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
 import axios from 'axios';
 
@@ -98,7 +99,18 @@ function EditarProduto() {
     sendUserData(product);
   };
   
-  
+  const history = useHistory();
+
+  const handleCancelar = () => {
+    const confirmacao = window.confirm('Você tem certeza que deseja cancelar?');
+
+    if (confirmacao) {
+      // Redireciona para a página /home se o usuário confirmar
+      history.push('/home');
+    }
+    // Se o usuário não confirmar, permanece na página
+  };
+
 
   return (
     <div className="container">
@@ -201,7 +213,7 @@ function EditarProduto() {
 
 
         <button type="submit">Salvar Alterações</button>
-        <button type="button">Cancelar</button>
+        <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
     </div>
   );

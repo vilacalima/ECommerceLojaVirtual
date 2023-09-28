@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './produtoForm.css';
 import axios from 'axios';
 
 function ProdutoForm() {
+
   const [product, setProduct] = useState({
     name: '',
     description: '',
@@ -101,8 +103,23 @@ function ProdutoForm() {
     }
   };
 
+  const history = useHistory();
+  
+  const handleCancelar = () => {
+    const confirmacao = window.confirm('Você tem certeza que deseja cancelar?');
+
+    if (confirmacao) {
+      // Redireciona para a página /home se o usuário confirmar
+      history.push('/home');
+    }
+    // Se o usuário não confirmar, permanece na página
+  };
+
   return (
     <div className="container">
+      <button className="home-button" onClick={() => history.push('/home')}>
+        home
+      </button>
       <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -213,7 +230,7 @@ function ProdutoForm() {
           )}
         </div>
         <button type="submit">Salvar Produto</button>
-        <button type="button">Cancelar</button>
+        <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
     </div>
   );
