@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './produtoForm.css';
 import axios from 'axios';
 
@@ -15,7 +16,6 @@ function ProdutoForm() {
   });
   
   const [errors, setErrors] = useState({});
-  const history = useHistory();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
