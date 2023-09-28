@@ -1,10 +1,12 @@
 /* listarProdutos.css */
 
+
 /* Estilos para o título da página */
 h2 {
     font-size: 24px;
     color: #333;
-    margin-bottom: 20px;
+    /* margin-bottom: 10px;
+    margin-top: -300px;  */
   }
   
   /* Estilos para o campo de busca */
@@ -41,9 +43,18 @@ h2 {
     margin-left: 10px; /* Ajuste esse valor para controlar o espaço desejado */
     margin-right: 10px; /* Pode definir margem direita também se preferir */
   }
+
+  .botao{
+    margin-top: 5%;
+  }
+  .paginacao button {
+    background-color: #be84b3;
+    /* Outros estilos para o botão, se necessário */
+  }
+  
   .botao-adicionar {
 
-    margin: 0 auto;
+    margin: 200px auto;
     width: 10%;
     padding: 10px;
     font-size: 16px;
@@ -60,4 +71,3 @@ h2 {
 .botao-adicionar:hover {
     background-color: #73576b;
 }
-

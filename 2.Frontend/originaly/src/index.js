@@ -14,23 +14,32 @@ import reportWebVitals from './reportWebVitals';
 import ListarProdutos from './listarProdutos';
 import ProdutoForm from './produtoForm';
 import EditarProduto from './editarProduto';
-
+import Compra from './compra';
+import PaginaInicial from './paginaInicial';
+import App from './app';
 
 
 ReactDOM.render(
   <Router>
     <Switch>
+    <Route path="/compra/:productId" component={Compra} />
     <Route path="/home" exact>
           <Home />
         </Route>
       <Route path="/login">
         <LoginUsuario />
       </Route>
+      <Route path="/app">
+        <App />
+      </Route>
       <Route path="/listarProdutos">
         <ListarProdutos />
       </Route>
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
+      </Route>
+      <Route path="/paginainicial">
+        <PaginaInicial />
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
@@ -43,11 +52,10 @@ ReactDOM.render(
       <Route path="/alterarUsuarios">
         <AlterarUsuario />
       </Route>
-      <Route path="/produtoForm">
+      <Route path="/cadastrarProduto">
         <ProdutoForm />
       </Route>
-      <Route path="/editarProduto">
-        <EditarProduto />
+      <Route path="/alterarProduto/:productId" component={EditarProduto}>
       </Route>
     </Switch>
   </Router>,

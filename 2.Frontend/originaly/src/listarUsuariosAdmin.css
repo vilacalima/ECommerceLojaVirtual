@@ -4,7 +4,7 @@ body{
     background-color: #f7d4e8; /* Cor de fundo rose */
     display: flex;
     flex-direction: column;
-     height: 100vh;
+     /* height: 100vh; */
      background-size: cover;
      background-repeat: no-repeat;
     position: relative;
@@ -55,6 +55,7 @@ table {
     width: 10%;
     padding: 10px;
     font-size: 16px;
+    min-height: 100vh; /* Garante que a página ocupe pelo menos a altura da tela */
     border: none;
     background-color: #be84b3;
     color: rgb(255, 255, 255);

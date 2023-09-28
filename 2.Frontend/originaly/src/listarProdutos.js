@@ -1,31 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutos.css';
-import { Link } from 'react-router-dom'; // Importe o Link corretamente
+import { Link } from 'react-router-dom'; 
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
-  const [busca, setBusca] = useState('');
-  const [pagina, setPagina] = useState(1);
-  const produtosPorPagina = 10;
   const [buscaParcial, setBuscaParcial] = useState('');
+  const [pagina, setPagina] = useState(1);
+  const [produtosPorPagina, setProdutosPorPagina] = useState(10);
 
   useEffect(() => {
-    // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
     axios
-    .get('http://localhost:8080/api/product/getAllProduct')  
-    //.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&buscaParcial=${buscaParcial}&sort=-dataInsercao`)
+      .get('http://localhost:8080/api/product/getAllProduct')
       .then((response) => {
         setProdutos(response.data);
       })
       .catch((error) => {
         console.error('Erro ao buscar produtos:', error);
       });
-  }, [pagina, busca, buscaParcial]);
+  }, [pagina, buscaParcial]);
+
+  const handleStatusProduto = async (productId, isChecked) => {
+    // Exibir mensagem de confirmação
+    const confirmacao = window.confirm(`Tem certeza de que deseja ${isChecked ? 'reativar' : 'inativar'} este produto?`);
+
+    if (!confirmacao) {
+      return; // Cancela a ação se o usuário não confirmar
+    }
+
+    try {
+      const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
+      
+      const response = await fetch(url, {
+        method: 'PUT',
+      });
+  
+      if (response.ok) {
+        console.log('Produto inativado com sucesso');
+        
+        const updatedProductList = produtos.map(product => {
+          if (product.id === productId) {
+            return { ...product, ativo: isChecked };
+          }
+          return product;
+        });
+        setProdutos(updatedProductList);
+      } else {
+        console.error('Falha ao inativar o produto');
+      }
+    } catch (error) {
+      console.error('Erro ao inativar o produto:', error);
+    }
+  };
 
   const handlePaginacao = (novaPagina) => {
     setPagina(novaPagina);
   };
+
+  const handleSearchChange = (event) => {
+    const searchTerm = event.target.value.toLowerCase();
+    setBuscaParcial(searchTerm);
+  };
+
+  // Filtrar produtos com base no termo de busca
+  const produtosFiltrados = produtos.filter((produto) =>
+    produto.nome.toLowerCase().includes(buscaParcial)
+  );
+
+  // Calcular os produtos a serem exibidos na página atual
+  const produtosDaPagina = produtosFiltrados.slice(
+    (pagina - 1) * produtosPorPagina,
+    pagina * produtosPorPagina
+  );
 
   return (
     <div>
@@ -36,15 +82,13 @@ function ListarProdutos() {
           type="text"
           placeholder="Buscar produto"
           value={buscaParcial}
-          onChange={(e) => setBuscaParcial(e.target.value)}
+          onChange={handleSearchChange}
         />
-
-        {/* Botão para chamar a tela de cadastro  TEM QUE LINKAR PARA A PAGINA CORRETA QUANDO FOR CRIADA*/}
-        <Link to="/cadastrarUsuario" className="botao-adicionar">
-          <span>+</span> Cadastrar Produto 
-        </Link> 
-
-  
+        <div className='botao'>
+          <Link to="/cadastrarProduto" className="botao-adicionar">
+            <span>+</span> Cadastrar Produto
+          </Link> 
+        </div>
       </div>
       <table className="tabela-produtos">
         <thead>
@@ -58,7 +102,7 @@ function ListarProdutos() {
           </tr>
         </thead>
         <tbody>
-          {produtos.map((produto) => (
+          {produtosDaPagina.map((produto) => (
             <tr key={produto.id}>
               <td>{produto.id}</td>
               <td>{produto.nome}</td>
@@ -66,13 +110,25 @@ function ListarProdutos() {
               <td>R${produto.valor}</td>
               <td>{produto.ativo ? 'Ativo' : 'Desativado'}</td>
               <td>
-                <a href={`#alterar/${produto.id}`}>Alterar</a>
+                <a href={`/alterarProduto/${produto.id}`}>Alterar</a>
+                <span className="espaco">|</span>                
+                <a href={`#inativar/${produto.id}`}>
+                  <span
+                    className="link-inativar"
+                    onClick={() => handleStatusProduto(produto.id, false)}>
+                    Inativar
+                  </span>
+                </a>
                 <span className="espaco">|</span>
-                <a href={`#inativar/${produto.id}`}>Inativar</a>
+                <a href={`#reativar/${produto.id}`}>
+                  <span
+                    className="link-inativar"
+                    onClick={() => handleStatusProduto(produto.id, true)}>
+                    Reativar
+                  </span>
+                </a>
                 <span className="espaco">|</span>
-                <a href={`#reativar/${produto.id}`}>Reativar</a>
-                <span className="espaco">|</span>
-                <a href={`#visualizar/${produto.id}`}>Visualizar</a>
+                <a href={`/compra/${produto.id}`}>Visualizar</a>
               </td>
             </tr>
           ))}
@@ -88,7 +144,7 @@ function ListarProdutos() {
         <span>Página {pagina}</span>
         <button
           onClick={() => handlePaginacao(pagina + 1)}
-          disabled={produtos.length < produtosPorPagina}
+          disabled={produtosFiltrados.length < produtosPorPagina}
         >
           Próxima
         </button>

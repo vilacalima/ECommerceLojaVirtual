@@ -2,6 +2,8 @@ package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.dto.ProdutoDTO;
+import com.br.originaly.dto.UpdateProdutoRecord;
+import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Produto;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.ImageService;
@@ -30,36 +32,80 @@ public class ProdutoController {
     }
 
     @PostMapping("/newProduct")
-    public MensagemDTO novoProduto(@RequestParam("file") MultipartFile file,
-                                   @RequestParam String nome,
+    public MensagemDTO novoProduto(@RequestParam String nome,
                                    @RequestParam String descricao,
                                    @RequestParam int quantidade,
                                    @RequestParam double valor,
                                    @RequestParam boolean ativo,
-                                   @RequestParam double avaliacao) {
+                                   @RequestParam double avaliacao,
+                                   @RequestParam("filePrimary") MultipartFile filePrimary,
+                                   @RequestParam("file") MultipartFile[] file) {
         MensagemDTO message;
-        if (!file.isEmpty()) {
-            try {
 
-                message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, file);
-                return message;
+        try {
 
-            } catch (IOException e) {
-                e.printStackTrace();
-                return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
-            }
-        } else {
-            return new MensagemDTO("Nenhum arquivo enviado", false);
+            message = _produto.newProduto(nome, descricao, quantidade, valor, ativo, avaliacao, filePrimary, file);
+            return message;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
         }
     }
 
+    @PutMapping("/updateProduct")
+    public MensagemDTO atualizarProduto(@RequestBody UpdateProdutoRecord product) {
+        MensagemDTO message;
+
+        try {
+
+            message = _produto.updateProduto(product);
+            return message;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
+        }
+
+    }
+
     @GetMapping("/getAllProduct")
-    public List<Produto> getUsuario(){
+    public List<Produto> getAllProduct(){
         return _produto.getProduct();
+    }
+
+    @GetMapping("/getAllProductAndImage")
+    public List<EnvProdutoDTO> getAllProductAndImage(){
+        return _produto.getProductAndImage();
+    }
+
+    @GetMapping("/getProductById/{id}")
+    public EnvProdutoDTO getProductById(@PathVariable int id){
+        return _produto.getProductById(id);
     }
 
     @GetMapping("/getImage")
     public String getImage(@RequestParam int id){
         return _produto.getImage(id);
+    }
+
+    @GetMapping("/getImagee")
+    public void getImagee() throws IOException {
+        _image.downloadObjectIntoMemory();
+    }
+
+
+    @PutMapping("/produtoAtivo/{id}/{isActive}")
+    public MensagemDTO produtoAtivo(@PathVariable int id, @PathVariable boolean isActive){
+        MensagemDTO mensagem = null;
+
+        try{
+            mensagem = _produto.isUserActive(id, isActive);
+
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            return new MensagemDTO(e.getMessage().toString(), false);
+        }
+        return mensagem;
     }
 }

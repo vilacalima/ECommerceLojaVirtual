@@ -54,4 +54,19 @@ public class UsuarioRepository {
 
         return debug != null;
     }
+
+    /**
+     * Retorna Grupo de usuario
+     * @param email
+     * @param senha
+     * @return grupo
+     * */
+    public String getGroup(String email, String senha){
+        Usuario debug = _usuarioRepository.getUserByEmailAndSenha(email, senha);
+
+        if(debug.isAtivo())
+            return debug.getGrupo();
+
+        return null;
+    }
 }

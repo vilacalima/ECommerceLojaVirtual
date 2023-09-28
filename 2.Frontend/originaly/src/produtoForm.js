@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import './produtoForm.css';
+import axios from 'axios';
 
 function ProdutoForm() {
-  
-  const [product, setProduct] = useState({
-    name: 'Digite o nome do produto',
-    description: 'Descrição do Produto',
-    rating: 3.5,
-    price: 50.0,
-    stock: 20,
-    image: null, // Alterado para uma única imagem em vez de uma array
-  });
 
+  const [product, setProduct] = useState({
+    name: '',
+    description: '',
+    rating: null,
+    price: null,
+    stock: null,
+    images: [],
+    filePrimary: null,
+  });
+  
   const [errors, setErrors] = useState({});
   const history = useHistory();
 
@@ -55,7 +57,12 @@ function ProdutoForm() {
     }
 
     if (product.description.length > 2000) {
-      validationErrors.description = 'A descrição deve ter no máximo 2000 caracteres';
+      validationErrors.description =
+        'A descrição deve ter no máximo 2000 caracteres';
+    }
+
+    if (!product.filePrimary) {
+      validationErrors.primaryImage = 'Selecione uma imagem principal';
     }
 
     if (Object.keys(validationErrors).length === 0) {

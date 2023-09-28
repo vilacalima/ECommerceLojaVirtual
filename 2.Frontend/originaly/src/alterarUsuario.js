@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
+import UsuarioService from './service/usuarioService';
 import './alterarUsuario.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -21,6 +22,7 @@ function AlterarUsuario() {
   });
 
   useEffect(() => {
+    
     axios.get(`http://localhost:8080/api/getUsuarioById/${userId}`)
       
     .then(response => {
@@ -43,7 +45,7 @@ function AlterarUsuario() {
       .catch(error => {
         console.error('Erro ao buscar dados do usuário:', error);
       });
-  }, [userData, userId]);
+  }, [, userId]);
 
   const handleNomeChange = (event) => {
     setNome(event.target.value);
@@ -189,15 +191,13 @@ function AlterarUsuario() {
                 </div>
               </div>
 
-              <button type="submit">Confirmar</button>
+              <button type="submit" className='botao-confirmar'>Confirmar</button>
             </div>
           </form>
         </div>
       </main>
 
-      <footer className="app-footer">
-        <p>RODAPE - FAZERrr</p>
-      </footer>
+      
     </div>
   );
 } export default AlterarUsuario;

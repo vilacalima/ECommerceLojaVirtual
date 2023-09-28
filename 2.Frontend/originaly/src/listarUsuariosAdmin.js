@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './listarUsuariosAdmin.css';
+import UsuarioService from './service/usuarioService';
 
 function ListaUsuariosAdmin() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -10,19 +11,17 @@ function ListaUsuariosAdmin() {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  useEffect(() => {
-    axios.get('http://localhost:8080/api/getUsuario')
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+  const loadUsers = async () => {
+    const user = await UsuarioService.getAllUser();
+    setUsers(user);
+  };
 
+  useEffect(() => {
+    
     loadUsers();
 
-     // atualiza automaticamente a cada 15 segundos
-    const refreshInterval = 15000;
+     // atualiza automaticamente a cada 10 segundos
+    const refreshInterval = 10000;
     const intervalId = setInterval(loadUsers, refreshInterval);
 
     // Limpa o intervalo
@@ -31,24 +30,10 @@ function ListaUsuariosAdmin() {
     };
   }, []);
 
-  const loadUsers = () => {
-    axios.get('http://localhost:8080/api/getUsuario')
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  };
-
   const handleCheckboxChange = async (userId, isChecked) => {
     try {
-      const url = `http://localhost:8080/api/usuarioAtivo/${userId}/${isChecked}`;
-
-      const response = await fetch(url, {
-        method: 'PUT',
-      });
-
+      const response = await UsuarioService.isChecked(userId, isChecked);
+     
       if (response.ok) {
         console.log('Atualização bem-sucedida');
         
@@ -68,7 +53,7 @@ function ListaUsuariosAdmin() {
   };
 
   // Aplicar filtro de busca
-  const filteredUsers = users.filter(user => user.nome.toLowerCase().includes(searchTerm));
+  const filteredUsers = Array.isArray(users) ? users.filter(user => user.nome.toLowerCase().includes(searchTerm)) : [];
 
   return (
     <div>
