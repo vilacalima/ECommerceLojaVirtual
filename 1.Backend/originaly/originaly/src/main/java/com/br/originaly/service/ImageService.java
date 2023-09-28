@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
-
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -19,6 +21,8 @@ import java.util.UUID;
 @Service
 public class ImageService {
 
+
+
     /**
      * Obtém o objeto de armazenamento do Firebase Storage
      * Gera um nome de arquivo único para a imagem (por exemplo, com UUID)
@@ -26,22 +30,8 @@ public class ImageService {
      * Recupera a URL pública da imagem recém-carregada
      * @return url
      * */
-    public String uploadImagem(MultipartFile imagem) throws IOException {
-
-        System.out.println("Entrou no método");
-
-        Bucket bucket = StorageClient.getInstance().bucket();
-        String nomeArquivo = UUID.randomUUID().toString() + "_" + imagem.getOriginalFilename();
-        Blob blob = bucket.create(nomeArquivo, imagem.getBytes(), imagem.getContentType());
-        String url = blob.getMediaLink();
-
-        System.out.println("Enviou");
-
-        return url;
-    }
-
     public String uploadNewImage(MultipartFile imagem) throws IOException{
-        FileInputStream serviceAccount = new FileInputStream("C:/Users/robso/workspace/ECommerceLojaVirtual/1.Backend/originaly/originaly/src/main/resources/firebase-config.json");
+        FileInputStream serviceAccount = new FileInputStream(getInstance("src/main/resources/firebase-config.json"));
         Storage storage = StorageOptions.newBuilder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setProjectId("originaly-dfcf1")
@@ -70,7 +60,7 @@ public class ImageService {
 
     public void deletImage(String url) throws IOException {
 
-        FileInputStream serviceAccount = new FileInputStream("C:/Users/robso/workspace/ECommerceLojaVirtual/1.Backend/originaly/originaly/src/main/resources/firebase-config.json");
+        FileInputStream serviceAccount = new FileInputStream(getInstance("src/main/resources/firebase-config.json"));
         Storage storage = StorageOptions.newBuilder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setProjectId("originaly-dfcf1")
@@ -118,7 +108,7 @@ public class ImageService {
 
     public static void getCredenciais() throws IOException {
         String projectId = "originaly-dfcf1";
-        String jsonKeyPath = "C:/Users/robso/workspace/ECommerceLojaVirtual/1.Backend/originaly/originaly/src/main/resources/application_default_credentials.json";
+        String jsonKeyPath = "application_default_credentials.json";
 
         // Crie uma instância do Storage com autenticação baseada na chave de serviço
         Storage storage = StorageOptions.newBuilder()
@@ -164,4 +154,14 @@ public class ImageService {
         }
     }
 
+    private String getInstance(String arquivoJSON) {
+        // Obtém o caminho real do arquivo usando a classe Paths
+        Path path = Paths.get(arquivoJSON);
+
+        // Obtém o caminho absoluto do arquivo
+        String caminhoReal = path.toAbsolutePath().toString();
+
+        System.out.println("Caminho real do arquivo: " + caminhoReal);
+        return caminhoReal;
+    }
 }
