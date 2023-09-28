@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './produtoForm.css';
 
 function ProdutoForm() {
-
+  
   const [product, setProduct] = useState({
     name: 'Digite o nome do produto',
     description: 'Descrição do Produto',
@@ -13,6 +13,7 @@ function ProdutoForm() {
   });
 
   const [errors, setErrors] = useState({});
+  const history = useHistory();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,8 +21,29 @@ function ProdutoForm() {
   };
 
   const handleImageUpload = (e) => {
-    const selectedImage = e.target.files[0];
-    setProduct({ ...product, image: URL.createObjectURL(selectedImage) });
+    const selectedImages = Array.from(e.target.files);
+    
+    const newImages = selectedImages.map((image) => ({
+      file: image,
+      displayImage: URL.createObjectURL(image),
+    }));
+  
+    setProduct({ ...product, images: [...product.images, ...newImages] });
+  };
+  
+
+  const toggleIsPrimary = (index) => {
+    const updatedImages = [...product.images];
+
+    if (index >= 0 && index < updatedImages.length) {
+      const selectedImage = updatedImages[index];
+      selectedImage.isPrimary = true;
+      setProduct({
+        ...product,
+        images: updatedImages.filter((_, i) => i !== index),
+        filePrimary: selectedImage,
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -37,14 +59,60 @@ function ProdutoForm() {
     }
 
     if (Object.keys(validationErrors).length === 0) {
-      // Envie os dados atualizados do produto e imagem para o servidor (backend) aqui
+      const formData = new FormData();
+      formData.append('nome', product.name);
+      formData.append('descricao', product.description);
+      formData.append('quantidade', product.stock);
+      formData.append('valor', product.price);
+      formData.append('ativo', true);
+      formData.append('avaliacao', product.rating);
+      
+      //pega as imagens e salva no banco de dados
+      for (let i = 0; i < product.images.length; i++) {
+        formData.append('file', product.images[i].file);
+      }
+
+      // Anexe a imagem principal
+      if (product.filePrimary) {
+        formData.append('filePrimary', product.filePrimary.file, 'primaryImage.jpg');
+      }
+      
+      try {
+        const response = await axios.post(
+          'http://localhost:8080/api/product/newProduct',
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+        console.log(response.data);
+      } catch (error) {
+        console.error('Erro ao enviar dados para a controller:', error);
+      }
     } else {
       setErrors(validationErrors);
     }
   };
 
+  const history = useHistory();
+  
+  const handleCancelar = () => {
+    const confirmacao = window.confirm('Você tem certeza que deseja cancelar?');
+
+    if (confirmacao) {
+      // Redireciona para a página /home se o usuário confirmar
+      history.push('/home');
+    }
+    // Se o usuário não confirmar, permanece na página
+  };
+
   return (
     <div className="container">
+      <button className="home-button" onClick={() => history.push('/home')}>
+        Home
+      </button>
       <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -116,24 +184,49 @@ function ProdutoForm() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">Imagem do Produto:</label>
-          {product.image && <img src={product.image} alt="Imagem do Produto" />}
+          <label htmlFor="images">Imagens do Produto:</label>
+          <div className="image-container">
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                className={`image ${image.isPrimary ? 'selected' : ''}`}
+              >
+                <img src={image.displayImage} alt={`Imagem do Produto ${index}`} />
+                <button onClick={() => toggleIsPrimary(index)}>
+                  Marcar como principal
+                </button>
+              </div>
+            ))}
+          </div>
           <input
             type="file"
-            id="image"
-            name="image"
+            id="images"
+            name="file"
             accept="image/*"
             onChange={handleImageUpload}
+            multiple
             required
           />
+          {errors.primaryImage && (
+            <div className="error">{errors.primaryImage}</div>
+          )}
         </div>
-
+        <div className="form-group">
+          <label>Imagem Principal:</label>
+          {product.filePrimary && (
+            <div className="image">
+              <img
+                src={product.filePrimary.displayImage}
+                alt="Imagem Principal"
+              />
+            </div>
+          )}
+        </div>
         <button type="submit">Salvar Produto</button>
-        <button type="button">Cancelar</button>
+        <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
     </div>
   );
 }
 
 export default ProdutoForm;
-
