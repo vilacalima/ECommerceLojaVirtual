@@ -118,7 +118,7 @@ function ProdutoForm() {
   return (
     <div className="container">
       <button className="home-button" onClick={() => history.push('/home')}>
-        Home
+        home
       </button>
       <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
