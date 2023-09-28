@@ -22,10 +22,8 @@ import App from './app';
 ReactDOM.render(
   <Router>
     <Switch>
-    <Route path="/compra/:productId" component={Compra} />
-    <Route path="/home" exact>
-          <Home />
-        </Route>
+      <Route path="/compra/:productId" component={Compra} />
+      <Route path="/home/:ativo" component={Home} />
       <Route path="/login">
         <LoginUsuario />
       </Route>
