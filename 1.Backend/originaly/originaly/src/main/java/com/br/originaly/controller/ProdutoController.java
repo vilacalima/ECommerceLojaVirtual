@@ -84,6 +84,11 @@ public class ProdutoController {
         return _produto.getProductById(id);
     }
 
+    @GetMapping("/getProductAndAllFileById/{id}")
+    public EnvProdutoDTO getProductAndAllFileById(@PathVariable int id){
+        return _produto.getProductAndAllFileById(id);
+    }
+
     @GetMapping("/getImage")
     public String getImage(@RequestParam int id){
         return _produto.getImage(id);

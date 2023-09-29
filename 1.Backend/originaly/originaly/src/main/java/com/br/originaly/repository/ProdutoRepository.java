@@ -131,6 +131,25 @@ public class ProdutoRepository {
     }
 
     /**
+     * Retorna uma lista do objeto de produto
+     * @param productId
+     * @return Monstruario
+     * */
+    public List<String> getAllMonstruarioByProductId(int productId){
+        List<Monstruario> monstruarios = _mostruarioRepository.findListByIdProdutoAndIdOrdem(productId, 0);
+        Monstruario monst = _mostruarioRepository.findByIdProdutoAndIdOrdem(productId, 1);
+        List<String> newList = new ArrayList<>();
+
+        newList.add(monst.getRota());
+
+        for (Monstruario monstruario : monstruarios){
+            newList.add(monstruario.getRota());
+        }
+
+        return newList;
+    }
+
+    /**
      * Retorna uma url de produto
      * @param productId
      * @return Monstruario

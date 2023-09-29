@@ -192,6 +192,26 @@ public class ProdutoService {
         return envProduto;
     }
 
+    public EnvProdutoDTO getProductAndAllFileById(int id){
+        Produto produto = _produtoRepository.getProductById(id);
+        List<String> file = _produtoRepository.getAllMonstruarioByProductId(produto.getId());
+        String primaryFile = _produtoRepository.getIPrimaryFileByProductId(produto.getId());
+
+        EnvProdutoDTO envProduto = new EnvProdutoDTO(
+                produto.getId(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getQuantidade(),
+                produto.getValor(),
+                produto.isAtivo(),
+                produto.getAvaliacao(),
+                file,
+                primaryFile
+        );
+
+        return envProduto;
+    }
+
     /**
      * Marca no banco de dados se o produto está ativo
      * @param id, isActive
