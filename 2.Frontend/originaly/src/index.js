@@ -33,9 +33,6 @@ ReactDOM.render(
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
       </Route>
-      <Route path="/paginaInicial">
-        <PaginaInicial />
-      </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
       </Route>
@@ -50,6 +47,9 @@ ReactDOM.render(
         <ProdutoForm />
       </Route>
       <Route path="/alterarProduto/:productId" component={EditarProduto}>
+      </Route>
+      <Route path="/">
+        <PaginaInicial />
       </Route>
     </Switch>
   </Router>,
