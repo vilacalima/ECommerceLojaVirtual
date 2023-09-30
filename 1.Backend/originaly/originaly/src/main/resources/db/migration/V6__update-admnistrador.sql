@@ -1,0 +1,2 @@
+ALTER TABLE usuario
+ALTER COLUMN grupo SET DATA TYPE varchar(15);
