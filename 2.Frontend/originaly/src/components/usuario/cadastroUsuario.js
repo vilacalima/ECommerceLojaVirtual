@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import InputMask from 'react-input-mask';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
-import UsuarioService from './service/usuarioService';
+import UsuarioService from '../../service/usuarioService';
 import axios from 'axios';
 import './cadastroUsuario.css';
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import './listarUsuariosAdmin.css';
-import UsuarioService from './service/usuarioService';
+import './listarUsuarios.css';
+import UsuarioService from '../../service/usuarioService';
 
-function ListaUsuariosAdmin() {
+function ListaUsuarios() {
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
   const handleSearchChange = (event) => {
@@ -107,4 +107,4 @@ function ListaUsuariosAdmin() {
   );
 }
 
-export default ListaUsuariosAdmin;
+export default ListaUsuarios;

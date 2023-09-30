@@ -13,7 +13,7 @@ function ProductPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/product/getProductById/${productId}`)
+    axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
       .then((response) => {
         setProduct(response.data);
 

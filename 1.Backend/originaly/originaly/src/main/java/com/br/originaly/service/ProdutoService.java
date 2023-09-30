@@ -1,7 +1,6 @@
 package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.ProdutoDTO;
 import com.br.originaly.dto.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Monstruario;
@@ -187,6 +186,26 @@ public class ProdutoService {
             produto.getAvaliacao(),
             file,
             primaryFile
+        );
+
+        return envProduto;
+    }
+
+    public EnvProdutoDTO getProductAndAllFileById(int id){
+        Produto produto = _produtoRepository.getProductById(id);
+        List<String> file = _produtoRepository.getAllMonstruarioByProductId(produto.getId());
+        String primaryFile = _produtoRepository.getIPrimaryFileByProductId(produto.getId());
+
+        EnvProdutoDTO envProduto = new EnvProdutoDTO(
+                produto.getId(),
+                produto.getNome(),
+                produto.getDescricao(),
+                produto.getQuantidade(),
+                produto.getValor(),
+                produto.isAtivo(),
+                produto.getAvaliacao(),
+                file,
+                primaryFile
         );
 
         return envProduto;

@@ -1,7 +1,6 @@
 package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.ProdutoDTO;
 import com.br.originaly.dto.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Produto;
@@ -82,6 +81,11 @@ public class ProdutoController {
     @GetMapping("/getProductById/{id}")
     public EnvProdutoDTO getProductById(@PathVariable int id){
         return _produto.getProductById(id);
+    }
+
+    @GetMapping("/getProductAndAllFileById/{id}")
+    public EnvProdutoDTO getProductAndAllFileById(@PathVariable int id){
+        return _produto.getProductAndAllFileById(id);
     }
 
     @GetMapping("/getImage")
