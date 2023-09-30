@@ -106,7 +106,7 @@ function EditarProduto() {
 
     if (confirmacao) {
       // Redireciona para a página /home se o usuário confirmar
-      history.push(`/home/${false}`);
+      history.push(`/home/${true}`);
     }
     // Se o usuário não confirmar, permanece na página
   };
