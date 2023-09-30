@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ProdutoService from './service/produtoService';
+import ProdutoService from '../../service/produtoService';
 import { useHistory } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
 import axios from 'axios';
@@ -106,7 +106,7 @@ function EditarProduto() {
 
     if (confirmacao) {
       // Redireciona para a página /home se o usuário confirmar
-      history.push('/home');
+      history.push(`/home/${false}`);
     }
     // Se o usuário não confirmar, permanece na página
   };
