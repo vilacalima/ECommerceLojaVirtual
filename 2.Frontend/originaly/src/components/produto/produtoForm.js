@@ -110,14 +110,14 @@ function ProdutoForm() {
 
     if (confirmacao) {
       // Redireciona para a página /home se o usuário confirmar
-      history.push('/home');
+      history.push(`/listarProdutos`);
     }
     // Se o usuário não confirmar, permanece na página
   };
 
   return (
     <div className="container">
-      <button className="home-button" onClick={() => history.push('/home')}>
+      <button className="home-button" onClick={() => history.push(`/home/${true}`)}>
         home
       </button>
       <h2>Cadastrar Produto</h2>

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-//import LoginRecord from './dto/LoginRecord';
 import { useHistory } from 'react-router-dom';
-
+//import './LoginUsuario.css';
 import LoginService from '../../service/loginService'
 
 function LoginUsuario() {
