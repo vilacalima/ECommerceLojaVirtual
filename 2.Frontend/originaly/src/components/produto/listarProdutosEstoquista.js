@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutosEstoquista.css';
+import ProdutoService from '../../service/produtoService';
 import { Link } from 'react-router-dom'; // Importe o Link corretamente
 
 function ListarProdutos() {
@@ -10,17 +11,17 @@ function ListarProdutos() {
   const [produtosPorPagina, setProdutosPorPagina] = useState(10); // Defina a quantidade de produtos por página aqui
   const [buscaParcial, setBuscaParcial] = useState('');
 
+  const loadProducts = async () => {
+    const products = await ProdutoService.getAllProduct();
+    setProdutos(products)
+  };
+
   useEffect(() => {
-    // Simulação de chamada à API (substitua pela chamada real quando tiver o backend)
-    axios
-    .get('http://localhost:8080/api/product/getAllProduct')  
-    //.get(`/api/produtos?page=${pagina}&limit=${produtosPorPagina}&busca=${busca}&buscaParcial=${buscaParcial}&sort=-dataInsercao`)
-      .then((response) => {
-        setProdutos(response.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar produtos:', error);
-      });
+    try {
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }, [pagina, busca, buscaParcial]);
 
   // const handlePaginacao = (novaPagina) => {

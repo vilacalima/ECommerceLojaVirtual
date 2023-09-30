@@ -1,23 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './index.css';
-import './listarUsuariosAdmin.css'; 
-import './home';
-import Home from './home';
-import CadastroUsuario from './cadastroUsuario';
-import LoginUsuario from './loginUsuario';
-import AlterarUsuario from './alterarUsuario';
-import ListarUsuariosAdmin from './listarUsuariosAdmin'; 
-import ListarProdutosEstoquista from './listarProdutosEstoquista'; 
+import './components/backoffice/home';
+import Home from './components/backoffice/home';
+import CadastroUsuario from './components/usuario/cadastroUsuario';
+import LoginUsuario from './components/login/loginUsuario';
+import AlterarUsuario from './components/usuario/alterarUsuario';
+import ListarUsuarios from './components/usuario/listarUsuarios'; 
+import ListarProdutosEstoquista from './components/produto/listarProdutosEstoquista'; 
 import reportWebVitals from './reportWebVitals';
-import ListarProdutos from './listarProdutos';
-import ProdutoForm from './produtoForm';
-import EditarProduto from './editarProduto';
-import Compra from './compra';
-import PaginaInicial from './paginaInicial';
+import ListarProdutos from './components/produto/listarProdutos';
+import ProdutoForm from './components/produto/produtoForm';
+import EditarProduto from './components/produto/editarProduto';
+import Compra from './components/compra/compra';
+import PaginaInicial from './components/paginaInicial/paginaInicial';
 import App from './app';
-
 
 ReactDOM.render(
   <Router>
@@ -36,16 +33,15 @@ ReactDOM.render(
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
       </Route>
-      <Route path="/paginainicial">
+      <Route path="/paginaInicial">
         <PaginaInicial />
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
       </Route>
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
-
-      <Route path="/listarUsuariosAdmin">
-        <ListarUsuariosAdmin />
+      <Route path="/listarUsuarios">
+        <ListarUsuarios />
       </Route>
       <Route path="/alterarUsuarios">
         <AlterarUsuario />

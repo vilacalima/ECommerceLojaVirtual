@@ -2,7 +2,7 @@
 body {
   font-family: Arial, sans-serif !important;
   margin: 0 !important;
-  background-image: url('../src/images/background-image.jpg') !important;
+  background-image: url('../../images/background-image.jpg') !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   position: relative !important; /* Centralizar a imagem no centro da tela */

@@ -1,8 +1,10 @@
 package com.br.originaly.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "usuario")
 public class Usuario {
     @Id
@@ -52,20 +54,4 @@ public class Usuario {
     public Usuario() {
 
     }
-
-    public int getId() { return id; }
-    public void setId(int _id) { id = _id; }
-    public String getNome() { return nome; }
-    public void setNome(String _nome) { nome = _nome; }
-    public String getCpf() { return cpf; }
-    public void setCpf(String _cpf) { cpf = _cpf; }
-    public String getEmail() { return email; }
-    public void setEmail(String _email) { email = _email; }
-    public boolean getAtivo() { return ativo; }
-    public void setAtivo(boolean _ativo) { ativo = _ativo; }
-    public String getGrupo() { return grupo; }
-    public void setGrupo(String _grupo) { _grupo = grupo; }
-    public boolean isAtivo() { return ativo; }
-    public String getSenha() { return senha; }
-    public void setSenha(String _senha) { senha = _senha; }
 }

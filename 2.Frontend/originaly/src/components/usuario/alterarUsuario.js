@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import UsuarioService from './service/usuarioService';
+import UsuarioService from '../../service/usuarioService';
 import './alterarUsuario.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';

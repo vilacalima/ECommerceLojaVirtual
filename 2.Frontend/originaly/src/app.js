@@ -1,4 +1,3 @@
-import './paginaInicial.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import { Carousel } from 'react-responsive-carousel';
 

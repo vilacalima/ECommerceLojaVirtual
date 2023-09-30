@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 //import LoginRecord from './dto/LoginRecord';
 import { useHistory } from 'react-router-dom';
 
-import LoginService from '../src/service/loginService'
+import LoginService from '../../service/loginService'
 
 function LoginUsuario() {
       // const user = new LoginRecord(event.target.username.value, event.target.password.value);

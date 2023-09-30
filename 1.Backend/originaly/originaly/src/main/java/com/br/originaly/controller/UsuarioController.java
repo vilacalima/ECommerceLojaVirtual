@@ -1,8 +1,6 @@
 package com.br.originaly.controller;
 
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.UsuarioDTO;
-import com.br.originaly.dto.UsuarioUpdateDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ public class UsuarioController {
     private UsuarioService _usuario;
 
     @PostMapping("/novoUsuario")
-    public MensagemDTO novoUsuario(@RequestBody UsuarioDTO dto) throws SQLException {
+    public MensagemDTO novoUsuario(@RequestBody Usuario dto) throws SQLException {
 
         MensagemDTO mensagem = null;
 
@@ -35,7 +33,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/atualizarUsuario")
-    public MensagemDTO atualizarUsuario(@RequestBody UsuarioUpdateDTO dto){
+    public MensagemDTO atualizarUsuario(@RequestBody Usuario dto){
 
         MensagemDTO mensagem = null;
 

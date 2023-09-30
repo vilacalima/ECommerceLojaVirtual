@@ -1,7 +1,6 @@
 package com.br.originaly.service;
 
 import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.ProdutoDTO;
 import com.br.originaly.dto.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Monstruario;

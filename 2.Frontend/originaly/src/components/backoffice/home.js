@@ -17,7 +17,7 @@ function Home() {
         <h2>Bem-vindo à Página Inicial</h2>
         <div className="home-links">
           <Link
-            to="/listarUsuariosAdmin"
+            to="/listarUsuarios"
             className={`button ${isButtonDisabled ? 'disabled' : ''}`}
             onClick={(e) => isButtonDisabled && e.preventDefault()}
           >

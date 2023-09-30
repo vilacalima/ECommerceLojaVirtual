@@ -1,6 +1,6 @@
 body{
 
-    background-image: url('../src/images/background-image.jpg');
+    background-image: url('../../images/background-image.jpg');
     background-color: #f7d4e8; /* Cor de fundo rose */
     display: flex;
     flex-direction: column;

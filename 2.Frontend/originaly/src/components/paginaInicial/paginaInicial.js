@@ -3,20 +3,24 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import { Carousel } from 'react-responsive-carousel';
 import './paginaInicial.css';
-import logo from './images/logo.jpg';
+import ProdutoService from '../../service/produtoService';
+import logo from '../../images/logo.jpg';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
+  const loadProducts = async () => {
+    const products = await ProdutoService.getAllProductAndImage();
+    setProducts(products)
+  };
+
   useEffect(() => {
-    axios.get('http://localhost:8080/api/product/getAllProductAndImage') 
-      .then((response) => {
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar produtos:', error);
-      });
+    try {
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // Função para dividir a lista de produtos em grupos de até 4
@@ -36,29 +40,13 @@ function HomePage() {
     return grouped;
   };
   
-  // Função para avançar para a próxima página
-  const nextPage = () => {
-    if (currentPage < groupProducts(products).length - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
-  // Função para voltar para a página anterior
-  const prevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const paginatedProducts = groupProducts(products);
-
   return (
     
     <div className="home-page">
       <header className="top-information">
         <img src={logo} className="logo"></img>
         <div className="user-section">
-          <a href="#"> • 👤 Login</a>
+          <a href="/login"> • 👤 Login</a>
           <a href="#"> • 🛒 Carrinho</a>
           <a href="#"> • Registrar</a>
         </div>

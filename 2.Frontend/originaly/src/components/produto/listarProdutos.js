@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutos.css';
+import ProdutoService from '../../service/produtoService';
 import { Link } from 'react-router-dom'; 
 
 function ListarProdutos() {
@@ -9,17 +10,20 @@ function ListarProdutos() {
   const [pagina, setPagina] = useState(1);
   const [produtosPorPagina, setProdutosPorPagina] = useState(10);
 
+  const loadProducts = async () => {
+    const products = await ProdutoService.getAllProduct();
+    setProdutos(products)
+  };
+
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/api/product/getAllProduct')
-      .then((response) => {
-        setProdutos(response.data);
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar produtos:', error);
-      });
+    try {
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
   }, [pagina, buscaParcial]);
 
+  
   const handleStatusProduto = async (productId, isChecked) => {
     // Exibir mensagem de confirmação
     const confirmacao = window.confirm(`Tem certeza de que deseja ${isChecked ? 'reativar' : 'inativar'} este produto?`);
@@ -29,12 +33,8 @@ function ListarProdutos() {
     }
 
     try {
-      const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
-      
-      const response = await fetch(url, {
-        method: 'PUT',
-      });
-  
+      const response = ProdutoService.isActive(productId, isChecked);
+        
       if (response.ok) {
         console.log('Produto inativado com sucesso');
         
