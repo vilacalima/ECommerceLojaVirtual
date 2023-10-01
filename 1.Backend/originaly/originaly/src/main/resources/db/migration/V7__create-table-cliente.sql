@@ -20,6 +20,7 @@ CREATE TABLE endereco (
     cep VARCHAR(10),
     is_faturamento BOOLEAN,
     is_endereco_padrao BOOLEAN,
+    is_endereco_entrega BOOLEAN,
     is_ativo BOOLEAN,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id)
 );

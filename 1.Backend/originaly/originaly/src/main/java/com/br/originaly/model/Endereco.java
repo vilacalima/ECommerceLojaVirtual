@@ -37,6 +37,8 @@ public class Endereco {
     private boolean isFaturamento;
     @Column(name = "is_endereco_padrao")
     private boolean isEnderecoPadrao;
+    @Column(name = "is_endereco_entrega")
+    private boolean isEnderecoEntrega;
     @Column(name = "is_ativo")
     private boolean isAtivo;
 }
