@@ -4,6 +4,10 @@ import com.br.originaly.dto.MensagemDTO;
 import com.br.originaly.model.Cliente;
 import com.br.originaly.model.Endereco;
 import com.br.originaly.repository.ClienteRepository;
+import com.br.originaly.validator.Cryptography;
+import com.br.originaly.validator.ValidaCPF;
+import com.br.originaly.validator.ValidaEmail;
+import com.br.originaly.validator.ValidaString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,35 +18,71 @@ import java.util.List;
 public class ClienteService {
 
     private final ClienteRepository _clienteRepository;
-    MensagemDTO mensagemDTO;
+    private final Cryptography _cryptography;
+    private final ValidaEmail _validaEmail;
+    private final ValidaCPF _validaCpf;
+    private final ValidaString _validaString;
+    private MensagemDTO mensagemDTO;
 
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository){
+    public ClienteService(ClienteRepository clienteRepository,
+                          Cryptography cryptography,
+                          ValidaEmail validaEmail,
+                          ValidaCPF validaCPF,
+                          ValidaString validaString){
         _clienteRepository = clienteRepository;
+        _cryptography = cryptography;
+        _validaEmail = validaEmail;
+        _validaCpf = validaCPF;
+        _validaString = validaString;
     }
 
     public MensagemDTO saveCliente(Cliente cliente, List<Endereco> enderecoList){
 
+        if(_validaEmail.emailValidator(cliente.getEmail()) == false){
+            return new MensagemDTO("O email é invalido.",false);
+        }
+
         //validar se endereço existe na base
+        if(_clienteRepository.getClientByEmail(cliente.getEmail()) == null){
 
-        //validar se cpf existe
+            //remover pontuação
+            String cpf = _validaCpf.repleaceCpf(cliente.getCpf());
 
-        //Validar se endereço de faturamento está flegado
+            //validar se cpf existe
+            if(_validaCpf.validarCPF(cpf) == false)
+                return new MensagemDTO("O CPF é invalido.",false);
 
-        //validar cep
+            if(_clienteRepository.getClientByCpf(cliente.getCpf()) == null)
+                return new MensagemDTO("O CPF já consta na base.",false);
 
-        //se o endereço de entrega não estiver flegado flegar o padrão como o de entrega
+            //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
+            if(_validaString.validateText(cliente.getNome()) == false)
+                return new MensagemDTO("Erro ao validar nome do cliente, verifique requisitos de nome.",false);
 
-        //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
+            //encripitar senha
+            String senha = _cryptography.encryptPassword(cliente.getSenha());
 
-        //encripitar senha
+            //Salvar cliente no banco de dadosreturn new MensagemDTO("O CPF já consta na base.",false);
+            Cliente newCliente = new Cliente(cliente.getNome(), cpf, cliente.getEmail(), cliente.getTelefone(), cliente.getDataNasc(), cliente.getSexo(), senha);
+            int idCliente = _clienteRepository.saveCliente(newCliente);
+            
+            //Validar se endereço de faturamento está flegado
 
-        //Salvar no banco de dados
+            //validar cep
 
-        //retornar mensagem
+            //se o endereço de entrega não estiver flegado flegar o padrão como o de entrega
 
 
 
+
+            //Salvar endereço no banco de dados
+
+
+            //retornar mensagem
+        } else{
+            return new MensagemDTO("Email já cadastrado na base", false);
+        }
         return mensagemDTO;
     }
 

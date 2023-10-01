@@ -33,4 +33,14 @@ public class Cliente {
     private int sexo;
     @Column(name = "senha")
     private String senha;
+
+    public Cliente(String nome, String cpf, String email, String telefone, Date dataNasc, int sexo, String senha) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.telefone = telefone;
+        this.dataNasc = dataNasc;
+        this.sexo = sexo;
+        this.senha = senha;
+    }
 }
