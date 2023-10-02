@@ -1,4 +1,4 @@
-package com.br.originaly.dto;
+package com.br.originaly.record;
 
 import org.springframework.web.multipart.MultipartFile;
 

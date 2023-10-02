@@ -1,17 +1,14 @@
 package com.br.originaly.controller;
 
-import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.UpdateProdutoRecord;
+import com.br.originaly.record.MensagemDTO;
+import com.br.originaly.record.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Produto;
-import com.br.originaly.model.Usuario;
 import com.br.originaly.service.ImageService;
 import com.br.originaly.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.IOException;
 import java.util.List;

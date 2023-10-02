@@ -1,6 +1,7 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.record.ClienteRecord;
+import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Cliente;
 import com.br.originaly.model.Endereco;
 import com.br.originaly.repository.ClienteRepository;
@@ -10,9 +11,6 @@ import com.br.originaly.validator.ValidaEmail;
 import com.br.originaly.validator.ValidaString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.security.PublicKey;
-import java.util.List;
 
 @Service
 public class ClienteService {
@@ -37,62 +35,109 @@ public class ClienteService {
         _validaString = validaString;
     }
 
-    public MensagemDTO saveCliente(Cliente cliente, List<Endereco> enderecoList){
+    /**
+     * Salva um novo cliente no banco de dados
+     * @param cliente
+     * @return MensagemDTO
+     * */
+    public MensagemDTO saveCliente(ClienteRecord cliente){
 
-        if(_validaEmail.emailValidator(cliente.getEmail()) == false){
+        if(_validaEmail.emailValidator(cliente.email()) == false){
             return new MensagemDTO("O email é invalido.",false);
         }
 
         //validar se endereço existe na base
-        if(_clienteRepository.getClientByEmail(cliente.getEmail()) == null){
+        if(_clienteRepository.getClientByEmail(cliente.email()) == null){
 
             //remover pontuação
-            String cpf = _validaCpf.repleaceCpf(cliente.getCpf());
+            String cpf = _validaCpf.repleaceCpf(cliente.cpf());
 
             //validar se cpf existe
             if(_validaCpf.validarCPF(cpf) == false)
                 return new MensagemDTO("O CPF é invalido.",false);
 
-            if(_clienteRepository.getClientByCpf(cliente.getCpf()) == null)
+            if(_clienteRepository.getClientByCpf(cliente.cpf()) == null)
                 return new MensagemDTO("O CPF já consta na base.",false);
 
             //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
-            if(_validaString.validateText(cliente.getNome()) == false)
+            if(_validaString.validateText(cliente.nome()) == false)
                 return new MensagemDTO("Erro ao validar nome do cliente, verifique requisitos de nome.",false);
 
             //encripitar senha
-            String senha = _cryptography.encryptPassword(cliente.getSenha());
+            String senha = _cryptography.encryptPassword(cliente.senha());
 
             //Salvar cliente no banco de dadosreturn new MensagemDTO("O CPF já consta na base.",false);
-            Cliente newCliente = new Cliente(cliente.getNome(), cpf, cliente.getEmail(), cliente.getTelefone(), cliente.getDataNasc(), cliente.getSexo(), senha);
+            Cliente newCliente = new Cliente(cliente.nome(), cpf, cliente.email(), cliente.telefone(), cliente.dataNasc(), cliente.sexo(), senha);
+
             int idCliente = _clienteRepository.saveCliente(newCliente);
-            
-            //Validar se endereço de faturamento está flegado
 
-            //validar cep
+            if(idCliente != 0){
+                //Validar se endereço de faturamento está flegado -- > cep vem validado do front
+                for(Endereco endereco : cliente.endereco()){
+                    //se o endereço de entrega não estiver flegado flegar o padrão como o de entrega
+                    Endereco newEndereco = new Endereco(idCliente,
+                                                        endereco.getRua(),
+                                                        endereco.getNumero(),
+                                                        endereco.getComplemento(),
+                                                        endereco.getBairro(),
+                                                        endereco.getCidade(),
+                                                        endereco.getCep(),
+                                                        endereco.isFaturamento(),
+                                                        endereco.isEnderecoPadrao(),
+                                                        endereco.isEnderecoEntrega(),
+                                                       true);
 
-            //se o endereço de entrega não estiver flegado flegar o padrão como o de entrega
-
-
-
-
-            //Salvar endereço no banco de dados
-
-
-            //retornar mensagem
+                    _clienteRepository.saveEndereco(newEndereco);
+                }
+            } else{
+                return new MensagemDTO("Erro! Cliente não cadastrado na base", false);
+            }
         } else{
             return new MensagemDTO("Email já cadastrado na base", false);
         }
-        return mensagemDTO;
+        return new MensagemDTO("Cliente Cadastrado com sucesso !", true);
     }
 
-    public MensagemDTO insertNewEndereco(){
-        //Inserindo novo endereco
-        return mensagemDTO;
+    /**
+     * Insere um novo endereço no banco de dados
+     * @param id cliente
+     * @param endereco
+     * @return MensagemDTO
+     * */
+    public MensagemDTO insertNewEndereco(int id, Endereco endereco){
+
+        int idCliente = _clienteRepository.getIdClient(id);
+
+        if(idCliente != 0){
+            Endereco newEndereco = new Endereco(idCliente,
+                    endereco.getRua(),
+                    endereco.getNumero(),
+                    endereco.getComplemento(),
+                    endereco.getBairro(),
+                    endereco.getCidade(),
+                    endereco.getCep(),
+                    false,
+                    endereco.isEnderecoPadrao(),
+                    endereco.isEnderecoEntrega(),
+                    true);
+
+            _clienteRepository.saveEndereco(newEndereco);
+        } else{
+            return new MensagemDTO("Erro ao cadastrar um novo endereço !", false);
+        }
+        return new MensagemDTO("Endereço cadastrado com sucesso !", true);
     }
 
-    public MensagemDTO isAtctive(){
-        //inativar endereço no banco de dados
-        return mensagemDTO;
+    /**
+     * Inativa um Cliente no banco de dados
+     * @param id
+     * return MensagemDTO
+     * */
+    public MensagemDTO inactiveClient(int id){
+
+        if(_clienteRepository.saveIsAddressActive(id, false) == false)
+            return new MensagemDTO("Erro ao encontrar um cliente ou inativar um endereço", false);
+
+        return new MensagemDTO("Cliente excluido com sucesso !", true);
     }
 }

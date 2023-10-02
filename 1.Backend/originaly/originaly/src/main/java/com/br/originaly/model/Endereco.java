@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.sql.Date;
-
 @Entity
 @Table(name = "endereco")
 @Data
@@ -41,4 +39,18 @@ public class Endereco {
     private boolean isEnderecoEntrega;
     @Column(name = "is_ativo")
     private boolean isAtivo;
+
+    public Endereco(int idCliente, String rua, String numero, String complemento, String bairro, String cidade, String cep, boolean isFaturamento, boolean isEnderecoPadrao, boolean isEnderecoEntrega, boolean isAtivo) {
+        this.idCliente = idCliente;
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.isFaturamento = isFaturamento;
+        this.isEnderecoPadrao = isEnderecoPadrao;
+        this.isEnderecoEntrega = isEnderecoEntrega;
+        this.isAtivo = isAtivo;
+    }
 }

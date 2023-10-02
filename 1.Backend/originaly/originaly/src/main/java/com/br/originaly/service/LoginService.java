@@ -1,6 +1,6 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.LoginRecord;
+import com.br.originaly.record.LoginRecord;
 import com.br.originaly.repository.UsuarioRepository;
 import com.br.originaly.validator.Cryptography;
 import com.br.originaly.validator.ValidaEmail;

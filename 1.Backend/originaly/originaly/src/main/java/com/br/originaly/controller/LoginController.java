@@ -1,8 +1,7 @@
 package com.br.originaly.controller;
 
-import com.br.originaly.dto.LoginRecord;
+import com.br.originaly.record.LoginRecord;
 import com.br.originaly.service.LoginService;
-import com.br.originaly.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
