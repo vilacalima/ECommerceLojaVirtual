@@ -1,6 +1,6 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.repository.UsuarioRepository;
 import com.br.originaly.validator.Cryptography;

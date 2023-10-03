@@ -1,18 +1,16 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.UpdateProdutoRecord;
+import com.br.originaly.record.MensagemDTO;
+import com.br.originaly.record.UpdateProdutoRecord;
 import com.br.originaly.model.EnvProdutoDTO;
 import com.br.originaly.model.Monstruario;
 import com.br.originaly.model.Produto;
 import com.br.originaly.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

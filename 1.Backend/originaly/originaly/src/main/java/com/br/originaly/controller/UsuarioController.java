@@ -1,6 +1,6 @@
 package com.br.originaly.controller;
 
-import com.br.originaly.dto.MensagemDTO;
+import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
