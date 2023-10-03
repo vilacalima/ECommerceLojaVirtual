@@ -14,6 +14,7 @@ import ProdutoForm from './components/produto/produtoForm';
 import EditarProduto from './components/produto/editarProduto';
 import Compra from './components/compra/compra';
 import PaginaInicial from './components/paginaInicial/paginaInicial';
+import CadastroCliente from './components/cliente/cadastrarCliente';
 import App from './app';
 
 ReactDOM.render(
@@ -35,6 +36,9 @@ ReactDOM.render(
       </Route>
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
+      </Route>
+      <Route path="/cadastrarCliente">
+        <CadastroCliente />
       </Route>
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
