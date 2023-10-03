@@ -103,7 +103,7 @@ class CadastroCliente extends Component {
             </div>
           ))}
           <button type="button" onClick={this.adicionarEndereco}>
-            Adicionar Endereço
+            Adicionar Endereçoo
           </button>
           {/* Outros campos de cadastro, como data de nascimento, sexo e senha */}
           <button type="submit">Cadastrar</button>
