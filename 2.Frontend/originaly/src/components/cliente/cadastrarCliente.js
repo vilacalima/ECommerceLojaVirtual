@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './cadastrarCliente.css';
 
 class CadastroCliente extends Component {
   constructor() {
@@ -9,32 +8,74 @@ class CadastroCliente extends Component {
       cpf: '',
       email: '',
       telefone: '',
-      endereco: '',
+      enderecos: [
+        {
+          rua: '',
+          numero: '',
+          complemento: '',
+          bairro: '',
+          cidade: '',
+          estado: '',
+          cep: '',
+          padrao: true,
+        },
+      ],
       dataNascimento: '',
       sexo: 'Masculino', // Pode definir um valor padrão
-      senha: ''
+      senha: '',
     };
   }
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-  }
+  };
+
+  adicionarEndereco = () => {
+    const novoEndereco = {
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cidade: '',
+      estado: '',
+      cep: '',
+      padrao: false,
+    };
+
+    this.setState((prevState) => ({
+      enderecos: [...prevState.enderecos, novoEndereco],
+    }));
+  };
+
+  removerEndereco = (index) => {
+    const enderecos = [...this.state.enderecos];
+    enderecos.splice(index, 1);
+    this.setState({ enderecos });
+  };
+
+  definirComoPadrao = (index) => {
+    const enderecos = [...this.state.enderecos];
+    enderecos.forEach((endereco, i) => {
+      endereco.padrao = i === index;
+    });
+    this.setState({ enderecos });
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
     // Aqui você pode adicionar a lógica para enviar os dados do formulário para o servidor
     // Por exemplo, usando uma solicitação HTTP para uma API de backend
     console.log(this.state); // Isso irá mostrar os dados no console, para fins de demonstração
-  }
+  };
 
   render() {
     return (
-      <div className='cadastrar-form-container'>
+      <div>
         <h1>Cadastro de Cliente</h1>
         <form onSubmit={this.handleSubmit}>
           <div>
-            <label>Nome:</label >
+            <label>Nome:</label>
             <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} required />
           </div>
           <div>
@@ -49,29 +90,23 @@ class CadastroCliente extends Component {
             <label>Telefone:</label>
             <input type="text" name="telefone" value={this.state.telefone} onChange={this.handleChange} required />
           </div>
-          <div>
-            <label>Endereço:</label>
-            <input type="text" name="endereco" value={this.state.endereco} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Data de Nascimento:</label>
-            <input type="date" name="dataNascimento" value={this.state.dataNascimento} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <label>Sexo:</label>
-            <select name="sexo" value={this.state.sexo} onChange={this.handleChange}>
-              <option value="Masculino">Masculino</option>
-              <option value="Feminino">Feminino</option>
-              <option value="Outro">Outro</option>
-            </select>
-          </div>
-          <div>
-            <label>Senha:</label>
-            <input type="password" name="senha" value={this.state.senha} onChange={this.handleChange} required />
-          </div>
-          <div>
-            <button type="submit">Cadastrar</button>
-          </div>
+          {this.state.enderecos.map((endereco, index) => (
+            <div key={index}>
+              <h2>Endereço {index + 1}</h2>
+              {/* Campos de endereço aqui */}
+              <button type="button" onClick={() => this.removerEndereco(index)}>
+                Remover
+              </button>
+              <button type="button" onClick={() => this.definirComoPadrao(index)}>
+                Definir como Padrão
+              </button>
+            </div>
+          ))}
+          <button type="button" onClick={this.adicionarEndereco}>
+            Adicionar Endereço
+          </button>
+          {/* Outros campos de cadastro, como data de nascimento, sexo e senha */}
+          <button type="submit">Cadastrar</button>
         </form>
       </div>
     );
