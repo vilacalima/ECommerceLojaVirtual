@@ -26,6 +26,7 @@ class CadastroCliente extends Component {
       senha: '',
       cadastradoComSucesso: false,
       erroNoCadastro: false,
+      enderecoPadraoIndex: 0, // Índice do endereço padrão
     };
   }
 
@@ -68,7 +69,7 @@ class CadastroCliente extends Component {
     enderecos.forEach((endereco, i) => {
       endereco.padrao = i === index;
     });
-    this.setState({ enderecos });
+    this.setState({ enderecos, enderecoPadraoIndex: index });
   };
 
   validarCEP = async (cep, index) => {
@@ -120,7 +121,19 @@ class CadastroCliente extends Component {
     if (emailJaExiste) {
       this.setState({ erroNoCadastro: true });
     } else {
-      // Se o email não existe na base, continue com o cadastro
+      // Adicione o índice do endereço padrão ao objeto do cliente
+      const cliente = {
+        nome: this.state.nome,
+        cpf: this.state.cpf,
+        email: this.state.email,
+        telefone: this.state.telefone,
+        enderecos: this.state.enderecos,
+        enderecoPadraoIndex: this.state.enderecoPadraoIndex,
+        dataNascimento: this.state.dataNascimento,
+        sexo: this.state.sexo,
+        senha: this.state.senha,
+      };
+
       // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
       setTimeout(() => {
         this.setState({ cadastradoComSucesso: true });
@@ -248,6 +261,18 @@ class CadastroCliente extends Component {
               <button type="button" onClick={() => this.definirComoPadrao(index)}>
                 Definir como Padrão
               </button>
+              {index > 0 && (
+                <div>
+                  <label>Endereço Padrão:</label>
+                  <input
+                    type="radio"
+                    name="enderecoPadrao"
+                    value={index}
+                    onChange={this.handleChange}
+                    checked={this.state.enderecoPadraoIndex === index}
+                  />
+                </div>
+              )}
             </div>
           ))}
           <button type="button" onClick={this.adicionarEndereco}>
