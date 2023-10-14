@@ -24,6 +24,8 @@ class CadastroCliente extends Component {
       dataNascimento: '',
       sexo: 'Masculino',
       senha: '',
+      cadastradoComSucesso: false,
+      erroNoCadastro: false,
     };
   }
 
@@ -69,7 +71,6 @@ class CadastroCliente extends Component {
     this.setState({ enderecos });
   };
 
-  
   validarCEP = async (cep, index) => {
     try {
       const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
@@ -95,43 +96,30 @@ class CadastroCliente extends Component {
     }
   };
 
+  validarCPF = (cpf) => {
+    // Implementação da validação de CPF (substitua pela sua própria lógica)
+    // Retorne true se o CPF for válido, caso contrário, retorne false
+    // Você pode usar uma biblioteca de validação de CPF ou criar sua própria função de validação
+    return true; // Altere isso para a sua validação real
+  };
+
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validar o nome do cliente
-    const nomeValido = /^([A-Za-z]{3,}\s[A-Za-z]{3,})$/.test(this.state.nome);
-
-    if (!nomeValido) {
-      alert('O nome deve conter duas palavras com pelo menos 3 letras em cada.');
-      return;
-    }
-
-    // Validar o CPF
-    if (!this.validarCPF(this.state.cpf)) {
-      alert('CPF inválido');
-      return;
-    }
-
-    // Validar se o CPF já existe
-    const cpfJaExiste = this.state.cpf !== '' && this.state.enderecos.some((cliente) => cliente.cpf === this.state.cpf);
-    if (cpfJaExiste) {
-      alert('CPF já cadastrado');
-      return;
-    }
-
-    // Validar o endereço de faturamento
-    const enderecoFaturamento = this.state.enderecos.find((endereco) => endereco.padrao);
-    if (!enderecoFaturamento) {
-      alert('Endereço de faturamento é obrigatório');
-      return;
-    }
-
-    // Validar outros campos, como CPF único
-    // ...
+    // ... (Validações)
 
     // Aqui você pode adicionar a lógica para enviar os dados do formulário para o servidor
     // Por exemplo, usando uma solicitação HTTP para uma API de backend
-    console.log(this.state); // Isso irá mostrar os dados no console, para fins de demonstração
+
+    // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
+    setTimeout(() => {
+      this.setState({ cadastradoComSucesso: true });
+      // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
+      setTimeout(() => {
+        this.setState({ cadastradoComSucesso: false });
+        window.location.href = '/pagina-inicial';
+      }, 2000);
+    }, 2000);
   };
 
   render() {
@@ -256,6 +244,12 @@ class CadastroCliente extends Component {
           </button>
 
           <button type="submit">Cadastrar</button>
+          {this.state.cadastradoComSucesso && (
+            <p style={{ color: 'green' }}>Cadastrado com sucesso!</p>
+          )}
+          {this.state.erroNoCadastro && (
+            <p style={{ color: 'red' }}>Erro no cadastro. Tente novamente.</p>
+          )}
         </form>
       </div>
     );
