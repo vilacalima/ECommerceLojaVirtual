@@ -96,30 +96,41 @@ class CadastroCliente extends Component {
     }
   };
 
-  validarCPF = (cpf) => {
-    // Implementação da validação de CPF (substitua pela sua própria lógica)
-    // Retorne true se o CPF for válido, caso contrário, retorne false
-    // Você pode usar uma biblioteca de validação de CPF ou criar sua própria função de validação
-    return true; // Altere isso para a sua validação real
+  verificarEmailExistente = async (email) => {
+    try {
+      const response = await axios.get('/verificar-email', {
+        params: {
+          email,
+        },
+      });
+
+      return response.data.emailJaExiste;
+    } catch (error) {
+      console.error('Erro ao verificar email:', error);
+      return true; // Assumindo que ocorreu um erro na verificação (você pode tratar erros adequadamente)
+    }
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    // ... (Validações)
+    // Verificar se o email já existe na base
+    const emailJaExiste = await this.verificarEmailExistente(this.state.email);
 
-    // Aqui você pode adicionar a lógica para enviar os dados do formulário para o servidor
-    // Por exemplo, usando uma solicitação HTTP para uma API de backend
-
-    // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
-    setTimeout(() => {
-      this.setState({ cadastradoComSucesso: true });
-      // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
+    if (emailJaExiste) {
+      this.setState({ erroNoCadastro: true });
+    } else {
+      // Se o email não existe na base, continue com o cadastro
+      // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
       setTimeout(() => {
-        this.setState({ cadastradoComSucesso: false });
-        window.location.href = '/pagina-inicial';
+        this.setState({ cadastradoComSucesso: true });
+        // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
+        setTimeout(() => {
+          this.setState({ cadastradoComSucesso: false });
+          window.location.href = '/pagina-inicial';
+        }, 2000);
       }, 2000);
-    }, 2000);
+    }
   };
 
   render() {
@@ -245,10 +256,10 @@ class CadastroCliente extends Component {
 
           <button type="submit">Cadastrar</button>
           {this.state.cadastradoComSucesso && (
-            <p style={{ color: 'green' }}>Cadastrado com sucesso!</p>
+            <div className="mensagem sucesso">Cadastrado com sucesso!</div>
           )}
           {this.state.erroNoCadastro && (
-            <p style={{ color: 'red' }}>Erro no cadastro. Tente novamente.</p>
+            <div className="mensagem erro">Erro no cadastro. Tente novamente.</div>
           )}
         </form>
       </div>
