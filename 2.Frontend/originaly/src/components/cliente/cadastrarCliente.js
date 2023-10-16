@@ -140,7 +140,7 @@ class CadastroCliente extends Component {
         // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
         setTimeout(() => {
           this.setState({ cadastradoComSucesso: false });
-          window.location.href = '/pagina-inicial';
+          window.location.href = '/';
         }, 2000);
       }, 2000);
     }
