@@ -9,10 +9,62 @@ function EditarProduto() {
   const { productId } = useParams();
 
   const [product, setProduct] = useState({
-  
+    images: [], 
+    newImages: [],
+    filePrimary: null,
   });
 
+  const [imageUrls, setImageUrls] = useState([]); // Crie um estado para armazenar as URLs das imagens
   const [errors, setErrors] = useState({});
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({ ...product, [name]: value });
+  };
+
+  const toggleIsPrimary = (index) => {
+    const updatedImages = [...product.images];
+
+    if (index >= 0 && index < updatedImages.length) {
+      const selectedImage = updatedImages[index];
+      selectedImage.isPrimary = true;
+      setProduct({
+        ...product,
+        images: updatedImages.filter((_, i) => i !== index),
+        filePrimary: selectedImage,
+      });
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const selectedImages = Array.from(e.target.files);
+    
+    const newImages = selectedImages.map((image) => ({
+      file: image,
+      displayImage: URL.createObjectURL(image),
+    }));
+  
+    setProduct({ ...product, images: [...product.newImages, ...newImages] });
+  };
+
+  // Função para remover a imagem
+  const handleImageDelete = (index) => {
+    console.log('Antes de excluir:', product.file);
+    if (Array.isArray(product.file) && product.file.length > index) {
+      const updatedImages = [...product.file];
+      updatedImages.splice(index, 1); // Remove a imagem no índice especificado
+      console.log('Após excluir:', updatedImages);
+      setProduct({ ...product, images: updatedImages });
+  
+      // Atualize também o estado de imageUrls
+      const updatedUrls = [...imageUrls];
+      updatedUrls.splice(index, 1);
+      console.log('Urls atualizadas:', updatedUrls);
+      setImageUrls(updatedUrls);
+    } else {
+      console.log('Índice inválido:', index);
+    }
+  };
 
   //Serviço que chama a função no para pegar dados do produto no backend
   useEffect(() => {
@@ -20,6 +72,12 @@ function EditarProduto() {
       try {
         const product = await ProdutoService.getProdutoById(productId);
         setProduct(product);
+
+        const urls = Array.isArray(product.file)
+        ? product.file.map((file) => file)
+        : [];
+
+        setImageUrls(urls);
       } catch (error) {
         console.error('Erro ao buscar dados do Produto:', error);
       }
@@ -28,16 +86,6 @@ function EditarProduto() {
     fetchData(); 
   }, [productId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
-  };
-
-  const handleImageUpload = (acceptedFiles) => {
-    const uploadedImages = [...product.images, ...acceptedFiles];
-    setProduct({ ...product, images: uploadedImages });
-  };
-  
   const sendUserData = async (userData) => {    
     try {
       const response = await axios.put("http://localhost:8080/api/product/updateProduct", userData);
@@ -46,21 +94,6 @@ function EditarProduto() {
       console.error('Erro ao enviar dados:', error);
     }
   };
-
-  const [newProduct, setNewProduct] = useState({
-    nome: '',
-    descricao: '',
-    quantidade: null,
-    valor: null,
-    ativo: null,
-    avaliacao: null,
-    files: [],
-    filePrimary: null,
-    rotaAntiga: [],
-    rotaFilePrimaryAntiga: '',
-    alterfilePrimary: null,
-    alterFiles: null
-  });
 
   const handleSubmit = async (e) => {
     
@@ -184,34 +217,29 @@ function EditarProduto() {
           />
         </div>
 
+        {/* Selecione as imagens com base nas URLs */}
         <div className="form-group">
           <label htmlFor="image">Imagem do Produto:</label>
-          {Array.isArray(product.file) && product.file.map((fileUrl, index) => (
-            <div key={index} className='image-container'>
-              <img src={fileUrl} alt={`Imagem do Produto ${index}`} className="image" />
+          {imageUrls.map((imageUrl, index) => (
+            <div key={index} className="image-container">
+              <img src={imageUrl} alt={`Img do Produto ${index}`} className="image" />
+              <button type="button" onClick={() => handleImageDelete(index)}>Excluir</button>
             </div>
           ))}
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="images">Novas imagens do Produto:</label>
           <input
             type="file"
-            id="image"
-            name="image"
+            id="newImages"
+            name="file"
             accept="image/*"
             onChange={handleImageUpload}
+            multiple
           />
         </div>
-        <div className="form-group">
-          <label>Imagem Principal:</label>
-          {product.primaryFile && (
-            <div className="image">
-              <img
-                src={product.primaryFile}
-                alt="Imagem Principal"
-              />
-            </div>
-          )}
-        </div>
-
-
+        
         <button type="submit">Salvar Alterações</button>
         <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
