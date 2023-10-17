@@ -5,6 +5,7 @@ import { Carousel } from 'react-responsive-carousel';
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
 import logo from '../../images/logo.jpg';
+import { logout } from './authService';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
@@ -22,6 +23,16 @@ function HomePage() {
       console.log(error);
     }
   }, []);
+
+
+  const handleLogout = () => {
+    const confirmLogout = window.confirm('Tem certeza que quer sair?');
+    
+    if (confirmLogout) {
+      // Aqui você pode adicionar a lógica para fazer logout, por exemplo, redirecionar para a página de login.
+      Exemplo: window.location.href = '/login';
+    }
+  };
 
   // Função para dividir a lista de produtos em grupos de até 4
   const groupProducts = (products) => {
@@ -46,9 +57,9 @@ function HomePage() {
       <header className="top-information">
         <img src={logo} className="logo"></img>
         <div className="user-section">
-          <a href="/login"> • 👤 Login</a>
-          <a href="#"> • 🛒 Carrinho</a>
-          <a href="#"> • Registrar</a>
+          <a href="/login">  👤 Login</a>
+          <a href="#">  🛒 Carrinho</a>
+          <a href="#" onClick={handleLogout}>  Sair</a>
         </div>
       </header>
       

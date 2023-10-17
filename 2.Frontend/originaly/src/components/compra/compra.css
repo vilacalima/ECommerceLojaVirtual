@@ -88,3 +88,11 @@
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+  .carousel .slide {
+    min-width: 100%;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    background-color: transparent !important;
+}
