@@ -45,4 +45,10 @@ public class ClienteController {
             return new MensagemDTO("Erro ao salvar usuário: " + ex.getMessage().toString(), false);
         }
     }
+
+    @GetMapping("/verificarEmail/{email}")
+    public boolean verifyEmailExists(@PathVariable String email){
+        System.out.println(email);
+        return _clienteService.verifyEmail(email);
+    }
 }

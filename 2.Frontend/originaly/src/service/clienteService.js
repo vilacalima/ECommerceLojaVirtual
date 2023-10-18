@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 const ClienteService = {
 
     /**
@@ -62,6 +63,19 @@ const ClienteService = {
             
         } catch (error) {
           console.error('Erro ao enviar dados:', error);
+        }
+    },
+
+    verificarEmailExistente: async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/cliente/verificarEmail/${email}`);
+            console.log('Dados enviados com sucesso: ', response.data);
+
+            return response.data;
+
+        } catch (error) {
+          console.error('Erro ao verificar email:', error);
+          return true;
         }
     }
 };
