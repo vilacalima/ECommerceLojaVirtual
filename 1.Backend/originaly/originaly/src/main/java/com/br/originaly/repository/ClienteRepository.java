@@ -3,6 +3,7 @@ package com.br.originaly.repository;
 import com.br.originaly.model.Cliente;
 import com.br.originaly.model.Endereco;
 import com.br.originaly.model.Produto;
+import com.br.originaly.model.Usuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,4 +88,19 @@ public class ClienteRepository {
         return debug != null;
     }
 
+    /**
+     * Retorna "Cliente" se o mesmo existe no banco de dados
+     * @param email
+     * @param senha
+     * @return
+     * */
+    public String getLogin(String email, String senha){
+        Cliente cliente = _clienteRepository.getClienteByEmailAndSenha(email, senha);
+
+        if(cliente != null){
+            return "Cliente";
+        }
+
+        return null;
+    }
 }
