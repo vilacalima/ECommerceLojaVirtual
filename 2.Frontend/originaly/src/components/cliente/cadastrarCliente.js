@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ClienteService  from '../../service/clienteService';
 
 class CadastroCliente extends Component {
   constructor() {
@@ -18,7 +19,7 @@ class CadastroCliente extends Component {
           bairro: '',
           cidade: '',
           uf: '',
-          padrao: true,
+          isEnderecoPadrao: true,
         },
       ],
       dataNascimento: '',
@@ -50,7 +51,7 @@ class CadastroCliente extends Component {
       bairro: '',
       cidade: '',
       uf: '',
-      padrao: false,
+      isEnderecoPadrao: false,
     };
 
     this.setState((prevState) => ({
@@ -67,7 +68,7 @@ class CadastroCliente extends Component {
   definirComoPadrao = (index) => {
     const enderecos = [...this.state.enderecos];
     enderecos.forEach((endereco, i) => {
-      endereco.padrao = i === index;
+      endereco.isEnderecoPadrao = i === index;
     });
     this.setState({ enderecos, enderecoPadraoIndex: index });
   };
@@ -97,26 +98,12 @@ class CadastroCliente extends Component {
     }
   };
 
-  verificarEmailExistente = async (email) => {
-    try {
-      const response = await axios.get('/verificar-email', {
-        params: {
-          email,
-        },
-      });
-
-      return response.data.emailJaExiste;
-    } catch (error) {
-      console.error('Erro ao verificar email:', error);
-      return true; // Assumindo que ocorreu um erro na verificação (você pode tratar erros adequadamente)
-    }
-  };
-
   handleSubmit = async (event) => {
     event.preventDefault();
 
     // Verificar se o email já existe na base
-    const emailJaExiste = await this.verificarEmailExistente(this.state.email);
+    const emailJaExiste = await ClienteService.verificarEmailExistente(this.state.email)
+    //this.verificarEmailExistente(this.state.email);
 
     if (emailJaExiste) {
       this.setState({ erroNoCadastro: true });
@@ -129,10 +116,13 @@ class CadastroCliente extends Component {
         telefone: this.state.telefone,
         enderecos: this.state.enderecos,
         enderecoPadraoIndex: this.state.enderecoPadraoIndex,
-        dataNascimento: this.state.dataNascimento,
+        dataNasc: this.state.dataNascimento,
         sexo: this.state.sexo,
         senha: this.state.senha,
       };
+
+      const saveCliente = await ClienteService.newCLiente(cliente);
+      console.log(saveCliente);
 
       // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
       setTimeout(() => {
@@ -266,7 +256,7 @@ class CadastroCliente extends Component {
                   <label>Endereço Padrão:</label>
                   <input
                     type="radio"
-                    name="enderecoPadrao"
+                    name="isEnderecoPadrao"
                     value={index}
                     onChange={this.handleChange}
                     checked={this.state.enderecoPadraoIndex === index}

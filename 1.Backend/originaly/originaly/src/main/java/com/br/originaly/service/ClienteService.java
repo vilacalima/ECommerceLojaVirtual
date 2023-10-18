@@ -56,7 +56,7 @@ public class ClienteService {
             if(_validaCpf.validarCPF(cpf) == false)
                 return new MensagemDTO("O CPF é invalido.",false);
 
-            if(_clienteRepository.getClientByCpf(cliente.cpf()) == null)
+            if(_clienteRepository.getClientByCpf(cliente.cpf()) != null)
                 return new MensagemDTO("O CPF já consta na base.",false);
 
             //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
@@ -67,13 +67,13 @@ public class ClienteService {
             String senha = _cryptography.encryptPassword(cliente.senha());
 
             //Salvar cliente no banco de dadosreturn new MensagemDTO("O CPF já consta na base.",false);
-            Cliente newCliente = new Cliente(cliente.nome(), cpf, cliente.email(), cliente.telefone(), cliente.dataNasc(), cliente.sexo(), senha);
+            Cliente newCliente = new Cliente(cliente.nome(), cpf, cliente.email(), cliente.telefone(), cliente.dataNasc(), cliente.sexo().ordinal(), senha);
 
             int idCliente = _clienteRepository.saveCliente(newCliente);
 
             if(idCliente != 0){
                 //Validar se endereço de faturamento está flegado -- > cep vem validado do front
-                for(Endereco endereco : cliente.endereco()){
+                for(Endereco endereco : cliente.enderecos()){
                     //se o endereço de entrega não estiver flegado flegar o padrão como o de entrega
                     Endereco newEndereco = new Endereco(idCliente,
                                                         endereco.getRua(),
@@ -139,5 +139,20 @@ public class ClienteService {
             return new MensagemDTO("Erro ao encontrar um cliente ou inativar um endereço", false);
 
         return new MensagemDTO("Cliente excluido com sucesso !", true);
+    }
+
+    /**
+     * Verifica se cliente existe na base
+     * Se existe retorna True se não existe retorna false
+     * @param email
+     * @return
+     * */
+    public boolean verifyEmail(String email){
+        System.out.println(email);
+        if(_clienteRepository.getClientByEmail(email) == null) {
+            return false;
+        }
+
+        return true;
     }
 }
