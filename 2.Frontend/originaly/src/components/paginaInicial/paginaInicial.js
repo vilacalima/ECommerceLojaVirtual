@@ -10,7 +10,8 @@ import { logout } from './authService';
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
     setProducts(products)
@@ -57,9 +58,10 @@ function HomePage() {
       <header className="top-information">
         <img src={logo} className="logo"></img>
         <div className="user-section">
-          <a href="/login">  👤 Login</a>
-          <a href="#">  🛒 Carrinho</a>
-          <a href="#" onClick={handleLogout}>  Sair</a>
+          <a href="/login"> • 👤 Login</a>
+          <a href="#"> • 🛒 Carrinho</a>
+          <a href="#"> • Registrar</a>
+          {isAuthenticated && <a href='/'> • Meu Endereços</a>}
         </div>
       </header>
       
