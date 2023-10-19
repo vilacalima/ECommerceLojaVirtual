@@ -61,7 +61,7 @@ function HomePage() {
           <a href="/login"> • 👤 Login</a>
           <a href="#"> • 🛒 Carrinho</a>
           <a href="/cadastrarCliente"> • Cadastrar</a>
-          <a href='/perfil/:email'> • Perfil</a>
+          <a href='/perfil/:email'> • Perfiil</a>
           {isAuthenticated && <a href='/'> • Meu Endereços</a>}
         </div>
       </header>
