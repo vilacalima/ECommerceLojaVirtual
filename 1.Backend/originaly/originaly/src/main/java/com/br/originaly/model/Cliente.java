@@ -43,4 +43,11 @@ public class Cliente {
         this.sexo = sexo;
         this.senha = senha;
     }
+
+    public Cliente(int id, String nome, Date dataNasc, String senha) {
+        this.id = id;
+        this.nome = nome;
+        this.dataNasc = dataNasc;
+        this.senha = senha;
+    }
 }

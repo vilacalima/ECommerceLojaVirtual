@@ -53,4 +53,17 @@ public class Endereco {
         this.isEnderecoEntrega = isEnderecoEntrega;
         this.isAtivo = isAtivo;
     }
+
+    public Endereco(String rua, String numero, String complemento, String bairro, String cidade, String cep, boolean isFaturamento, boolean isEnderecoPadrao, boolean isEnderecoEntrega, boolean isAtivo) {
+        this.rua = rua;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.cep = cep;
+        this.isFaturamento = isFaturamento;
+        this.isEnderecoPadrao = isEnderecoPadrao;
+        this.isEnderecoEntrega = isEnderecoEntrega;
+        this.isAtivo = isAtivo;
+    }
 }

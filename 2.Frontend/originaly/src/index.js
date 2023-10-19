@@ -15,6 +15,7 @@ import EditarProduto from './components/produto/editarProduto';
 import Compra from './components/compra/compra';
 import PaginaInicial from './components/paginaInicial/paginaInicial';
 import CadastroCliente from './components/cliente/cadastrarCliente';
+import EditarCliente from './components/cliente/editarCliente';
 import App from './app';
 
 ReactDOM.render(
@@ -40,6 +41,7 @@ ReactDOM.render(
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>
+      <Route path="/perfil/:email" component={EditarCliente} />
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
         <ListarUsuarios />

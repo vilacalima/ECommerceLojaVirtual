@@ -1,12 +1,14 @@
 package com.br.originaly.repository;
 
-import com.br.originaly.model.Cliente;
-import com.br.originaly.model.Endereco;
-import com.br.originaly.model.Produto;
-import com.br.originaly.model.Usuario;
+import com.br.originaly.model.*;
+import com.br.originaly.record.UpdateClienteRecord;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteRepository {
@@ -28,6 +30,23 @@ public class ClienteRepository {
     public int saveCliente(Cliente cliente) {
         Cliente newProduto = _clienteRepository.save(cliente);
         return newProduto.getId();
+    }
+
+    /**
+     * Salva um cliente no banco de dados
+     * @param cliente
+     * @return id
+     * */
+    public boolean updateCliente(Cliente cliente) {
+        Cliente debug = _clienteRepository.findById((long) cliente.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado"));
+
+        debug.setNome(cliente.getNome());
+        debug.setDataNasc(cliente.getDataNasc());
+        debug.setSenha(cliente.getSenha());
+        _clienteRepository.save(debug);
+
+        return debug != null;
     }
 
     /**
@@ -103,4 +122,19 @@ public class ClienteRepository {
 
         return null;
     }
+
+    /**
+     * Retorna o cliente pelo Id
+     * @param id
+     * @return Cliente
+     * */
+    public Cliente getClientById(int id){
+        return _clienteRepository.findById((long)id)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
+    }
+
+    public List<Endereco> getEnderecoByIdCliente(int idCliente){
+        return _enderecoRepository.getEnderecoByIdCliente(idCliente);
+    }
+
 }

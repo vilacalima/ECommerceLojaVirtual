@@ -1,9 +1,12 @@
 package com.br.originaly.service;
 
+import com.br.originaly.model.Produto;
 import com.br.originaly.record.ClienteRecord;
+import com.br.originaly.record.EnderecoRecord;
 import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Cliente;
 import com.br.originaly.model.Endereco;
+import com.br.originaly.record.UpdateClienteRecord;
 import com.br.originaly.repository.ClienteRepository;
 import com.br.originaly.validator.Cryptography;
 import com.br.originaly.validator.ValidaCPF;
@@ -11,6 +14,8 @@ import com.br.originaly.validator.ValidaEmail;
 import com.br.originaly.validator.ValidaString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClienteService {
@@ -98,30 +103,61 @@ public class ClienteService {
         return new MensagemDTO("Cliente Cadastrado com sucesso !", true);
     }
 
+    public MensagemDTO updateDadosPessoais(UpdateClienteRecord cliente){
+        Cliente dto = _clienteRepository.getClientByEmail(cliente.email());
+        //validar se endereço existe na base
+        if(dto != null){
+            int id = dto.getId();
+            //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
+            if(_validaString.validateText(cliente.nome()) == false)
+                return new MensagemDTO("Erro ao validar nome do cliente, verifique requisitos de nome.",false);
+
+            //encripitar senha
+            String senha = _cryptography.encryptPassword(cliente.senha());
+
+            //Salvar cliente no banco de dadosreturn new MensagemDTO("O CPF já consta na base.",false);
+            Cliente newCliente = new Cliente(id, cliente.nome(), cliente.dataNasc(), senha);
+
+            boolean returnCLiente = _clienteRepository.updateCliente(newCliente);
+
+            if(returnCLiente){
+                return new MensagemDTO("Cliente Atualizado na base", false);
+            } else{
+                return new MensagemDTO("Erro! Cliente não cadastrado na base", false);
+            }
+        } else{
+            return new MensagemDTO("Erro ao procurar Cliente", false);
+        }
+    }
+
     /**
      * Insere um novo endereço no banco de dados
-     * @param id cliente
+     * @param email cliente
      * @param endereco
      * @return MensagemDTO
      * */
-    public MensagemDTO insertNewEndereco(int id, Endereco endereco){
-
-        int idCliente = _clienteRepository.getIdClient(id);
+    public MensagemDTO insertNewEndereco(String email, List<EnderecoRecord> endereco){
+        Cliente cliente = _clienteRepository.getClientByEmail(email);
+        int idCliente = _clienteRepository.getIdClient(cliente.getId());
 
         if(idCliente != 0){
-            Endereco newEndereco = new Endereco(idCliente,
-                    endereco.getRua(),
-                    endereco.getNumero(),
-                    endereco.getComplemento(),
-                    endereco.getBairro(),
-                    endereco.getCidade(),
-                    endereco.getCep(),
-                    false,
-                    endereco.isEnderecoPadrao(),
-                    endereco.isEnderecoEntrega(),
-                    true);
+            for (EnderecoRecord newEndereco: endereco){
+                Endereco dto = new Endereco(idCliente,
+                        newEndereco.rua(),
+                        newEndereco.numero(),
+                        newEndereco.complemento(),
+                        newEndereco.bairro(),
+                        newEndereco.cidade(),
+                        newEndereco.cep(),
+                        false,
+                        newEndereco.isEnderecoPadrao(),
+                        newEndereco.isEnderecoEntrega(),
+                        true);
 
-            _clienteRepository.saveEndereco(newEndereco);
+                System.out.println(newEndereco.cep().toString());
+                _clienteRepository.saveEndereco(dto);
+            }
+
         } else{
             return new MensagemDTO("Erro ao cadastrar um novo endereço !", false);
         }
@@ -154,5 +190,25 @@ public class ClienteService {
         }
 
         return true;
+    }
+
+    /**
+     * Retorna o cliente pelo Id
+     * @param email
+     * */
+    public ClienteRecord getClienteByEmail(String email){
+        Cliente cliente = _clienteRepository.getClientByEmail(email);
+        List<Endereco> enderecos = _clienteRepository.getEnderecoByIdCliente(cliente.getId());
+
+        return new ClienteRecord(
+                cliente.getNome(),
+                cliente.getCpf(),
+                cliente.getEmail(),
+                cliente.getTelefone(),
+                cliente.getDataNasc(),
+                Sexo.Masculino,
+                cliente.getSenha(),
+                enderecos
+        );
     }
 }
