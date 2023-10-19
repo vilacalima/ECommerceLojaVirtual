@@ -60,7 +60,8 @@ function HomePage() {
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
           <a href="#"> • 🛒 Carrinho</a>
-          <a href="/cadastrarCliente"> • Registrar</a>
+          <a href="/cadastrarCliente"> • Cadastrar</a>
+          <a href='/perfil/:email'> • Perfil</a>
           {isAuthenticated && <a href='/'> • Meu Endereços</a>}
         </div>
       </header>

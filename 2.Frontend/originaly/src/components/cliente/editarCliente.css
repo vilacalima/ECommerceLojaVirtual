@@ -62,7 +62,7 @@
 
 /* Estilos para os cards de Dados Pessoais e Endereços */
 .card {
-  background-color: white;
+  background-color: rgba(255, 241, 241, 0.616);
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -93,3 +93,5 @@
 .editar-botao-confirmar:hover {
   background-color: #bb1c6c;
 }
+
+
