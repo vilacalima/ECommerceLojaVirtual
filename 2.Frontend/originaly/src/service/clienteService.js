@@ -34,14 +34,44 @@ const ClienteService = {
     },
 
     /**
+     * Envia um novo cliente para o banco de dados
+     * @param {*} dto 
+     * @returns 
+     */
+    updateDadosPessoais: async (dto) => {
+        try {
+            const response = await axios.post(`http://localhost:8080/cliente/updateDadosPessoais`, dto);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
+    /**
+     * Retorna Um objeto de Cliente do banco de dados
+     * @param {*} email
+     * @returns 
+     */
+    getClientByEmail: async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/cliente/getCliente/${email}`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
+    /**
      * Envia um novo endereço para o banco de dados
      * @param {*} idCliente 
      * @param {*} dto 
      * @returns 
      */
-    newAddress: async (idCliente, dto) => {
+    newAddress: async (email, dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/cliente/newAddress/${idCliente}`, dto);          
+            const response = await axios.post(`http://localhost:8080/cliente/newAddress/${email}`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);

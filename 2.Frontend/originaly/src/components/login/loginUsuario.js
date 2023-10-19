@@ -23,6 +23,8 @@ function LoginUsuario() {
             history.push(`/home/${false}`);
         } else if (login === 'estoquista') {
             history.push(`/home/${true}`);
+        } else if (login === 'Cliente') {
+          history.push(`/perfil/${user.email}`);
         } else {
           window.postMessage('Sem premissão');
         } 
