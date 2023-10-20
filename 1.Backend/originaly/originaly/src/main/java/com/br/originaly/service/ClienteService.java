@@ -58,8 +58,8 @@ public class ClienteService {
             String cpf = _validaCpf.repleaceCpf(cliente.cpf());
 
             //validar se cpf existe
-            if(_validaCpf.validarCPF(cpf) == false)
-                return new MensagemDTO("O CPF é invalido.",false);
+            if(_validaCpf.validarCPF(cpf) == false && _clienteRepository.getClientByCpf(cpf) == null)
+                return new MensagemDTO("O CPF é invalido ou não existe",false);
 
             if(_clienteRepository.getClientByCpf(cliente.cpf()) != null)
                 return new MensagemDTO("O CPF já consta na base.",false);
