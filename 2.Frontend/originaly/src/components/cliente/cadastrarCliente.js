@@ -20,14 +20,18 @@ class CadastroCliente extends Component {
           cidade: '',
           uf: '',
           isEnderecoPadrao: true,
+          isFaturamento: false
         },
       ],
       dataNascimento: '',
       sexo: 'Masculino',
       senha: '',
+      confirmarSenha: '',
       cadastradoComSucesso: false,
+      senhaErrada: false,
       erroNoCadastro: false,
-      enderecoPadraoIndex: 0, // Índice do endereço padrão
+      enderecoPadraoIndex: 0, 
+      enderecoFaturamentoIndex: 0,// Índice do endereço padrão
     };
   }
 
@@ -70,7 +74,24 @@ class CadastroCliente extends Component {
     enderecos.forEach((endereco, i) => {
       endereco.isEnderecoPadrao = i === index;
     });
-    this.setState({ enderecos, enderecoPadraoIndex: index });
+    this.setState({
+      enderecos,
+      enderecoPadraoIndex: index,
+    });
+    // Set isEnderecoPadrao to true in the selected address
+    enderecos[index].isEnderecoPadrao = true;
+  };
+  definirComoFaturamento = (index) => {
+    const enderecos = [...this.state.enderecos];
+    enderecos.forEach((endereco, i) => {
+      endereco.isFaturamento = i === index;
+    });
+    this.setState({ 
+      enderecos, 
+      enderecoFaturamentoIndex: index 
+    });
+
+    enderecos[index].isFaturamento = true;
   };
 
   validarCEP = async (cep, index) => {
@@ -103,8 +124,11 @@ class CadastroCliente extends Component {
 
     // Verificar se o email já existe na base
     const emailJaExiste = await ClienteService.verificarEmailExistente(this.state.email)
-    //this.verificarEmailExistente(this.state.email);
-
+    
+    if (this.state.confirmarSenha != this.state.senha){
+      this.setState({ senhaErrada: true });
+      return;
+    }
     if (emailJaExiste) {
       this.setState({ erroNoCadastro: true });
     } else {
@@ -171,6 +195,10 @@ class CadastroCliente extends Component {
           <div>
             <label>Senha:</label>
             <input type="password" name="senha" value={this.state.senha} onChange={this.handleChange} required />
+          </div>
+          <div>
+            <label>Confirmar senha:</label>
+            <input type="password" name="confirmarSenha" value={this.state.confirmarSenha} onChange={this.handleChange} required />
           </div>
 
           {/* Campos de endereço */}
@@ -263,6 +291,21 @@ class CadastroCliente extends Component {
                   />
                 </div>
               )}
+              <button type="button" onClick={() => this.definirComoFaturamento(index)}>
+                Endereco Faturamento
+              </button>
+              {index > 0 && (
+                <div>
+                  <label>Endereço de Faturamento:</label>
+                  <input
+                    type="radio"
+                    name="isFaturamento"
+                    value={index}
+                    onChange={this.handleChange}
+                    checked={this.state.enderecoFaturamentoIndex === index}
+                  />
+                </div>
+              )}
             </div>
           ))}
           <button type="button" onClick={this.adicionarEndereco}>
@@ -275,6 +318,9 @@ class CadastroCliente extends Component {
           )}
           {this.state.erroNoCadastro && (
             <div className="mensagem erro">Erro no cadastro. Tente novamente.</div>
+          )}
+          {this.state.senhaErrada && (
+            <div className="mensagem erro">Confirmação de senha invalida.</div>
           )}
         </form>
       </div>

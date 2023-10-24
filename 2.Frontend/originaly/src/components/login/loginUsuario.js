@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-//import './LoginUsuario.css';
-import LoginService from '../../service/loginService'
+import LoginService from '../../service/loginService';
+import Cookies from 'js-cookie';
 
 function LoginUsuario() {
       // const user = new LoginRecord(event.target.username.value, event.target.password.value);
@@ -18,6 +18,7 @@ function LoginUsuario() {
       
       try {
         const login = await LoginService.getLogin(user);
+        Cookies.set('token', 'ORIGINALYPI42023', { expires: 1 }); // O token expira em 1 dias
 
         if (login === 'administrador') {
             history.push(`/home/${false}`);
