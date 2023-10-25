@@ -93,48 +93,63 @@ public class ProdutoService {
                     default_hora_atual
             );
 
-            List<String> novaRota = new ArrayList<>();
-
-            if(product.alterfilePrimary() && product.filePrimary() != null){
-                _image.deletImage(product.rotaFilePrimaryAntiga());
-                int idMonstruario = _produtoRepository.getIdByRota(product.rotaFilePrimaryAntiga());
-                String filePrimary = _image.uploadNewImage(product.filePrimary());
-                _produtoRepository.updateMonstruario(idMonstruario, filePrimary);
-            }
-
-            //pegar a nova imagem e salvar no banco de imagens e gerar nova rota
-            if (product.alterFiles() && product.files() != null) {
-                for (MultipartFile file : product.files()) {
-                    String rota = _image.uploadNewImage(file);
-                    novaRota.add(rota);
-                }
-            }
-
             //fazer update do produto no banco de dados
-            boolean updateProduto = _produtoRepository.updateProduto(dtoProduct);
-
-            if (updateProduto) {
-                for (String rota : product.rotaAntiga()) {
-                    int i = 0;
-                    int idMonstruario = _produtoRepository.getIdByRota(rota);
-
-                    _produtoRepository.updateMonstruario(idMonstruario, novaRota.get(i));
-
-                    i++; //A cada passagem no foreach vai incrementando mai um
-                }
-
-                for (String rota : product.rotaAntiga()) {
-                    _image.deletImage(rota);
-                }
-            } else {
-                return new MensagemDTO("Falha ao atualizar Produto", false);
-            }
+            _produtoRepository.updateProduto(dtoProduct);
         } else{
             return new MensagemDTO("Produto não encontrado, id: " + product.id(), false);
         }
 
         return new MensagemDTO("Produto atualizado com sucesso", true);
     }
+
+    /**
+     * Faz o Updade de um Produto
+     * @param idProduct
+     * @param files
+     * @param rotaAntiga
+     * @return MensagemDTO
+     * */
+    public MensagemDTO updateImage(int idProduct, List<String> rotaAntiga, MultipartFile[] files) throws IOException {
+
+        Produto product = _produtoRepository.getProductById(idProduct);
+
+        if(product != null) {
+
+            List<String> novaRota = new ArrayList<>();
+
+            //pegar a nova imagem e salvar no banco de imagens e gerar nova rota
+            if (files != null) {
+                for (MultipartFile file : files) {
+                    String rota = _image.uploadNewImage(file);
+                    novaRota.add(rota);
+                }
+            }
+
+            if (novaRota != null) {
+                for (String rota : rotaAntiga) {
+                    int i = 0;
+                    int idMonstruario = _produtoRepository.getIdByRota(rota);
+
+                    if(idMonstruario != 0){
+                        _produtoRepository.updateMonstruario(idMonstruario, novaRota.get(i));
+                    }
+
+                    i++; //A cada passagem no foreach vai incrementando mais um
+                }
+
+                for (String rota : rotaAntiga) {
+                    _image.deletImage(rota);
+                }
+            } else {
+                return new MensagemDTO("Falha ao atualizar Imagem", false);
+            }
+        } else{
+            return new MensagemDTO("Imagem não encontrada, id: " + idProduct, false);
+        }
+
+        return new MensagemDTO("Banco de imagens atualizado com sucesso", true);
+    }
+
 
     public List<EnvProdutoDTO> getProductAndImage(){
         List<Produto> produto = _produtoRepository.getAllProductActive();

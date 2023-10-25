@@ -10,12 +10,4 @@ public record UpdateProdutoRecord(int id,
                                   int quantidade,
                                   double valor,
                                   boolean ativo,
-                                  double avaliacao,
-                                  MultipartFile[] files,
-                                  MultipartFile filePrimary,
-                                  List<String> rotaAntiga,
-                                  String rotaFilePrimaryAntiga,
-                                  boolean alterfilePrimary,
-                                  boolean alterFiles) {
-
-}
+                                  double avaliacao) { }
