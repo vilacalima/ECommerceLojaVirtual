@@ -1,3 +1,5 @@
+// App.js
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -17,6 +19,7 @@ import PaginaInicial from './components/paginaInicial/paginaInicial';
 import CadastroCliente from './components/cliente/cadastrarCliente';
 import EditarCliente from './components/cliente/editarCliente';
 import App from './app';
+import MeusPedidos from './components/cliente/meusPedidos';
 
 ReactDOM.render(
   <Router>
@@ -46,6 +49,7 @@ ReactDOM.render(
       <Route path="/listarUsuarios">
         <ListarUsuarios />
       </Route>
+      <Route path="/MeusPedidos" component={MeusPedidos} /> {/* Corrigida a rota para MeusPedidos */}
       <Route path="/alterarUsuarios">
         <AlterarUsuario />
       </Route>
