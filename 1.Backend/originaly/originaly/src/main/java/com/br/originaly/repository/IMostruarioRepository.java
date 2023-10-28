@@ -12,7 +12,7 @@ import java.util.List;
 @EnableJpaRepositories
 public interface IMostruarioRepository extends JpaRepository<Monstruario, Long> {
 
-    Monstruario findByIdProduto(int idProduto);
+    List<Monstruario> findByIdProduto(int idProduto);
     List<Monstruario> findListByIdProduto(int idProduto);
     List<Monstruario> findListByIdProdutoAndIdOrdem(int idProduto, int idOrdem);
     Monstruario findByIdProdutoAndIdOrdem(int idProduto, int idOrdem);

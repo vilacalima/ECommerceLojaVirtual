@@ -64,11 +64,10 @@ public class ProdutoController {
     }
 
     @PutMapping("/updateImage")
-    public MensagemDTO atualizarImage(@PathVariable int idProduct,
-                                      @PathVariable List<String> rotaAntiga,
-                                      @RequestParam("file") MultipartFile[] file) {
+    public MensagemDTO atualizarImage(@RequestParam int idProduct,
+                                      @RequestParam(required = false) List<String> rotaAntiga,
+                                      @RequestPart(name = "file", required = false) MultipartFile[] file) {
         MensagemDTO message;
-
         try {
             message = _produto.updateImage(idProduct, rotaAntiga, file);
             return message;
@@ -98,8 +97,8 @@ public class ProdutoController {
         return _produto.getProductAndAllFileById(id);
     }
 
-    @GetMapping("/getImage")
-    public String getImage(@RequestParam int id){
+    @GetMapping("/getImage/{id}")
+    public List<String> getImage(@PathVariable int id){
         return _produto.getImage(id);
     }
 

@@ -121,27 +121,16 @@ public class ProdutoService {
             if (files != null) {
                 for (MultipartFile file : files) {
                     String rota = _image.uploadNewImage(file);
-                    novaRota.add(rota);
+                    _produtoRepository.saveMonstruario(new Monstruario(product.getId(), rota, 0));
                 }
             }
 
-            if (novaRota != null) {
-                for (String rota : rotaAntiga) {
-                    int i = 0;
-                    int idMonstruario = _produtoRepository.getIdByRota(rota);
-
-                    if(idMonstruario != 0){
-                        _produtoRepository.updateMonstruario(idMonstruario, novaRota.get(i));
-                    }
-
-                    i++; //A cada passagem no foreach vai incrementando mais um
+            if(rotaAntiga != null){
+                for(String rota : rotaAntiga){
+                    int id = _produtoRepository.getMonstruarioByRota(rota);
+                    _produtoRepository.deleteMonstruarioById(id); //exclui da base
+                    _image.deletImage(rota); //exclui do firebase
                 }
-
-                for (String rota : rotaAntiga) {
-                    _image.deletImage(rota);
-                }
-            } else {
-                return new MensagemDTO("Falha ao atualizar Imagem", false);
             }
         } else{
             return new MensagemDTO("Imagem não encontrada, id: " + idProduct, false);
@@ -178,10 +167,22 @@ public class ProdutoService {
         return _produtoRepository.getAllProduct();
     }
 
-    public String getImage(int id){
+    /**
+     * Retora uma lista de imagem a partir do Id do produto
+     * @param id
+     * @return rotas
+     * */
+    public List<String> getImage(int id){
+        List<String> rotas = new ArrayList<>();
         int idProduct = _produtoRepository.getIdProduct(id);
-        String image = _produtoRepository.getUrlImage(idProduct);
-        return _image.getUrlDaImagem(image);
+        List<Monstruario> images = _produtoRepository.getUrlImage(idProduct);
+
+        for (Monstruario monstruario : images){
+            String url = monstruario.getRota();
+            rotas.add(url);
+        }
+
+        return rotas;
     }
 
     public EnvProdutoDTO getProductById(int id){

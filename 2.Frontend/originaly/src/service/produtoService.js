@@ -12,6 +12,16 @@ const ProdutoService = {
         }
     },
 
+    getImage: async (productId) => {
+        try{
+            const response = await axios.get(`http://localhost:8080/api/product/getImage/${productId}`)
+            return response.data;
+        } catch (error){
+            console.error('Erro ao receber dados: ', error);
+            throw error; 
+        }
+    },
+
     getAllProduct: async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/product/getAllProduct');
@@ -40,7 +50,24 @@ const ProdutoService = {
         });
 
         return response;
-    },    
+    },
+
+    updateImage: async (formData) =>{
+        try {
+            const response = await axios.put(
+              'http://localhost:8080/api/product/updateImage',
+              formData,
+              {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              }
+            );
+            console.log(response.data);
+          } catch (error) {
+            console.error('Erro ao enviar dados para a controller:', error);
+          }
+    }
 };
 
 export default ProdutoService;

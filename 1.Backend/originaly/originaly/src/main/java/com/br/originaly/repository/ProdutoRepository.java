@@ -50,6 +50,15 @@ public class ProdutoRepository {
         return debug != null;
     }
 
+    public void deleteMonstruarioById(int id) {
+         _mostruarioRepository.deleteById((long) id);
+    }
+
+    public int getMonstruarioByRota(String rota){
+        Monstruario monstruario = _mostruarioRepository.getMonstruarioByRota(rota);
+        return monstruario.getId();
+    }
+
     public boolean updateMonstruario(int id, String rota){
         Monstruario debug = _mostruarioRepository.findById((long) id)
                 .orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado"));
@@ -109,9 +118,8 @@ public class ProdutoRepository {
      * @param id
      * @return rota
      * */
-    public String getUrlImage(int id){
-        Monstruario monstruario = _mostruarioRepository.findByIdProduto(id);
-        return monstruario.getRota();
+    public List<Monstruario> getUrlImage(int id){
+         return _mostruarioRepository.findListByIdProduto(id);
     }
 
     /**
