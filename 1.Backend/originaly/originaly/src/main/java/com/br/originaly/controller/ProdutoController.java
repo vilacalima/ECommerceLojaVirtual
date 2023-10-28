@@ -55,15 +55,26 @@ public class ProdutoController {
         MensagemDTO message;
 
         try {
-
             message = _produto.updateProduto(product);
             return message;
-
         } catch (IOException e) {
             e.printStackTrace();
             return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
         }
+    }
 
+    @PutMapping("/updateImage")
+    public MensagemDTO atualizarImage(@RequestParam int idProduct,
+                                      @RequestParam(required = false) List<String> rotaAntiga,
+                                      @RequestPart(name = "file", required = false) MultipartFile[] file) {
+        MensagemDTO message;
+        try {
+            message = _produto.updateImage(idProduct, rotaAntiga, file);
+            return message;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new MensagemDTO("Erro durante o upload da imagem: " + e.getMessage().toString(), false);
+        }
     }
 
     @GetMapping("/getAllProduct")
@@ -86,8 +97,8 @@ public class ProdutoController {
         return _produto.getProductAndAllFileById(id);
     }
 
-    @GetMapping("/getImage")
-    public String getImage(@RequestParam int id){
+    @GetMapping("/getImage/{id}")
+    public List<String> getImage(@PathVariable int id){
         return _produto.getImage(id);
     }
 

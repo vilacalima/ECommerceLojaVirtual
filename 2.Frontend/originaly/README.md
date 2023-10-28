@@ -7,6 +7,7 @@
 - npm install react-helmet-async
 - npm install react-responsive-carousel
 - npm install jwt-decode
+- npm install js-cookie
 - npm start
 -----------------------------------------------------------------------
 

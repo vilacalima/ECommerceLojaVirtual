@@ -1,7 +1,19 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import { Carousel } from 'react-responsive-carousel';
+import Cookies from 'js-cookie';
+import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function App() {
+    const history = useHistory();
+
+    useEffect(() => {
+      const token = Cookies.get('token');
+      if (token) {
+        history.push(`/home/${false}`);
+      }
+    }, []);
+
     return (
       <div style={{ display: 'block', width: 700, padding: 30 }}>
         <h4>React-Bootstrap Carousel Component</h4>

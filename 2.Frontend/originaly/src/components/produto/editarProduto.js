@@ -4,6 +4,7 @@ import ProdutoService from '../../service/produtoService';
 import { useHistory } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
 import axios from 'axios';
+import NovaImagem from './novaImagem';
 
 function EditarProduto() {
   const { productId } = useParams();
@@ -20,31 +21,6 @@ function EditarProduto() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
-  };
-
-  const toggleIsPrimary = (index) => {
-    const updatedImages = [...product.images];
-
-    if (index >= 0 && index < updatedImages.length) {
-      const selectedImage = updatedImages[index];
-      selectedImage.isPrimary = true;
-      setProduct({
-        ...product,
-        images: updatedImages.filter((_, i) => i !== index),
-        filePrimary: selectedImage,
-      });
-    }
-  };
-
-  const handleImageUpload = (e) => {
-    const selectedImages = Array.from(e.target.files);
-    
-    const newImages = selectedImages.map((image) => ({
-      file: image,
-      displayImage: URL.createObjectURL(image),
-    }));
-  
-    setProduct({ ...product, images: [...product.newImages, ...newImages] });
   };
 
   // Função para remover a imagem
@@ -215,34 +191,12 @@ function EditarProduto() {
             onChange={handleInputChange}
             required
           />
-        </div>
-
-        {/* Selecione as imagens com base nas URLs */}
-        <div className="form-group">
-          <label htmlFor="image">Imagem do Produto:</label>
-          {imageUrls.map((imageUrl, index) => (
-            <div key={index} className="image-container">
-              <img src={imageUrl} alt={`Img do Produto ${index}`} className="image" />
-              <button type="button" onClick={() => handleImageDelete(index)}>Excluir</button>
-            </div>
-          ))}
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="images">Novas imagens do Produto:</label>
-          <input
-            type="file"
-            id="newImages"
-            name="file"
-            accept="image/*"
-            onChange={handleImageUpload}
-            multiple
-          />
-        </div>
-        
+        </div>        
         <button type="submit">Salvar Alterações</button>
         <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
+
+      <NovaImagem id={productId}/>
     </div>
   );
 }

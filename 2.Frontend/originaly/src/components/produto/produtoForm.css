@@ -61,6 +61,7 @@ body {
     padding: 10px;
     cursor: pointer;
     margin-right: 10px;
+    margin-top: 20px;
   }
   
   button[type="submit"] {
@@ -85,11 +86,12 @@ body {
   padding: 5px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s ease-in-out;
+  height: auto;
 }
 
 /* Estilo para a imagem em si */
 .image img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -111,5 +113,30 @@ body {
   transform: scale(1.1); /* Efeito de escala quando selecionada */
   border-color: #007bff; /* Cor da borda quando selecionada */
 }
+
+/* seu-estilo.css */
+.image-row {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Isso alinha as colunas à esquerda e à direita */
+}
+
+.image-column {
+  flex-basis: calc(10% - 10px); /* 50% de largura com algum espaço entre as colunas */
+  margin-bottom: 20px; 
+  /* text-align: center; Centraliza o botão e a imagem */
+}
+
+.image-column img {
+  display: block; /* Garante que a imagem ocupa a largura completa da coluna */
+}
+
+.image-column button {
+  margin-top: 10px; /* Espaçamento superior entre a imagem e o botão "Excluir" */
+}
+
+
+
 
   
