@@ -3,6 +3,7 @@ import axios from 'axios';
 import ClienteService  from '../../service/clienteService';
 import { useParams } from 'react-router-dom';
 import './editarCliente.css';
+import { Link } from 'react-router-dom';
 
 class EditarCliente extends Component {
   constructor() {
@@ -181,9 +182,11 @@ class EditarCliente extends Component {
     return (
       <div className="form-container">
         <h1>Editar Cliente</h1>
-        
+        <Link to="/MeusPedidos">
+            <button>Meus Pedidos</button>
+          </Link>
         <div className="card-container"> {/* Aplicando a classe card-container */}
-          
+
         
             {/* Campos de dados pessoais */}
           <form onSubmit={this.handleSubmitDadosPessoais}>
@@ -351,6 +354,7 @@ class EditarCliente extends Component {
           </div>
           
         </form>
+
         </div>
       </div>
     );
