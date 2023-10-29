@@ -20,6 +20,7 @@ import CadastroCliente from './components/cliente/cadastrarCliente';
 import EditarCliente from './components/cliente/editarCliente';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
+import Cart from './components/cliente/carrinho';
 
 ReactDOM.render(
   <Router>
@@ -38,9 +39,16 @@ ReactDOM.render(
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
       </Route>
+
       <Route path="/cadastrarUsuario">
         <CadastroUsuario />
       </Route>
+
+      <Route path="/carrinho">
+        <Cart />
+      </Route>
+
+
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>

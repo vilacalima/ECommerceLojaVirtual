@@ -4,6 +4,8 @@ import axios from 'axios';
 import './compra.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import { Carousel } from 'react-responsive-carousel';
+import { useHistory } from 'react-router-dom';
+
 
 function ProductPage() {
   const { productId } = useParams();
@@ -11,6 +13,7 @@ function ProductPage() {
   const [imageUrls, setImageUrls] = useState([]); // Defina como um array, não como um objeto
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
@@ -39,9 +42,12 @@ function ProductPage() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const buttonText = 'Comprar 🛒';
 
+
   const handleSubmit = async () => {
     try {
       setIsButtonDisabled(true);
+      // Redirecione para a página de carrinho com os dados do produto
+      history.push('/carrinho', { product });
     } catch (error) {
       console.error('Erro ao processar a compra:', error);
     }
@@ -69,7 +75,7 @@ function ProductPage() {
         <p>{product.descricao}</p>
         <h3>{product.avaliacao}</h3>
         <p>Por: {product.valor}</p>
-        <button id="comprar-button" disabled={isButtonDisabled} onClick={handleSubmit}>
+        <button id="comprar-button"  onClick={handleSubmit}>
           {buttonText}
         </button>
       </div>
