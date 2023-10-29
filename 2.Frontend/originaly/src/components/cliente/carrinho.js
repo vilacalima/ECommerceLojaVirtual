@@ -3,23 +3,21 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
 function Cart() {
-  // Estado para manter o carrinho
+  // Use o estado local para manter o carrinho em memória
   const [cart, setCart] = useState([]);
   const location = useLocation();
-  const product = location.state.product;
+  const product = location.state && location.state.product;
 
   // Função para adicionar um item ao carrinho
   const addToCart = (product) => {
     const existingItem = cart.find((item) => item.id === product.id);
 
     if (existingItem) {
-      // Verifique se a quantidade não excede 2
       if (existingItem.quantity < 2) {
         existingItem.quantity += 1;
         setCart([...cart]);
       }
     } else {
-      // Adicione o produto ao carrinho com quantidade 1
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
@@ -33,8 +31,6 @@ function Cart() {
       return item;
     });
     setCart(updatedCart);
-    // Recalcule o subtotal após aumentar a quantidade
-    calculateSubtotal();
   };
 
   // Função para calcular o subtotal
@@ -51,13 +47,16 @@ function Cart() {
       return item;
     });
     setCart(updatedCart);
-    // Recalcule o subtotal após diminuir a quantidade
-    calculateSubtotal();
   };
+
+  if (!product) {
+    return <div>O produto não foi encontrado no carrinho.</div>;
+  }
 
   return (
     <div>
       <h2>Carrinho de Compras</h2>
+      <button onClick={() => addToCart(product)}>Adicionar ao Carrinho</button>
       <ul>
         {cart.map((item) => (
           <li key={item.id}>

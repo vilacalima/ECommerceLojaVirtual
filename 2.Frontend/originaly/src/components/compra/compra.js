@@ -46,8 +46,13 @@ function ProductPage() {
   const handleSubmit = async () => {
     try {
       setIsButtonDisabled(true);
-      // Redirecione para a página de carrinho com os dados do produto
-      history.push('/carrinho', { product });
+  
+      // Certifique-se de que o objeto product não está vazio antes de redirecionar
+      if (product) {
+        history.push('/carrinho', { product });
+      } else {
+        console.error('Erro: objeto product está vazio.');
+      }
     } catch (error) {
       console.error('Erro ao processar a compra:', error);
     }
