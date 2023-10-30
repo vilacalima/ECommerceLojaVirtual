@@ -8,6 +8,10 @@ public class MensagemDTO {
     public String message;
     public boolean isSuccess;
 
+    public  MensagemDTO(){
+
+    }
+
     /**
      * Retorna mensagem para o usuário
      * @param message
