@@ -23,25 +23,6 @@ function EditarProduto() {
     setProduct({ ...product, [name]: value });
   };
 
-  // Função para remover a imagem
-  const handleImageDelete = (index) => {
-    console.log('Antes de excluir:', product.file);
-    if (Array.isArray(product.file) && product.file.length > index) {
-      const updatedImages = [...product.file];
-      updatedImages.splice(index, 1); // Remove a imagem no índice especificado
-      console.log('Após excluir:', updatedImages);
-      setProduct({ ...product, images: updatedImages });
-  
-      // Atualize também o estado de imageUrls
-      const updatedUrls = [...imageUrls];
-      updatedUrls.splice(index, 1);
-      console.log('Urls atualizadas:', updatedUrls);
-      setImageUrls(updatedUrls);
-    } else {
-      console.log('Índice inválido:', index);
-    }
-  };
-
   //Serviço que chama a função no para pegar dados do produto no backend
   useEffect(() => {
     const fetchData = async () => {
