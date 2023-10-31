@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutosEstoquista.css';
 import ProdutoService from '../../service/produtoService';
-import { Link } from 'react-router-dom'; // Importe o Link corretamente
+import { Link, useHistory } from 'react-router-dom'; // Importe o Link corretamente
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
@@ -10,17 +10,23 @@ function ListarProdutos() {
   const [pagina, setPagina] = useState(1);
   const [produtosPorPagina, setProdutosPorPagina] = useState(10); // Defina a quantidade de produtos por página aqui
   const [buscaParcial, setBuscaParcial] = useState('');
-
+  const history = useHistory();
+  
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProduct();
     setProdutos(products)
   };
 
   useEffect(() => {
-    try {
-      loadProducts();
-    } catch (error) {
-      console.log(error);
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } else{
+      try {
+        loadProducts();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [pagina, busca, buscaParcial]);
 

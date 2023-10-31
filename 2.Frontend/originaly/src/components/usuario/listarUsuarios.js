@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './listarUsuarios.css';
 import UsuarioService from '../../service/usuarioService';
@@ -7,6 +7,8 @@ import UsuarioService from '../../service/usuarioService';
 function ListaUsuarios() {
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+  const history = useHistory();
+  
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
   };
@@ -17,17 +19,21 @@ function ListaUsuarios() {
   };
 
   useEffect(() => {
-    
-    loadUsers();
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } else {
+      loadUsers();
 
-     // atualiza automaticamente a cada 10 segundos
-    const refreshInterval = 10000;
-    const intervalId = setInterval(loadUsers, refreshInterval);
+      // atualiza automaticamente a cada 10 segundos
+      const refreshInterval = 10000;
+      const intervalId = setInterval(loadUsers, refreshInterval);
 
-    // Limpa o intervalo
-    return () => {
-      clearInterval(intervalId);
-    };
+      // Limpa o intervalo
+      return () => {
+        clearInterval(intervalId);
+      };
+    } 
   }, []);
 
   const handleCheckboxChange = async (userId, isChecked) => {

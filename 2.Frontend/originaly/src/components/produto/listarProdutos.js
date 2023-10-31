@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './listarProdutos.css';
 import ProdutoService from '../../service/produtoService';
-import { Link } from 'react-router-dom'; 
+import { Link, useHistory } from 'react-router-dom'; 
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
   const [buscaParcial, setBuscaParcial] = useState('');
   const [pagina, setPagina] = useState(1);
   const [produtosPorPagina, setProdutosPorPagina] = useState(10);
+  const history = useHistory();
 
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProduct();
@@ -16,10 +17,15 @@ function ListarProdutos() {
   };
 
   useEffect(() => {
-    try {
-      loadProducts();
-    } catch (error) {
-      console.log(error);
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } else{
+      try {
+        loadProducts();
+      } catch (error) {
+        console.log(error);
+      }
     }
   }, [pagina, buscaParcial]);
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import ClienteService  from '../../service/clienteService';
 import { useParams } from 'react-router-dom';
 import './editarCliente.css';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter } from 'react-router-dom';
 
 class EditarCliente extends Component {
   constructor() {
@@ -40,27 +40,31 @@ class EditarCliente extends Component {
 
   async componentDidMount() {
     const { email } = this.props.match.params;
+    const history = new BrowserRouter().history;
 
-    try {
-      const cliente = await ClienteService.getClientByEmail(email);
-      this.setState({
-        id: cliente.id,
-        nome: cliente.nome,
-        cpf: cliente.cpf,
-        email: cliente.email,
-        telefone: cliente.telefone,
-        dataNascimento: cliente.dataNasc,
-        sexo: cliente.sexo,
-        enderecosBanco: cliente.enderecos
-      });
-    } catch (error) {
-      console.error('Erro ao buscar dados do Cliente:', error);
-    }
+    const userToken = localStorage.getItem('usuario');
+
+    if (userToken == null) {
+      history.push(`/login`);
+    } else {
+      try {
+        const cliente = await ClienteService.getClientByEmail(email);
+        this.setState({
+          id: cliente.id,
+          nome: cliente.nome,
+          cpf: cliente.cpf,
+          email: cliente.email,
+          telefone: cliente.telefone,
+          dataNascimento: cliente.dataNasc,
+          sexo: cliente.sexo,
+          enderecosBanco: cliente.enderecos
+        });
+      } catch (error) {
+        console.error('Erro ao buscar dados do Cliente:', error);
+      }
+    }  
   }
-
-  //Serviço que chama a função no para pegar dados do produto no backend
   
-
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -141,14 +145,14 @@ class EditarCliente extends Component {
     console.log(saveCliente);
 
     // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
-    // setTimeout(() => {
-    //   this.setState({ cadastradoComSucesso: true });
-    //   // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
-    //   setTimeout(() => {
-    //     this.setState({ cadastradoComSucesso: false });
-    //     window.location.href = '/';
-    //   }, 2000);
-    // }, 2000);
+    setTimeout(() => {
+      this.setState({ cadastradoComSucesso: true });
+      // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
+      setTimeout(() => {
+        this.setState({ cadastradoComSucesso: false });
+        window.location.href = '/';
+      }, 2000);
+    }, 2000);
     
   };
 
@@ -167,14 +171,14 @@ class EditarCliente extends Component {
     console.log(saveCliente);
 
     // Simular um atraso de 2 segundos para exibir a mensagem de sucesso
-    // setTimeout(() => {
-    //   this.setState({ cadastradoComSucesso: true });
-    //   // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
-    //   setTimeout(() => {
-    //     this.setState({ cadastradoComSucesso: false });
-    //     window.location.href = '/';
-    //   }, 2000);
-    // }, 2000);
+    setTimeout(() => {
+      this.setState({ cadastradoComSucesso: true });
+      // Após 2 segundos, redirecionar para a página inicial (você pode substituir a URL pela sua página inicial real)
+      setTimeout(() => {
+        this.setState({ cadastradoComSucesso: false });
+        window.location.href = '/';
+      }, 2000);
+    }, 2000);
     
   };
 
