@@ -16,7 +16,11 @@ function ProductPage() {
   const history = useHistory();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } else {
+      axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
       .then((response) => {
         setProduct(response.data);
 
@@ -37,6 +41,7 @@ function ProductPage() {
         setError('Erro ao buscar produtos:' + error.message);
         setLoading(false);
       });
+    }
   }, [productId]);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);

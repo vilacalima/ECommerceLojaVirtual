@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import UsuarioService from '../../service/usuarioService';
 import './alterarUsuario.css';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 function AlterarUsuario() {
@@ -11,6 +11,7 @@ function AlterarUsuario() {
   const [newNome, setNome] = useState('');
   const [newSenha, setSenha] = useState('');
   const [newCpf, setCpf] = useState('');
+  const history = useHistory();
   
   const [userData, setUserData] = useState({
     id: null,
@@ -22,10 +23,14 @@ function AlterarUsuario() {
   });
 
   useEffect(() => {
-    
-    axios.get(`http://localhost:8080/api/getUsuarioById/${userId}`)
+    const userToken = localStorage.getItem('usuario');
+
+    if (userToken == null) {
+      history.push(`/login`);
+    } else{
+      axios.get(`http://localhost:8080/api/getUsuarioById/${userId}`)
       
-    .then(response => {
+      .then(response => {
         const user = response.data;
         setUserData({
           ...userData,
@@ -45,6 +50,9 @@ function AlterarUsuario() {
       .catch(error => {
         console.error('Erro ao buscar dados do usuário:', error);
       });
+    }
+    
+    
   }, [, userId]);
 
   const handleNomeChange = (event) => {

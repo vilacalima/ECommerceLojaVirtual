@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './produtoForm.css';
 import axios from 'axios';
@@ -32,8 +32,14 @@ function ProdutoForm() {
   
     setProduct({ ...product, images: [...product.images, ...newImages] });
   };
-  
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } 
+  }, []);
+  
   const toggleIsPrimary = (index) => {
     const updatedImages = [...product.images];
 

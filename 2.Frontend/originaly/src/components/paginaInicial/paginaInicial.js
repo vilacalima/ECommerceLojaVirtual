@@ -6,11 +6,14 @@ import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
 import logo from '../../images/logo.jpg';
 import { logout } from './authService';
+import { useHistory } from 'react-router-dom';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const history = useHistory();
   
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
@@ -28,11 +31,12 @@ function HomePage() {
 
   const handleLogout = () => {
     const confirmLogout = window.confirm('Tem certeza que quer sair?');
-    
+
     if (confirmLogout) {
-      // Aqui você pode adicionar a lógica para fazer logout, por exemplo, redirecionar para a página de login.
+      localStorage.removeItem('usuario');
       Exemplo: window.location.href = '/login';
     }
+     
   };
 
   // Função para dividir a lista de produtos em grupos de até 4
@@ -62,6 +66,7 @@ function HomePage() {
           <a href="#"> • 🛒 Carrinho</a>
           <a href="/cadastrarCliente"> • Cadastrar</a>
           <a href='/perfil/:email'> • Perfil</a>
+          <a href='#' onClick={handleLogout}> • Logout</a>
           {isAuthenticated && <a href='/'> • Meu Endereços</a>}
         </div>
       </header>

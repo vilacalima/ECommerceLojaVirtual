@@ -8,6 +8,7 @@ import NovaImagem from './novaImagem';
 
 function EditarProduto() {
   const { productId } = useParams();
+  const history = useHistory();
 
   const [product, setProduct] = useState({
     images: [], 
@@ -25,22 +26,27 @@ function EditarProduto() {
 
   //Serviço que chama a função no para pegar dados do produto no backend
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const product = await ProdutoService.getProdutoById(productId);
-        setProduct(product);
-
-        const urls = Array.isArray(product.file)
-        ? product.file.map((file) => file)
-        : [];
-
-        setImageUrls(urls);
-      } catch (error) {
-        console.error('Erro ao buscar dados do Produto:', error);
-      }
-    };
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } else{
+      const fetchData = async () => {
+        try {
+          const product = await ProdutoService.getProdutoById(productId);
+          setProduct(product);
   
-    fetchData(); 
+          const urls = Array.isArray(product.file)
+          ? product.file.map((file) => file)
+          : [];
+  
+          setImageUrls(urls);
+        } catch (error) {
+          console.error('Erro ao buscar dados do Produto:', error);
+        }
+      };
+    
+      fetchData(); 
+    } 
   }, [productId]);
 
   const sendUserData = async (userData) => {    
@@ -89,8 +95,6 @@ function EditarProduto() {
     sendUserData(product);
   };
   
-  const history = useHistory();
-
   const handleCancelar = () => {
     const confirmacao = window.confirm('Você tem certeza que deseja cancelar?');
 
