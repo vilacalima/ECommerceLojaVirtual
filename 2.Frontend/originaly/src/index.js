@@ -21,6 +21,8 @@ import EditarCliente from './components/cliente/editarCliente';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
+import Pagamento from './components/compra/pagamento';
+
 
 ReactDOM.render(
   <Router>
@@ -65,6 +67,9 @@ ReactDOM.render(
         <ProdutoForm />
       </Route>
       <Route path="/alterarProduto/:productId" component={EditarProduto}>
+      </Route>
+      <Route path="/pagamento">
+        <Pagamento />
       </Route>
       <Route path="/">
         <PaginaInicial />
