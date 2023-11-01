@@ -12,13 +12,17 @@ function Cart() {
   const addToCart = (product) => {
     const existingItem = cart.find((item) => item.id === product.id);
 
+    localStorage.setItem('quantidadeCarrinho', existingItem.quantity); 
+    
     if (existingItem) {
       if (existingItem.quantity < 2) {
         existingItem.quantity += 1;
         setCart([...cart]);
+        localStorage.setItem('quantidadeCarrinho', existingItem.quantity); //Altera a quantidade do carrinho
       }
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
+      localStorage.setItem('quantidadeCarrinho', cart); //Altera a quantidade do carrinho
     }
   };
 
