@@ -49,8 +49,7 @@ ReactDOM.render(
       <Route path="/carrinho">
         <Cart />
       </Route>
-
-
+      
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>

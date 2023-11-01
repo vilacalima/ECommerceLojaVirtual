@@ -34,9 +34,10 @@ function HomePage() {
 
     if (confirmLogout) {
       localStorage.removeItem('usuario');
-      // Alterado de "Exemplo: window.location.href = '/login';" para o seguinte:
       history.push('/login'); // Redireciona usando o useHistory
+      Exemplo: window.location.href = '/login';
     }
+     
   };
 
   const addToCart = (product) => {

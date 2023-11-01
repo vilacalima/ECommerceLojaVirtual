@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import InputMask from 'react-input-mask';
 import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import UsuarioService from '../../service/usuarioService';
@@ -9,6 +10,7 @@ function App() {
   const [cpfValue, setCpfValue] = useState('');
   const [isCpfValid, setIsCpfValid] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const history = useHistory();
 
   const handleCpfChange = (event) => {
     const newCpfValue = event.target.value;
@@ -21,19 +23,25 @@ function App() {
       const response = UsuarioService.newUser(userData);
       console.log('Dados enviados com sucesso:', response);
 
-            // Após o cadastro bem-sucedido, defina showSuccessMessage para true
-            setShowSuccessMessage(true);
+      // Após o cadastro bem-sucedido, defina showSuccessMessage para true
+      setShowSuccessMessage(true);
 
-            // Use setTimeout para ocultar a mensagem após 3 segundos
-            setTimeout(() => {
-              setShowSuccessMessage(false);
-            }, 3000); // 3000 milissegundos = 3 segundos
-
+      // Use setTimeout para ocultar a mensagem após 3 segundos
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+      }, 3000); // 3000 milissegundos = 3 segundos
 
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
     }
   };
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser == null) {
+      history.push(`/login`);
+    } 
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();

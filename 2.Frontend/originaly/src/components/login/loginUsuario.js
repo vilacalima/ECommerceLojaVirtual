@@ -1,39 +1,69 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import LoginService from '../../service/loginService';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 function LoginUsuario() {
-      // const user = new LoginRecord(event.target.username.value, event.target.password.value);
-      const [user, setUser] = useState({
-        email: '',
-        senha: '',
-      });
+  // const user = new LoginRecord(event.target.username.value, event.target.password.value);
+  const [user, setUser] = useState({
+    email: '',
+    senha: '',
+  });
+
+  const [usuario, setUsuario] = useState()
     
-    const history = useHistory();
+  const history = useHistory();
 
-    const handleSubmit = async (event) => {
-      event.preventDefault();
-      
-      try {
-        const login = await LoginService.getLogin(user);
-        Cookies.set('token', 'ORIGINALYPI42023', { expires: 1 }); // O token expira em 1 dias
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("usuario");
+    if (loggedInUser) {
+      doLogin(loggedInUser);
+      // const foundUser = JSON.parse(loggedInUser);
+      // setUsuario(foundUser);
 
-        if (login === 'administrador') {
-            history.push(`/home/${false}`);
-        } else if (login === 'estoquista') {
-            history.push(`/home/${true}`);
-        } else if (login === 'Cliente') {
-          history.push(`/perfil/${user.email}`);
-        } else {
-          window.postMessage('Sem premissão');
-        } 
-      } catch (error) {
-        console.error('Erro ao enviar login:', error);
-      }
+      // doLogin(loggedInUser);
+    }
+  }, []);
+
   
-    };
+
+  const doLogin = (login) => {
+    if (login === 'administrador') {
+      history.push(`/home/${false}`);
+    } else if (login === 'estoquista') {
+        history.push(`/home/${true}`);
+    } else if (login === 'Cliente') {
+      history.push(`/perfil/${user.email}`);
+    } else {
+      window.postMessage('Sem premissão');
+    } 
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const login = await LoginService.getLogin(user);
+      
+      const data = localStorage.getItem("usuario");
+      
+      if(data == null){
+        Cookies.set('token', 'ORIGINALYPI42023', { expires: 1 }); // O token expira em 1 dias
+      
+        localStorage.setItem('usuario', login);
+
+        doLogin(login);
+      } else {
+        console.log(data);
+      }
+
+    } catch (error) {
+      console.error('Erro ao enviar login:', error);
+    }
+
+  };
   
     return (
 

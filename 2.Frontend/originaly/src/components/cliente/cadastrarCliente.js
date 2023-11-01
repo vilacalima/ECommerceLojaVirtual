@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ClienteService  from '../../service/clienteService';
+import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 
 class CadastroCliente extends Component {
   constructor() {
@@ -119,11 +120,21 @@ class CadastroCliente extends Component {
     }
   };
 
+  async componentDidMount() {
+    const history = new BrowserRouter().history;
+
+    const userToken = localStorage.getItem('usuario');
+
+    if (userToken == null) {
+      history.push(`/login`);
+    }
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
 
     // Verificar se o email já existe na base
-    const emailJaExiste = await ClienteService.verificarEmailExistente(this.state.email)
+    const emailJaExiste = await ClienteService.verificarEmailExistente(this.state.email);
     
     if (this.state.confirmarSenha != this.state.senha){
       this.setState({ senhaErrada: true });

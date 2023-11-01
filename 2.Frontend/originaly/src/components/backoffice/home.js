@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import './home.css';
 import axios from 'axios';
 
@@ -7,8 +7,16 @@ function Home() {
   const { ativo } = useParams();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+  const history = useHistory();
+
   useEffect(() => {
-    setIsButtonDisabled(ativo === 'true');
+    const userToken = localStorage.getItem('usuario');
+
+    if (userToken == null) {
+      history.push(`/login`);
+    } else {
+      setIsButtonDisabled(ativo === 'true');
+    }
   }, [ativo]);
 
   return (
