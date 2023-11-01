@@ -54,6 +54,7 @@ function ProductPage() {
   
       // Certifique-se de que o objeto product não está vazio antes de redirecionar
       if (product) {
+        localStorage.setItem('carrinho', product);
         history.push('/carrinho', { product });
       } else {
         console.error('Erro: objeto product está vazio.');

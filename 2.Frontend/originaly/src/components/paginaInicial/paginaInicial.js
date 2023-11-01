@@ -24,6 +24,9 @@ function HomePage() {
   useEffect(() => {
     try {
       loadProducts();
+      const quantidade = localStorage.getItem("quantidadeProduto");
+      setCartCount(quantidade);
+      console.log(quantidade);
     } catch (error) {
       console.log(error);
     }
@@ -93,8 +96,6 @@ function HomePage() {
                   <a href={`/compra/${product.id}`} className="detail-button">
                     Descrição
                   </a>
-                  <button onClick={() => addToCart(product)}>Adicionar ao Carrinho</button>
-                  <button onClick={() => removeFromCart(product)}>Remover do Carrinho</button>
                 </div>
               ))}
             </div>
