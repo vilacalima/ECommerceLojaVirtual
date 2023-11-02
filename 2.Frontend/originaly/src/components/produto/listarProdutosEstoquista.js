@@ -3,6 +3,7 @@ import axios from 'axios';
 import './listarProdutosEstoquista.css';
 import ProdutoService from '../../service/produtoService';
 import { Link, useHistory } from 'react-router-dom'; // Importe o Link corretamente
+import PadraoHeader from '../header/padraoHeader';
 
 function ListarProdutos() {
   const [produtos, setProdutos] = useState([]);
@@ -41,6 +42,7 @@ function ListarProdutos() {
 
   return (
     <div>
+      <PadraoHeader pedidos={false}/>
       <h2>Listagem de Produtos</h2>
 
       <div className="filtro">

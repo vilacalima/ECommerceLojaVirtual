@@ -2,9 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './components/backoffice/home';
-import Home from './components/backoffice/home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';  
+import Backoffice from './components/backoffice/backoffice';
 import CadastroUsuario from './components/usuario/cadastroUsuario';
 import LoginUsuario from './components/login/loginUsuario';
 import AlterarUsuario from './components/usuario/alterarUsuario';
@@ -31,7 +30,7 @@ ReactDOM.render(
   <Router>
     <Switch>
       <Route path="/compra/:productId" component={Compra} />
-      <Route path="/home/:ativo" component={Home} />
+      <Route path="/backoffice" component={Backoffice} />
       <Route path="/login">
         <LoginUsuario />
       </Route>
@@ -60,7 +59,7 @@ ReactDOM.render(
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>
-      <Route path="/perfil/:email" component={Perfil} />
+      <Route path="/perfil" component={Perfil} />
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
         <ListarUsuarios />
