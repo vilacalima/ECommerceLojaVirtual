@@ -17,13 +17,13 @@ body {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 5px 20px !important;
+  padding: 10px 75px !important;
 }
 
 .logo {
   max-width: 100% ;
   max-height: 200px; /* Defina a altura máxima desejada */
-  width: 100px;
+  width: 135px;
   height: 100px;
 }
 
@@ -48,7 +48,7 @@ main {
   padding: 20px;
   display: flex;
   flex-wrap: wrap; /* Permite que os cartões quebrem para a próxima linha */
-  justify-content: space-between;
+  justify-content: center;
 }
 
 /* Estilos dos Cards */

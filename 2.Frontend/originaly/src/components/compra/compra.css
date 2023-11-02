@@ -1,11 +1,11 @@
 
 /* Estilos para o componente ProductPage */
-.product-container {
+.produto-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 20px;
-    background-color: #f4ccccfb;
+    background-color: transparent;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 15px;
   }
@@ -30,7 +30,7 @@
   }
   
   .carousel{
-    background-color: #f4ccccfb;
+    background-color: tranparent;
   } 
   
   .image-carousel img.active {
@@ -38,24 +38,25 @@
 
   }
     
-  .product-info {
+  .product-info1 {
     width: 300px;
     padding: 50px;
     text-align: left;
     margin-left: auto;
     margin-right: auto;
+    background-color: transparent;
   }
   
    
   
-  .product-info h2 {
+  .product-info1 h2 {
     font-size: 24px;
     font-weight: bold;
   }
   
    
   
-  .product-info p {
+  .product-info1 p {
     font-size: 16px;
     margin-top: 10px;
     padding: 20px;
@@ -63,18 +64,30 @@
   
    
   
-  .product-info h3 {
+  .product-info1 h3 {
     margin-top: 20px;
     font-size: 18px;
   }
   
    
-  
+  .adicionar-carrinho-button{
+    display: block;
+    width: 5px;
+    padding: 5px;
+    background-color: #af4c8e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: not-allowed;
+
+  }
+
   button#comprar-button {
     display: block;
-    width: 100%;
+    width: 150px;
     padding: 10px;
-    background-color: #333;
+    background-color: #af4c8e;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -96,3 +109,13 @@
     text-align: center;
     background-color: transparent !important;
 }
+.quantity-controls{
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+
+
