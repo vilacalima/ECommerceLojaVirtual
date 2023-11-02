@@ -22,6 +22,8 @@ import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
 import Pagamento from './components/compra/pagamento';
+import Pedido from './components/compra/pedido';
+
 
 
 ReactDOM.render(
@@ -69,6 +71,9 @@ ReactDOM.render(
       </Route>
       <Route path="/pagamento">
         <Pagamento />
+      </Route>
+      <Route path="/pedido">
+        <Pedido />
       </Route>
       <Route path="/">
         <PaginaInicial />
