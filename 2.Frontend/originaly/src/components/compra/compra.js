@@ -51,13 +51,10 @@ function ProductPage() {
       setIsButtonDisabled(true);
 
       if (product) {
-        // Cria um objeto do produto com quantidade
-        const productWithQuantity = { ...product, quantity };
-
         // Define o produto no armazenamento local
-        localStorage.setItem('carrinho', JSON.stringify(productWithQuantity));
-
-        history.push('/carrinho', { product: productWithQuantity });
+        localStorage.setItem('adicionarCarrinho', JSON.stringify({id: product.id, valor: product.valor, quantity: quantity}));
+        console.log(localStorage.getItem('adicionarCarrinho'));
+        history.push('/carrinho', { product: quantity });
       } else {
         console.error('Erro: objeto product está vazio.');
       }

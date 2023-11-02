@@ -8,13 +8,11 @@ import { useHistory, Link } from 'react-router-dom';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartCount, setCartCount] = useState(0); // Adicionado o estado cartCount
 
   const history = useHistory();
   
-
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
     setProducts(products);
@@ -23,18 +21,26 @@ function HomePage() {
   useEffect(() => {
     try {
       loadProducts();
-      const quantidade = localStorage.getItem("quantidadeProduto");
-      setCartCount(quantidade);
-
-      const usuario = localStorage.getItem("usuario");
-      if(usuario){
-        setIsAuthenticated(true);
-      }
-      console.log(quantidade);
+      usuarioLogado();
+      itensCarrinho();   
     } catch (error) {
       console.log(error);
     }
   }, []);
+
+  const usuarioLogado = () => {
+      const usuario = localStorage.getItem("usuario");
+      if(usuario){
+        setIsAuthenticated(true);
+      }
+  }
+
+  const itensCarrinho = () => {
+    const localStorageItemsString = localStorage.getItem("adicionarCarrinho");
+    const product =  JSON.parse(localStorageItemsString) || [];
+    
+    setCartCount(product.quantity);
+  }
 
   const handleLogout = () => {
     const confirmLogout = window.confirm('Tem certeza que quer sair?');
@@ -44,16 +50,6 @@ function HomePage() {
       history.push('/login'); // Redireciona usando o useHistory
     }
      
-  };
-
-  const addToCart = (product) => {
-    // Adicione o produto ao carrinho
-    setCartCount(cartCount + 1); // Atualize o estado cartCount
-  };
-
-  const removeFromCart = (product) => {
-    // Remova o produto do carrinho
-    setCartCount(cartCount - 1); // Atualize o estado cartCount
   };
 
   const groupProducts = (products) => {
