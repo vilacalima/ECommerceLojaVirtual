@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import './listarUsuarios.css';
 import UsuarioService from '../../service/usuarioService';
+import PadraoHeader from '../header/padraoHeader';
 
 function ListaUsuarios() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -63,6 +64,7 @@ function ListaUsuarios() {
 
   return (
     <div>
+      <PadraoHeader pedidos={false}/>
       <h2>Procurar Usuário</h2>
 
       <input

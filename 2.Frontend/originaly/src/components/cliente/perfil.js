@@ -40,10 +40,14 @@ class Perfil extends Component {
   }
 
   async componentDidMount() {
-    const { email } = this.props.match.params;
+    // const { email } = this.props.match.params;
     const history = new BrowserRouter().history;
 
     const userToken = localStorage.getItem('usuario');
+    console.log(userToken)
+    const { email } = JSON.parse(userToken);
+
+    console.log(email);
 
     if (userToken == null) {
       history.push(`/login`);

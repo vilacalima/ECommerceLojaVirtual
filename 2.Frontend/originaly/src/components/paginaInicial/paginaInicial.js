@@ -80,7 +80,7 @@ function HomePage() {
           <a href="/login"> • 👤 Login</a>
           <Link> • 🛒 Carrinho ({cartCount})</Link> {/* Adicionado o contador de carrinho */}
           <a href="/cadastrarCliente"> • Cadastrar</a>
-          {isAuthenticated && <a href='/perfil/'> • Perfil</a>}
+          {isAuthenticated && <a href='/perfil'> • Perfil</a>}
           {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}
         </div>
       </header>
