@@ -17,7 +17,7 @@ import EditarProduto from './components/produto/editarProduto';
 import Compra from './components/compra/compra';
 import PaginaInicial from './components/paginaInicial/paginaInicial';
 import CadastroCliente from './components/cliente/cadastrarCliente';
-import EditarCliente from './components/cliente/editarCliente';
+import Perfil from './components/cliente/perfil';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
@@ -60,7 +60,7 @@ ReactDOM.render(
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>
-      <Route path="/perfil/:email" component={EditarCliente} />
+      <Route path="/perfil/:email" component={Perfil} />
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
         <ListarUsuarios />

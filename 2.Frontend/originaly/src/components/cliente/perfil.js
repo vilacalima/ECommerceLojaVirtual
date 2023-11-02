@@ -4,8 +4,9 @@ import ClienteService  from '../../service/clienteService';
 import { useParams } from 'react-router-dom';
 import './editarCliente.css';
 import { Link, BrowserRouter } from 'react-router-dom';
+import PadraoHeader from '../header/padraoHeader';
 
-class EditarCliente extends Component {
+class Perfil extends Component {
   constructor() {
     super();
     this.state = {
@@ -184,14 +185,11 @@ class EditarCliente extends Component {
 
   render() {
     return (
-      <div className="form-container">
-        <h1>Editar Cliente</h1>
-        <Link to="/MeusPedidos">
-            <button>Meus Pedidos</button>
-          </Link>
-        <div className="card-container"> {/* Aplicando a classe card-container */}
+      <div className="perfil-form-container">
+        <PadraoHeader pedidos={true}/>
+        <h1>Área do Cliente</h1>
 
-        
+        <div className="card-container"> {/* Aplicando a classe card-container */}
             {/* Campos de dados pessoais */}
           <form onSubmit={this.handleSubmitDadosPessoais}>
             <div className='card'>
@@ -365,4 +363,4 @@ class EditarCliente extends Component {
   }
 }
 
-export default EditarCliente;
+export default Perfil;
