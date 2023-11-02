@@ -5,17 +5,7 @@ import './compra.css';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { useHistory } from 'react-router-dom';
-
-function ProductRating({ rating }) {
-  const roundedRating = Math.round(rating);
-  const stars = Array.from({ length: 5 }, (_, index) => (
-    <span key={index} className={index < roundedRating ? 'star-filled' : 'star-empty'}>
-      ⭐
-    </span>
-  ));
-
-  return <div className="product-rating">{stars}</div>;
-}
+import ProductRating from './productRating.js';
 
 function ProductPage() {
   const { productId } = useParams();
@@ -29,30 +19,28 @@ function ProductPage() {
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("usuario");
-    if (loggedInUser == null) {
-      history.push(`/login`);
-    } else {
-      axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
-        .then((response) => {
-          setProduct(response.data);
+    
+    axios.get(`http://localhost:8080/api/product/getProductAndAllFileById/${productId}`)
+    
+    .then((response) => {
+      setProduct(response.data);
 
-          const urls = [];
-          urls.push(response.data.primaryFile.url);
+      const urls = [];
+      urls.push(response.data.primaryFile.url);
 
-          response.data.file.forEach(file => {
-            urls.push(file.url);
-          });
+      response.data.file.forEach(file => {
+        urls.push(file.url);
+      });
 
-          setImageUrls(urls);
+      setImageUrls(urls);
 
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError('Erro ao buscar produtos:' + error.message);
-          setLoading(false);
-        });
-    }
+      setLoading(false);
+    })
+    .catch((error) => {
+      setError('Erro ao buscar produtos:' + error.message);
+      setLoading(false);
+    });
+    
   }, [productId]);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);

@@ -9,6 +9,7 @@
 - npm install jwt-decode
 - npm install react-icons
 - npm install js-cookie
+- npm install react-modal
 - npm start
 -----------------------------------------------------------------------
 

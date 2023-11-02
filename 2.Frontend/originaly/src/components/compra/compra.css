@@ -114,8 +114,32 @@
   align-items: center;
 }
 
+/* Estilo básico das estrelas */
+.product-rating span {
+  font-size: 24px; /* Tamanho da fonte das estrelas */
+  color: gold; /* Cor das estrelas (pode ajustar para a cor desejada) */
+}
 
+/* Estilo das estrelas preenchidas */
+.star-filled {
+  color: gold; /* Cor das estrelas preenchidas */
+}
 
+/* Estilo das estrelas vazias */
+.star-empty {
+  color: #ccc; /* Cor das estrelas vazias (pode ser uma cor mais clara) */
+}
 
+/* Estilo da estrela do meio (meia estrela) */
+.star-half {
+  color: gold; /* Cor da meia estrela (a mesma cor das estrelas preenchidas) */
+  position: relative; /* Permite ajustar a posição da meia estrela */
+}
 
-
+/* Ajustar a posição da meia estrela para exibir apenas metade dela */
+.star-half::before {
+  content: "★"; /* Usamos um símbolo de estrela em vez de uma meia estrela */
+  position: absolute;
+  left: -0.4em; /* Ajusta a posição horizontal para exibir metade da estrela */
+  top: 0; /* Alinha verticalmente com as outras estrelas */
+}
