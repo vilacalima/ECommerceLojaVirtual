@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
 import logo from '../../images/logo.jpg';
@@ -13,6 +12,7 @@ function HomePage() {
   const [cartCount, setCartCount] = useState(0); // Adicionado o estado cartCount
 
   const history = useHistory();
+  
 
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
