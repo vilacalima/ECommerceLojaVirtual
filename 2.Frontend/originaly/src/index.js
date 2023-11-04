@@ -20,6 +20,7 @@ import Perfil from './components/cliente/perfil';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
+import PaginaDeCompra from './components/cliente/paginaDeCompra';
 import Pagamento from './components/compra/pagamento';
 import Pedido from './components/compra/pedido';
 
@@ -49,6 +50,10 @@ ReactDOM.render(
 
       <Route path="/carrinho">
         <Cart />
+      </Route>
+
+      <Route path="/checarProduto">
+        <PaginaDeCompra/>
       </Route>
       
       <Route path="/cadastrarCliente">
