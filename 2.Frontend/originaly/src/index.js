@@ -21,6 +21,7 @@ import EditarCliente from './components/cliente/editarCliente';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
+import PaginaDeCompra from './components/cliente/paginaDeCompra';
 
 ReactDOM.render(
   <Router>
@@ -46,6 +47,10 @@ ReactDOM.render(
 
       <Route path="/carrinho">
         <Cart />
+      </Route>
+
+      <Route path="/checarProduto">
+        <PaginaDeCompra/>
       </Route>
       
       <Route path="/cadastrarCliente">
