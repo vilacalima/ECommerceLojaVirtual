@@ -1,45 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
-import { Carousel } from 'react-responsive-carousel';
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
 import logo from '../../images/logo.jpg';
-import { logout } from './authService';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
-  const [currentPage, setCurrentPage] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [cartCount, setCartCount] = useState(0); // Adicionado o estado cartCount
 
   const history = useHistory();
   
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
-    setProducts(products)
+    setProducts(products);
   };
 
   useEffect(() => {
     try {
       loadProducts();
+      usuarioLogado();
+      itensCarrinho();   
     } catch (error) {
       console.log(error);
     }
   }, []);
 
+  const usuarioLogado = () => {
+      const usuario = localStorage.getItem("usuario");
+      if(usuario){
+        setIsAuthenticated(true);
+      }
+  }
+
+  const itensCarrinho = () => {
+    const localStorageItemsString = localStorage.getItem("adicionarCarrinho");
+    const product =  JSON.parse(localStorageItemsString) || [];
+    
+    setCartCount(product.quantity);
+  }
 
   const handleLogout = () => {
     const confirmLogout = window.confirm('Tem certeza que quer sair?');
 
     if (confirmLogout) {
       localStorage.removeItem('usuario');
-      Exemplo: window.location.href = '/login';
+      history.push('/login'); // Redireciona usando o useHistory
     }
      
   };
 
-  // Função para dividir a lista de produtos em grupos de até 4
   const groupProducts = (products) => {
     const grouped = [];
     let group = [];
@@ -55,22 +67,20 @@ function HomePage() {
     }
     return grouped;
   };
-  
+
   return (
-    
     <div className="home-page">
       <header className="top-information">
-        <img src={logo} className="logo"></img>
+        <img src={logo} className="logo" alt="Logo"></img>
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
-          <a href="#"> • 🛒 Carrinho</a>
+          <Link> • 🛒 Carrinho ({cartCount})</Link> {/* Adicionado o contador de carrinho */}
           <a href="/cadastrarCliente"> • Cadastrar</a>
-          <a href='/perfil/:email'> • Perfil</a>
-          <a href='#' onClick={handleLogout}> • Logout</a>
-          {isAuthenticated && <a href='/'> • Meu Endereços</a>}
+          {isAuthenticated && <a href='/perfil'> • Perfil</a>}
+          {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}
         </div>
       </header>
-      
+
       <main>
         <div className="row">
           {groupProducts(products).map((productGroup, index) => (
@@ -89,7 +99,6 @@ function HomePage() {
             </div>
           ))}
         </div>
-        
       </main>
 
       <footer className="footer">

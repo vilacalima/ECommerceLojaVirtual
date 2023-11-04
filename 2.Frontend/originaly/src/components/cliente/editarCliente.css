@@ -1,3 +1,14 @@
+.perfil-form-container {
+  /* background-color: rgba(255, 241, 241, 0.616); */
+  padding: 20px;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Estilos para a página de cadastro de cliente */
 .editar-cliente {
   display: flex;

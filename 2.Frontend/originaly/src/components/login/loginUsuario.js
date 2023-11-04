@@ -11,8 +11,6 @@ function LoginUsuario() {
     email: '',
     senha: '',
   });
-
-  const [usuario, setUsuario] = useState()
     
   const history = useHistory();
 
@@ -27,15 +25,14 @@ function LoginUsuario() {
     }
   }, []);
 
-  
-
   const doLogin = (login) => {
     if (login === 'administrador') {
-      history.push(`/home/${false}`);
+      console.log("entrou aqui");
+      history.push('/backoffice', { ativo: false });
     } else if (login === 'estoquista') {
-        history.push(`/home/${true}`);
+        history.push(`/backoffice`, { ativo: true });
     } else if (login === 'Cliente') {
-      history.push(`/perfil/${user.email}`);
+      history.push(`/perfil`);
     } else {
       window.postMessage('Sem premissão');
     } 
@@ -50,9 +47,10 @@ function LoginUsuario() {
       const data = localStorage.getItem("usuario");
       
       if(data == null){
-        Cookies.set('token', 'ORIGINALYPI42023', { expires: 1 }); // O token expira em 1 dias
-      
-        localStorage.setItem('usuario', login);
+
+        if(login !== "Usuário não encontrado"){
+          localStorage.setItem('usuario', JSON.stringify({ tipo: login, email: user.email }));
+        }
 
         doLogin(login);
       } else {

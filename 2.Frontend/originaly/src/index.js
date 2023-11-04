@@ -2,9 +2,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './components/backoffice/home';
-import Home from './components/backoffice/home';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';  
+import Backoffice from './components/backoffice/backoffice';
 import CadastroUsuario from './components/usuario/cadastroUsuario';
 import LoginUsuario from './components/login/loginUsuario';
 import AlterarUsuario from './components/usuario/alterarUsuario';
@@ -17,16 +16,20 @@ import EditarProduto from './components/produto/editarProduto';
 import Compra from './components/compra/compra';
 import PaginaInicial from './components/paginaInicial/paginaInicial';
 import CadastroCliente from './components/cliente/cadastrarCliente';
-import EditarCliente from './components/cliente/editarCliente';
+import Perfil from './components/cliente/perfil';
 import App from './app';
 import MeusPedidos from './components/cliente/meusPedidos';
 import Cart from './components/cliente/carrinho';
+import Pagamento from './components/compra/pagamento';
+import Pedido from './components/compra/pedido';
+
+
 
 ReactDOM.render(
   <Router>
     <Switch>
       <Route path="/compra/:productId" component={Compra} />
-      <Route path="/home/:ativo" component={Home} />
+      <Route path="/backoffice" component={Backoffice} />
       <Route path="/login">
         <LoginUsuario />
       </Route>
@@ -51,7 +54,7 @@ ReactDOM.render(
       <Route path="/cadastrarCliente">
         <CadastroCliente />
       </Route>
-      <Route path="/perfil/:email" component={EditarCliente} />
+      <Route path="/perfil" component={Perfil} />
       <Route path="/alterarUsuario/:userId" component={AlterarUsuario} />
       <Route path="/listarUsuarios">
         <ListarUsuarios />
@@ -64,6 +67,12 @@ ReactDOM.render(
         <ProdutoForm />
       </Route>
       <Route path="/alterarProduto/:productId" component={EditarProduto}>
+      </Route>
+      <Route path="/pagamento">
+        <Pagamento />
+      </Route>
+      <Route path="/pedido">
+        <Pedido />
       </Route>
       <Route path="/">
         <PaginaInicial />
