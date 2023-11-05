@@ -3,6 +3,7 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
+import CarrinhoService from  '../../service/carrinhoService';
 import logo from '../../images/logo.jpg';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -29,12 +30,24 @@ function HomePage() {
     }
   }, []);
 
+  const usuarioLogado = () => {
+      const usuario = localStorage.getItem("usuario");
+      if(usuario){
+        setIsAuthenticated(true);
+      }
+  }
+
+  const itensCarrinho = async () => {
+    const response = await CarrinhoService.getCount();
+    setCartCount(response);
+  }
+
   const handleLogout = () => {
     const confirmLogout = window.confirm('Tem certeza que quer sair?');
 
     if (confirmLogout) {
       localStorage.removeItem('usuario');
-      history.push('/login'); // Redireciona usando o useHistory
+      history.push('/login');
     }
      
   };

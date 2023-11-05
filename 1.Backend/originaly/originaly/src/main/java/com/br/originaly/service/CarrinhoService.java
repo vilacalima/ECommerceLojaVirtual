@@ -1,8 +1,6 @@
 package com.br.originaly.service;
 
-import com.br.originaly.model.Carrinho;
-import com.br.originaly.model.Pedido;
-import com.br.originaly.model.Produto;
+import com.br.originaly.model.*;
 import com.br.originaly.record.CarrinhoRecord;
 import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.repository.CarrinhoRepository;
@@ -62,6 +60,8 @@ public class CarrinhoService {
 
                     saveNewCarrinho.add(map(dto.getIdPedido(), produto.getId(), dto.getQuantidade(), produto.getValor(), precoTotal));
                 }
+
+                deleteAllCarrinhoTemporario(idCliente);
             }
 
             _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(idCliente, carrinho.opcaoPagamento(), subtotal, carrinho.opcaoFrete(), Situacao.CADASTRADO.ordinal()));
@@ -69,6 +69,58 @@ public class CarrinhoService {
             return new MensagemDTO("Erro ao encontrar um cliente no banco de dados", true);
         }
         return new MensagemDTO("Pedido salvo com sucesso", true);
+    }
+
+    /**
+     * Salva um item no carrinho temporário
+     * @param carrinhoTemporario
+     * */
+    public MensagemDTO saveCarrinhoTemporario(CarrinhoTemporario carrinhoTemporario){
+        boolean itemCarrinho = _carrinhoRepository.saveCarrinhoTemporario(carrinhoTemporario);
+
+        if(itemCarrinho){
+            return new MensagemDTO("Item salvo no carrinho temporário", true);
+        } else{
+            return new MensagemDTO("Item não foi salvo no carrinho temporário", false);
+        }
+    }
+
+    /**
+     * Retorna todos itens do carrinho temporário
+     * @param email
+     * */
+    public List<CarrinhoTemporario> getAllCarrinhoTemporario(String email){
+        return _carrinhoRepository.getCarrinhoTemporario(email);
+    }
+
+    /**
+     * Retorna a quantidade do carrinho
+     * */
+    public long getCount(){
+        return _carrinhoRepository.getCountCarrinhoTemporario();
+    }
+
+    /**
+     * Atualiza um item no carrinho temporário
+     * @param carrinhoTemporario
+     * */
+    public MensagemDTO updateCarrinhoTemporario(CarrinhoTemporario carrinhoTemporario){
+        boolean itemCarrinho = _carrinhoRepository.updateCarrinhoTemporario(carrinhoTemporario);
+
+        if(itemCarrinho){
+            return new MensagemDTO("Item atualizado no carrinho temporário", true);
+        } else{
+            return new MensagemDTO("Item não foi atualizado no carrinho temporário", false);
+        }
+    }
+
+    /**
+     * Deleta todos os itens do carrinho temporário
+     * @param id
+     * */
+    private void deleteAllCarrinhoTemporario(int id){
+        Cliente cliente = _clienteRepository.getClientById(id);
+        _carrinhoRepository.deleteCarrinhoTemporario(cliente.getEmail());
     }
 
     /**
@@ -113,11 +165,19 @@ public class CarrinhoService {
         );
     }
 
+    /**
+     * Retorna as opções de pagamento
+     * @param opcao
+     * */
     private boolean opcaoPagamento(int opcao){
         return(opcao != OpcaoPagamento.PIX.ordinal()
                 || opcao != OpcaoPagamento.CARTAO.ordinal());
     }
 
+    /**
+     * Retorna as opções de frete
+     * @param opcao
+     * */
     private boolean opcaoFrete(int opcao){
         return(opcao != OpcaoFrete.GRANDE_SAO_PAULO.ordinal()
                 || opcao != OpcaoFrete.INTERIOR.ordinal()
