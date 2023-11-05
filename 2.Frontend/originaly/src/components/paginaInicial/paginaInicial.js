@@ -3,6 +3,7 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
+import CarrinhoService from  '../../service/carrinhoService';
 import logo from '../../images/logo.jpg';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -35,11 +36,9 @@ function HomePage() {
       }
   }
 
-  const itensCarrinho = () => {
-    const localStorageItemsString = localStorage.getItem("adicionarCarrinho");
-    const product =  JSON.parse(localStorageItemsString) || [];
-    
-    setCartCount(product.quantity);
+  const itensCarrinho = async () => {
+    const response = await CarrinhoService.getCount();
+    setCartCount(response);
   }
 
   const handleLogout = () => {
@@ -47,8 +46,7 @@ function HomePage() {
 
     if (confirmLogout) {
       localStorage.removeItem('usuario');
-      // Alterado de "Exemplo: window.location.href = '/login';" para o seguinte:
-      history.push('/login'); // Redireciona usando o useHistory
+      history.push('/login');
     }
      
   };

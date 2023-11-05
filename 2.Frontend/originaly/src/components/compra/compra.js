@@ -6,6 +6,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import { useHistory } from 'react-router-dom';
 import ProductRating from './productRating.js';
+import CarrinhoService from '../../service/carrinhoService.js';
+import CalculadoraService from '../../service/calculadora/calculadoraService.js';
 
 function ProductPage() {
   const { productId } = useParams();
@@ -46,15 +48,36 @@ function ProductPage() {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const buttonText = 'Comprar ';
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (event) => {
+    event.preventDefault();
+
     try {
       setIsButtonDisabled(true);
 
       if (product) {
-        // Define o produto no armazenamento local
-        localStorage.setItem('adicionarCarrinho', JSON.stringify({id: product.id, valor: product.valor, quantity: quantity}));
-        console.log(localStorage.getItem('adicionarCarrinho'));
-        history.push('/carrinho', { product: quantity });
+        
+        let precoTotal = CalculadoraService.calculatePrecoTotal(product.quantidade, product.valor);
+        const usuario = localStorage.getItem("usuario");
+        let saveUsuario = '';
+
+        if (usuario){
+          const usuarioParse = JSON.parse(usuario);
+          saveUsuario = usuarioParse.email;
+        } else{
+          saveUsuario = 'Usuario_nao_logado';
+        }
+
+        const carrinho = {
+          emailCliente: saveUsuario,
+          idProduto: productId,
+          quantidade: product.quantidade,
+          precoUnitario: product.valor,
+          precoTotal: precoTotal
+        }
+
+        const saveCompra = await CarrinhoService.saveCarrinhoTemporario(carrinho);
+        console.log(saveCompra);
+
       } else {
         console.error('Erro: objeto product está vazio.');
       }
