@@ -2,6 +2,7 @@ package com.br.originaly.controller;
 
 import com.br.originaly.model.CarrinhoTemporario;
 import com.br.originaly.record.CarrinhoRecord;
+import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.service.CarrinhoService;
 import com.br.originaly.service.ClienteService;
@@ -19,7 +20,7 @@ public class CarrinhoController {
     private CarrinhoService _carrinhoService;
 
     @PostMapping("/save")
-    public MensagemDTO save(@RequestParam CarrinhoRecord carrinho){
+    public MensagemDTO save(@RequestBody CarrinhoRecord carrinho){
         try{
             return _carrinhoService.save(carrinho);
         } catch(Exception ex){
@@ -29,8 +30,9 @@ public class CarrinhoController {
     }
 
     @PostMapping("/saveCarrinhoTemporario")
-    public MensagemDTO saveCarrinhoTemporario(@RequestParam(required = false) CarrinhoTemporario carrinho){
+    public MensagemDTO saveCarrinhoTemporario(@RequestBody CarrinhoTemporario carrinho){
         try{
+            System.out.println(carrinho.getEmailCliente());
             return _carrinhoService.saveCarrinhoTemporario(carrinho);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
@@ -39,7 +41,7 @@ public class CarrinhoController {
     }
 
     @PutMapping("/updateCarrinhoTemporario")
-    public MensagemDTO updateCarrinhoTemporario(@RequestParam CarrinhoTemporario carrinho){
+    public MensagemDTO updateCarrinhoTemporario(@RequestBody List<CarrinhoTemporario> carrinho){
         try{
             return _carrinhoService.updateCarrinhoTemporario(carrinho);
         } catch(Exception ex){
@@ -48,13 +50,23 @@ public class CarrinhoController {
         }
     }
 
-    @GetMapping("/getCarrinhoTemporario")
-    public List<CarrinhoTemporario> getCarrinhoTemporario(@PathVariable String email){
+    @DeleteMapping("/deleteItem/{id}")
+    public MensagemDTO deleteItem(@PathVariable int id){
+        try{
+            return _carrinhoService.deleteItemCarrinhoTemporario(id);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return new MensagemDTO("Erro ao deletar item do carrinho " + ex.getMessage().toString(), false);
+        }
+    }
+
+    @GetMapping("/getCarrinhoTemporario/{email}")
+    public List<CarrinhoTemporarioRecord> getCarrinhoTemporario(@PathVariable String email){
         return _carrinhoService.getAllCarrinhoTemporario(email);
     }
 
-    @GetMapping("/getCountCarrinhoTemporario")
-    public long getCountCarrinhoTemporario(){
-        return _carrinhoService.getCount();
+    @GetMapping("/getCountCarrinhoTemporario/{email}")
+    public long getCountCarrinhoTemporario(@PathVariable String email){
+        return _carrinhoService.getCount(email);
     }
 }

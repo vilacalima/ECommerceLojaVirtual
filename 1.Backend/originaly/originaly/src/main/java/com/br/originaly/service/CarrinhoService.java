@@ -2,6 +2,7 @@ package com.br.originaly.service;
 
 import com.br.originaly.model.*;
 import com.br.originaly.record.CarrinhoRecord;
+import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.repository.CarrinhoRepository;
 import com.br.originaly.repository.ClienteRepository;
@@ -89,29 +90,38 @@ public class CarrinhoService {
      * Retorna todos itens do carrinho temporário
      * @param email
      * */
-    public List<CarrinhoTemporario> getAllCarrinhoTemporario(String email){
-        return _carrinhoRepository.getCarrinhoTemporario(email);
+    public List<CarrinhoTemporarioRecord> getAllCarrinhoTemporario(String email){
+
+        List<CarrinhoTemporarioRecord> dto = new ArrayList<>();
+        List<CarrinhoTemporario> listCarrinhoTemporario = _carrinhoRepository.getCarrinhoTemporario(email);
+
+        for(CarrinhoTemporario item : listCarrinhoTemporario){
+            Produto produto = _produtoRepository.getProductById(item.getIdProduto());
+
+            dto.add(map(item, produto));
+        }
+
+        return dto;
     }
 
     /**
      * Retorna a quantidade do carrinho
      * */
-    public long getCount(){
-        return _carrinhoRepository.getCountCarrinhoTemporario();
+    public long getCount(String email){
+        return _carrinhoRepository.getCountCarrinhoTemporario(email);
     }
 
     /**
      * Atualiza um item no carrinho temporário
      * @param carrinhoTemporario
      * */
-    public MensagemDTO updateCarrinhoTemporario(CarrinhoTemporario carrinhoTemporario){
-        boolean itemCarrinho = _carrinhoRepository.updateCarrinhoTemporario(carrinhoTemporario);
-
-        if(itemCarrinho){
-            return new MensagemDTO("Item atualizado no carrinho temporário", true);
-        } else{
-            return new MensagemDTO("Item não foi atualizado no carrinho temporário", false);
+    public MensagemDTO updateCarrinhoTemporario(List<CarrinhoTemporario> carrinhoTemporario){
+        try{
+            _carrinhoRepository.updateCarrinhoTemporario(carrinhoTemporario);
+        } catch (Exception ex){
+            throw ex;
         }
+        return new MensagemDTO("Item atualizado no carrinho temporário", true);
     }
 
     /**
@@ -121,6 +131,19 @@ public class CarrinhoService {
     private void deleteAllCarrinhoTemporario(int id){
         Cliente cliente = _clienteRepository.getClientById(id);
         _carrinhoRepository.deleteCarrinhoTemporario(cliente.getEmail());
+    }
+
+    /**
+     * Deleta todos os itens do carrinho temporário
+     * @param id
+     * */
+    public MensagemDTO deleteItemCarrinhoTemporario(int id){
+        boolean dto = _carrinhoRepository.deleteCarrinhoTemporario(id);
+        if (dto == true){
+            return new MensagemDTO("Item deletado com sucesso", true);
+        } else{
+            return new MensagemDTO("Item não deletado", false);
+        }
     }
 
     /**
@@ -162,6 +185,26 @@ public class CarrinhoService {
                 quantidade,
                 precoUnitario,
                 precoTotal
+        );
+    }
+
+    /**
+     * Mapeia um objeto de carrinho Temporario
+     * @param carrinhoTemporario
+     * @param produto
+     * */
+    @NotNull
+    @Contract(value = "_, _, _, _, _ -> new", pure = true)
+    private CarrinhoTemporarioRecord map(CarrinhoTemporario carrinhoTemporario, Produto produto){
+
+        return new CarrinhoTemporarioRecord(
+                carrinhoTemporario.getId(),
+                carrinhoTemporario.getEmailCliente(),
+                produto.getId(),
+                produto.getNome(),
+                carrinhoTemporario.getQuantidade(),
+                carrinhoTemporario.getPrecoUnitario(),
+                carrinhoTemporario.getPrecoTotal()
         );
     }
 

@@ -56,7 +56,7 @@ function ProductPage() {
 
       if (product) {
         
-        let precoTotal = CalculadoraService.calculatePrecoTotal(product.quantidade, product.valor);
+        let precoTotal = CalculadoraService.calculatePrecoTotal(quantity, product.valor);
         const usuario = localStorage.getItem("usuario");
         let saveUsuario = '';
 
@@ -70,7 +70,7 @@ function ProductPage() {
         const carrinho = {
           emailCliente: saveUsuario,
           idProduto: productId,
-          quantidade: product.quantidade,
+          quantidade: quantity,
           precoUnitario: product.valor,
           precoTotal: precoTotal
         }

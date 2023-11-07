@@ -12,6 +12,5 @@ import java.util.List;
 @EnableJpaRepositories
 public interface ICarrinhoTemporarioRepository extends JpaRepository<CarrinhoTemporario, Long> {
     List<CarrinhoTemporario> getCarrinhoTemporarioByEmailCliente(String emailCliente);
-    CarrinhoTemporario deleteByEmailCliente(String emailCliente);
-
+    long countByEmailCliente(String emailCliente);
 }
