@@ -46,7 +46,8 @@ const CalculadoraService = {
   },
 
   calculatePrecoTotal: (quantidade, precoUnit) => {
-    return quantidade * precoUnit;
+    const total = quantidade * precoUnit;
+    return total.toFixed(2);
   }
 };
 

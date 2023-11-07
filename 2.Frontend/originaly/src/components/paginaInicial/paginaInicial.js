@@ -38,7 +38,17 @@ function HomePage() {
   }
 
   const itensCarrinho = async () => {
-    const response = await CarrinhoService.getCount();
+    let user = '';
+    const usuario = localStorage.getItem("usuario");
+    const usuarioParse = JSON.parse(usuario);
+    
+    if(usuarioParse != null){
+      user = usuarioParse.email;
+    } else{
+      user = 'Usuario_nao_logado';
+    }
+    
+    const response = await CarrinhoService.getCount(user);
     setCartCount(response);
   }
 
@@ -84,7 +94,7 @@ function HomePage() {
         <img src={logo} className="logo" alt="Logo"></img>
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
-          <a href="#"> • 🛒 Carrinho ({cartCount})</a> {/* Adicionado o contador de carrinho */}
+          <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a> {/* Adicionado o contador de carrinho */}
           <a href="/cadastrarCliente"> • Cadastrar</a>
           {isAuthenticated && <a href='/perfil'> • Perfil</a>}
           {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}

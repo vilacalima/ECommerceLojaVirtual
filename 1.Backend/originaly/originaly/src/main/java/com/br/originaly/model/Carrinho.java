@@ -23,7 +23,7 @@ public class Carrinho {
     private int idProduto;
     @Column(name = "quantidade")
     private int quantidade;
-    @Column(name = "preco")
+    @Column(name = "preco_unitario")
     private double precoUnitario;
     @Column(name = "preco_total")
     private double precoTotal;

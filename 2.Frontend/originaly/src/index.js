@@ -23,6 +23,7 @@ import Cart from './components/cliente/carrinho';
 import PaginaDeCompra from './components/cliente/paginaDeCompra';
 import Pagamento from './components/compra/pagamento';
 import Pedido from './components/compra/pedido';
+import ListarCarrinho from './components/carrinho/carrinho';
 
 
 
@@ -31,6 +32,7 @@ ReactDOM.render(
     <Switch>
       <Route path="/compra/:productId" component={Compra} />
       <Route path="/backoffice" component={Backoffice} />
+      <Route path="/carrinho" component={ListarCarrinho} />
       <Route path="/login">
         <LoginUsuario />
       </Route>
