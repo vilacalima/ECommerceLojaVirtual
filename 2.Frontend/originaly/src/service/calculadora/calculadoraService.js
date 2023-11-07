@@ -43,9 +43,12 @@ const CalculadoraService = {
     // IntervaloCepOutrosEstados
     //     Taxa de frete = $20
 
-  }
-  
+  },
 
+  calculatePrecoTotal: (quantidade, precoUnit) => {
+    const total = quantidade * precoUnit;
+    return total.toFixed(2);
+  }
 };
 
 export default CalculadoraService;

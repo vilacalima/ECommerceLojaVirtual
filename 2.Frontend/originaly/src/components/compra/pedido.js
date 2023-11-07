@@ -5,9 +5,11 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import './pedido.css';
+import Pagamento from './pagamento';
+import ItensPedido from './itensPedido';
 
-
-const App = () => {
+const Pedido = () => {
+  const [currentPage, setCurrentPage] = useState("pedido"); // Inicialmente, a página é "pedido"
   const [isModalOpen, setModalOpen] = useState(false);
   const [pedidoInfo, setPedidoInfo] = useState({
     numeroPedido: null,
@@ -30,27 +32,39 @@ const App = () => {
     setModalOpen(false);
   };
 
+  const handleNext = () => {
+    if (currentPage === "pedido") {
+      setCurrentPage("endereco");
+    } else if (currentPage === "endereco") {
+      setCurrentPage("pagamento");
+    } else if (currentPage === "pagamento") {
+      setCurrentPage("pagamento");
+    }
+  };
+  
+  const renderComponent = () => {
+    if (currentPage === "endereco") {
+      // return <Pedido />;
+    } else if (currentPage === "pagamento") {
+      return <Pagamento />;
+    }
+  };
+  
+
   return (
+    
     <div>
-      <button onClick={salvarPedido}>Salvar Pedido</button>
+      <ItensPedido />
       {isModalOpen && (
         <div className="modal">
-          <div className="modal-content">
-            <h2 className="modal-title">Detalhes do Pedido</h2>
-            {pedidoInfo.numeroPedido && (
-              <p className="modal-content-text">Número do Pedido: {pedidoInfo.numeroPedido}</p>
-            )}
-            {pedidoInfo.statusPedido && (
-              <p className="modal-content-text">Status do Pedido: {pedidoInfo.statusPedido}</p>
-            )}
-            <button className="modal-button" onClick={closeModal}>
-              Fechar
-            </button>
-          </div>
+          {/* ... Conteúdo do modal ... */}
         </div>
       )}
+      {renderComponent()} {/* Renderize o componente apropriado com base na página atual */}
+      <button onClick={handleNext}>Avançar</button>
     </div>
+    
   );
 };
 
-export default App;
+export default Pedido;

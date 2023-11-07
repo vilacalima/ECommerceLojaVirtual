@@ -3,6 +3,7 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // Importe o CSS da biblioteca
 import './paginaInicial.css';
 import ProdutoService from '../../service/produtoService';
+import CarrinhoService from  '../../service/carrinhoService';
 import logo from '../../images/logo.jpg';
 import { useHistory, Link } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ function HomePage() {
 
   const history = useHistory();
   
+
   const loadProducts = async () => {
     const products = await ProdutoService.getAllProductAndImage();
     setProducts(products);
@@ -35,11 +37,19 @@ function HomePage() {
       }
   }
 
-  const itensCarrinho = () => {
-    const localStorageItemsString = localStorage.getItem("adicionarCarrinho");
-    const product =  JSON.parse(localStorageItemsString) || [];
+  const itensCarrinho = async () => {
+    let user = '';
+    const usuario = localStorage.getItem("usuario");
+    const usuarioParse = JSON.parse(usuario);
     
-    setCartCount(product.quantity);
+    if(usuarioParse != null){
+      user = usuarioParse.email;
+    } else{
+      user = 'Usuario_nao_logado';
+    }
+    
+    const response = await CarrinhoService.getCount(user);
+    setCartCount(response);
   }
 
   const handleLogout = () => {
@@ -47,9 +57,19 @@ function HomePage() {
 
     if (confirmLogout) {
       localStorage.removeItem('usuario');
-      history.push('/login'); // Redireciona usando o useHistory
+      history.push('/login');
     }
      
+  };
+
+  const addToCart = (product) => {
+    // Adicione o produto ao carrinho
+    setCartCount(cartCount + 1); // Atualize o estado cartCount
+  };
+
+  const removeFromCart = (product) => {
+    // Remova o produto do carrinho
+    setCartCount(cartCount - 1); // Atualize o estado cartCount
   };
 
   const groupProducts = (products) => {
@@ -74,7 +94,7 @@ function HomePage() {
         <img src={logo} className="logo" alt="Logo"></img>
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
-          <Link> • 🛒 Carrinho ({cartCount})</Link> {/* Adicionado o contador de carrinho */}
+          <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a> {/* Adicionado o contador de carrinho */}
           <a href="/cadastrarCliente"> • Cadastrar</a>
           {isAuthenticated && <a href='/perfil'> • Perfil</a>}
           {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}
@@ -94,6 +114,8 @@ function HomePage() {
                   <a href={`/compra/${product.id}`} className="detail-button">
                     Descrição
                   </a>
+                  <button onClick={() => addToCart(product)}>Adicionar ao Carrinho</button>
+                  <button onClick={() => removeFromCart(product)}>Remover do Carrinho</button>
                 </div>
               ))}
             </div>
