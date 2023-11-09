@@ -21,14 +21,13 @@ function Frete() {
           
           const endereco = await ClienteService.getAddress(usuarioParse.email);
 
-          console.log(endereco.rua);
-          
           setEnderecos(endereco);
           setLoading(false);
           setClienteLogado(true);
           const calc = CalcularFrete(endereco.cep);
           setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });
-          console.log(frete.frete);  
+          
+          
       } 
     };
 

@@ -27,6 +27,15 @@ function ItensPedido() {
   const loadCarrinho = async (email) => {
     const dto = await CarrinhoService.getCarrinhoTemporario(email)
     setCarrinho(dto);
+
+    let precoTotal = 0
+    dto.forEach(element => {
+      precoTotal += element.precoTotal;
+    });
+
+    localStorage.setItem("subtotal", precoTotal);
+
+    console.log(localStorage.getItem("subtotal"));
   };
   
   return (
