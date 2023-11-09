@@ -24,6 +24,7 @@ import PaginaDeCompra from './components/cliente/paginaDeCompra';
 import Pagamento from './components/compra/pagamento';
 import Pedido from './components/compra/pedido';
 import ListarCarrinho from './components/carrinho/carrinho';
+import Frete from './components/compra/frete';
 
 
 
@@ -44,6 +45,9 @@ ReactDOM.render(
       </Route>
       <Route path="/listarProdutosEstoquista">
         <ListarProdutosEstoquista />
+      </Route>
+      <Route path="/frete">
+        <Frete/>
       </Route>
 
       <Route path="/cadastrarUsuario">
