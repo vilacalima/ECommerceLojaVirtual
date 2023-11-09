@@ -6,6 +6,7 @@ import PadraoHeader from '../header/padraoHeader';
 import './carrinho.css';
 import CarrinhoService from '../../service/carrinhoService';
 import CalculadoraService from '../../service/calculadora/calculadoraService';
+import Pedido from '../compra/pedido';
 
 function ListarCarrinho() {
   const [buscaParcial, setBuscaParcial] = useState('');
@@ -83,8 +84,12 @@ function ListarCarrinho() {
     }
   };
 
+  const handleFinalizar = () => {
+    history.push('/pedido');
+  };
+
   return (
-    <div>
+    <div className='pedido-container'>
       <PadraoHeader pedidos={false}/>
       <h2>Itens do Carrinho</h2>
 
@@ -134,7 +139,7 @@ function ListarCarrinho() {
           ))}
         </tbody>
       </table>
-      <button>Finalizar Pedido</button>
+      <button onClick={handleFinalizar}>Finalizar Pedido</button>
     </div>
   );
 }

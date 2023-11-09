@@ -108,14 +108,12 @@ function HomePage() {
               {productGroup.map((product) => (
                 <div className="product-card" key={product.id}>
                   <img src={product.primaryFile} alt={product.name} />
-                  <h2>{product.nome}</h2>
-                  <p>Descrição: {product.descricao}</p>
+                  <h2 className='pagina-inicial-detail'>{product.nome}</h2>
+                  <p className='pagina-inicial-detail'>Descrição: {product.descricao}</p>
                   <p>Por: R${product.valor}</p>
-                  <a href={`/compra/${product.id}`} className="detail-button">
+                  <a href={`/compra/${product.id}`} className="pagina-inicial-detail-button">
                     Descrição
                   </a>
-                  <button onClick={() => addToCart(product)}>Adicionar ao Carrinho</button>
-                  <button onClick={() => removeFromCart(product)}>Remover do Carrinho</button>
                 </div>
               ))}
             </div>

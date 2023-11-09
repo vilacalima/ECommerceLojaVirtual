@@ -78,6 +78,7 @@ function LoginUsuario() {
                     type="text" 
                     id="username" 
                     name="username" 
+                    className='login-caixa-text'
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
                     required 
