@@ -4,8 +4,7 @@ import com.br.originaly.model.Carrinho;
 
 import java.util.List;
 
-public record CarrinhoRecord(int idCliente,
+public record CarrinhoRecord(String emailCliente,
                              int opcaoPagamento,
-                             int opcaoFrete,
-                             List<Carrinho> carrinhoList) {
+                             String opcaoFrete) {
 }

@@ -34,11 +34,11 @@ public class CarrinhoRepository {
      * @param carrinhoList
      * @param pedido
      */
-    public void saveCarrinho(List<Carrinho> carrinhoList, Pedido pedido){
+    public void saveCarrinho(List<Carrinho> carrinhoList, Pedido pedido) {
         Pedido newPedido = _pedidoRepository.save(pedido);
 
-        for (Carrinho carrinho: carrinhoList) {
-            carrinho.setIdProduto(newPedido.getId());
+        for (Carrinho carrinho : carrinhoList) {
+            carrinho.setIdPedido(newPedido.getId());
             _carrinhoRepository.save(carrinho);
         }
     }

@@ -25,6 +25,8 @@ function Frete() {
           setLoading(false);
           setClienteLogado(true);
           const calc = CalcularFrete(endereco.cep);
+
+          localStorage.setItem("frete", JSON.stringify({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') }));
           setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });
           
           

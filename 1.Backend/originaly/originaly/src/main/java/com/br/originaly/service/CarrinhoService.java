@@ -38,10 +38,12 @@ public class CarrinhoService {
      * @param carrinho
      * */
     public MensagemDTO save(CarrinhoRecord carrinho){
+        Cliente cliente = _clienteRepository.getClientByEmail(carrinho.emailCliente());
+        int idCliente = _clienteRepository.getIdClient(cliente.getId());
 
-        int idCliente = _clienteRepository.getIdClient(carrinho.idCliente());
+        if(cliente.getId() != 0){
+            List<CarrinhoTemporario> carrinhoTemporario= _carrinhoRepository.getCarrinhoTemporario(cliente.getEmail());
 
-        if(idCliente != 0){
             if(!opcaoPagamento(carrinho.opcaoPagamento()))
                 return new MensagemDTO("forma de pagamento invalido", false);
 
@@ -52,20 +54,21 @@ public class CarrinhoService {
 
             List<Carrinho> saveNewCarrinho = new ArrayList<>();
 
-            for (Carrinho dto : carrinho.carrinhoList()) {
+            for (CarrinhoTemporario dto : carrinhoTemporario) {
                 Produto produto = _produtoRepository.getProductById(dto.getIdProduto());
 
                 if(produto != null){
                     double precoTotal = dto.getQuantidade() * produto.getValor();
                     subtotal += precoTotal;
 
-                    saveNewCarrinho.add(map(dto.getIdPedido(), produto.getId(), dto.getQuantidade(), produto.getValor(), precoTotal));
+                    saveNewCarrinho.add(map(produto.getId(), dto.getQuantidade(), produto.getValor(), precoTotal));
                 }
-
-                deleteAllCarrinhoTemporario(idCliente);
             }
 
-            _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(idCliente, carrinho.opcaoPagamento(), subtotal, carrinho.opcaoFrete(), Situacao.CADASTRADO.ordinal()));
+            _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
+            deleteAllCarrinhoTemporario(cliente.getId());
+
+            //Lembrar de atualizar o produto tirando a quantidade
         } else{
             return new MensagemDTO("Erro ao encontrar um cliente no banco de dados", true);
         }
@@ -177,10 +180,10 @@ public class CarrinhoService {
      * */
     @NotNull
     @Contract(value = "_, _, _, _, _ -> new", pure = true)
-    private Carrinho map(int idPedido, int idProduto, int quantidade, double precoUnitario, double precoTotal){
+    private Carrinho map(int idProduto, int quantidade, double precoUnitario, double precoTotal){
 
         return new Carrinho(
-                idPedido,
+//                idPedido,
                 idProduto,
                 quantidade,
                 precoUnitario,
@@ -221,9 +224,25 @@ public class CarrinhoService {
      * Retorna as opções de frete
      * @param opcao
      * */
-    private boolean opcaoFrete(int opcao){
-        return(opcao != OpcaoFrete.GRANDE_SAO_PAULO.ordinal()
-                || opcao != OpcaoFrete.INTERIOR.ordinal()
-                || opcao != OpcaoFrete.DEMAIS_REGIOES.ordinal());
+    private boolean opcaoFrete(String opcao){
+        return(opcao != OpcaoFrete.GRANDE_SAO_PAULO.toString()
+                || opcao != OpcaoFrete.INTERIOR.toString()
+                || opcao != OpcaoFrete.DEMAIS_REGIOES.toString());
+    }
+
+    /**
+     * Retorna um inteiro com a opção de frete
+     * */
+    private int map(String opcao){
+        switch (opcao){
+            case "Zona A":
+                return OpcaoFrete.GRANDE_SAO_PAULO.ordinal();
+            case "Zona B":
+                return OpcaoFrete.INTERIOR.ordinal();
+            case "Zona C":
+                return OpcaoFrete.DEMAIS_REGIOES.ordinal();
+            default:
+                return 0;
+        }
     }
 }

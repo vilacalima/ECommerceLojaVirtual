@@ -18,6 +18,14 @@ class PaymentForm extends Component {
   };
 
   handlePaymentMethodChange = (event) => {
+    let op = 'pix';
+    localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: op  }));
+
+    if(this.state.cardType === 'debit' || this.state.cardType === 'crédito'){
+      op = 'cartao'
+      localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: op  }));
+    }
+
     this.setState({ paymentMethod: event.target.value });
   };
 
