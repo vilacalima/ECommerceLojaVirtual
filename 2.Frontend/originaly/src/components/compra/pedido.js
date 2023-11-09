@@ -7,6 +7,7 @@ import { Carousel } from 'react-responsive-carousel';
 import './pedido.css';
 import Pagamento from './pagamento';
 import ItensPedido from './itensPedido';
+import PadraoHeader from '../header/padraoHeader';
 
 const Pedido = () => {
   const [currentPage, setCurrentPage] = useState("pedido"); // Inicialmente, a página é "pedido"
@@ -53,7 +54,8 @@ const Pedido = () => {
 
   return (
     
-    <div>
+    <div className='pedido-container'>
+      <PadraoHeader pedidos={false}/>
       <ItensPedido />
       {isModalOpen && (
         <div className="modal">

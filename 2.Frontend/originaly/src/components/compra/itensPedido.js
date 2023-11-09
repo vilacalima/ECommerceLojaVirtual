@@ -40,7 +40,7 @@ function ItensPedido() {
       <div>
         {carrinho.map((item, index) => (
           <div key={index}>
-            <p>Produto({index + 1}): {item.nomeProduto} Quantidade: {item.quantidade}  
+            <p>Produto({index + 1}): {item.nomeProduto} Quantidade: {item.quantidade} <br />  
              Preço Unitário: R$ {item.precoUnitario} Preço Total: R$ {item.precoTotal}</p>
           </div>
         ))}

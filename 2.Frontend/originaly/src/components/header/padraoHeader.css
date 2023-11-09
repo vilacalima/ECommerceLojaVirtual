@@ -1,8 +1,14 @@
 .header-container {
-    width: 100%;
+    position: fixed !important;
+    top: 0;
+    width: 100% !important;
     margin: 0;
     padding: 0;
-  }
+    margin-bottom: 30px;
+}
+.header-container.hidden {
+    top: -100px; /* Mova o cabeçalho para cima para escondê-lo */
+}
 
 /* Estilos do Cabeçalho */
 .header-top-information {

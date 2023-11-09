@@ -18,6 +18,27 @@ function PadraoHeader(props) {
       history.push('/');
     }
   };
+
+  // Função para controlar a exibição do cabeçalho
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    const headerContainer = document.querySelector('.header-container');
+
+    if (scrollY > 0) {
+      headerContainer.classList.add('hidden');
+    } else {
+      headerContainer.classList.remove('hidden');
+    }
+  };
+
+  // Adicione um evento de rolagem ao carregar o componente
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []); 
   
   return (
     
