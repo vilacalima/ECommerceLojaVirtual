@@ -8,6 +8,7 @@ import './pedido.css';
 import Pagamento from './pagamento';
 import ItensPedido from './itensPedido';
 import PadraoHeader from '../header/padraoHeader';
+import Frete from './frete';
 
 const Pedido = () => {
   const [currentPage, setCurrentPage] = useState("pedido"); // Inicialmente, a página é "pedido"
@@ -45,12 +46,11 @@ const Pedido = () => {
   
   const renderComponent = () => {
     if (currentPage === "endereco") {
-      // return <Pedido />;
+      return <Frete />;
     } else if (currentPage === "pagamento") {
       return <Pagamento />;
     }
   };
-  
 
   return (
     

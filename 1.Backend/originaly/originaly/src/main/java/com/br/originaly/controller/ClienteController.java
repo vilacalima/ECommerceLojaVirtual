@@ -71,4 +71,9 @@ public class ClienteController {
     public ClienteRecord getClient(@PathVariable String email){
         return  _clienteService.getClienteByEmail(email);
     }
+
+    @GetMapping("/getAddress/{email}")
+    public Endereco getAddress(@PathVariable String email){
+        return _clienteService.getEnderecoByIdAndActive(email);
+    }
 }

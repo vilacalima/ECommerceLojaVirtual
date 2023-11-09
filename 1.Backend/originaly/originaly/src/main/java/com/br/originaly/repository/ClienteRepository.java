@@ -137,4 +137,14 @@ public class ClienteRepository {
         return _enderecoRepository.getEnderecoByIdCliente(idCliente);
     }
 
+    /**
+     * Retorna o endereço de entrea
+     * @param idCliente
+     * @param isActive
+     * @return
+     * */
+    public Endereco getEnderecoAndActive(int idCliente, boolean isActive){
+        return _enderecoRepository.getEnderecoByIdClienteAndIsEnderecoEntrega(idCliente, isActive);
+    }
+
 }

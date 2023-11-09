@@ -10,7 +10,7 @@ h2 {
   }
   
   /* Estilos para o campo de busca */
-  input[type="text"] {
+  /* input[type="text"] {
     padding: 10px;
     box-sizing: border-box;
     border: 2px solid black;
@@ -18,7 +18,7 @@ h2 {
     width: 47%;
     text-align: center;
 
-  }
+  } */
   /* Estilos para a lista de produtos */
   ul {
     list-style: none;
