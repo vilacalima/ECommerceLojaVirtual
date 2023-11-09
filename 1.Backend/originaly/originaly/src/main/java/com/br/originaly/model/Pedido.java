@@ -29,7 +29,7 @@ public class Pedido {
     private int situacao;
 
     public Pedido(int id, int opPagamento, double total, int frete, int situacaoVenda){
-        this.id = id;
+        this.idCliente = id;
         this.opcaoPagamento = opPagamento;
         this.subtotal = total;
         this.opcaoFrete = frete;

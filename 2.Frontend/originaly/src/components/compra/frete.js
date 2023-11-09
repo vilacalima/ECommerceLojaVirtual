@@ -2,24 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './frete.css';
 import axios from 'axios';
+import ClienteService from '../../service/clienteService';
+import CalcularFrete from '../../service/calculadora/calculaCep';
 
 function Frete() {
   const [freteSelecionado, setFreteSelecionado] = useState(null);
   const [enderecos, setEnderecos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [clienteLogado, setClienteLogado] = useState(false); // Adicione um estado para verificar se o cliente está logado
+  const [frete, setFrete] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/cliente/enderecos')
-      .then((response) => {
-        setEnderecos(response.data);
-        setLoading(false);
-        setClienteLogado(true); // Define como true se o cliente estiver logado
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar endereços:', error);
-        setLoading(false);
-      });
+    const fetchData = async () => {
+      const loggedInUser = localStorage.getItem("usuario");
+      
+      if (loggedInUser != null){
+          const usuarioParse = JSON.parse(loggedInUser);
+          
+          const endereco = await ClienteService.getAddress(usuarioParse.email);
+
+          setEnderecos(endereco);
+          setLoading(false);
+          setClienteLogado(true);
+          const calc = CalcularFrete(endereco.cep);
+
+          localStorage.setItem("frete", JSON.stringify({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') }));
+          setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });
+          
+          
+      } 
+    };
+
+    fetchData();
   }, []);
 
   const handleFreteChange = (valorFrete) => {
@@ -75,28 +89,28 @@ function Frete() {
       )}
       
       {loading ? (
-        <p>Carregando endereços...</p>
-      ) : (
-        <div>
-          {enderecos.length > 0 ? (
-            <div>
-              <h3>Seus Endereços Cadastrados:</h3>
-              {enderecos.map((endereco) => (
-                <div key={endereco.id} className="endereco-div">
-                  <p>Rua: {endereco.rua}</p>
-                  <p>Cidade: {endereco.cidade}</p>
-                </div>
-              ))}
+      <p>Carregando endereço...</p>
+    ) : (
+      <div>
+        {enderecos ? (
+          <div>
+            <h3>Seu Endereço Cadastrado:</h3>
+            <div className="endereco-div">
+              <p>Cep: {enderecos.cep}</p>
+              <p>Rua: {enderecos.rua}</p>
+              <p>Cidade: {enderecos.cidade}</p>
+              <h3>Valor do frete: R${frete.frete}</h3>
             </div>
-          ) : (
-            <p>Você não tem endereços cadastrados. Adicione um endereço na sua conta.</p>
-          )}
-        </div>
-      )}
+          </div>
+        ) : (
+          <p>Você não tem endereço cadastrado. Adicione um endereço na sua conta.</p>
+        )}
+      </div>
+    )}
 
-      <Link to="/login" id="finalizar-pedido-button">
+      {/* <Link to="/login" id="finalizar-pedido-button">
         FAZER LOGIN PARA CALCULAR MEU FRETE
-      </Link>
+      </Link> */}
     </div>
   );
 }

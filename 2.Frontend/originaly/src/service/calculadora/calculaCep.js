@@ -1,9 +1,9 @@
-function calcularFrete(cepDestino) {
+function CalcularFrete(cepDestino) {
     // Lista de intervalos de CEP e suas zonas correspondentes
     const intervalosCEP = [
-        { intervalo: { inicio: '01000', fim: '09999' }, zona: 'Zona A', frete: 10 },
-        { intervalo: { inicio: '10000', fim: '19999' }, zona: 'Zona B', frete: 15 },
-        { intervalo: { inicio: '20000', fim: '29999' }, zona: 'Zona C', frete: 20 },
+        { intervalo: { inicio: '01000', fim: '09999' }, zona: 'Zona A', frete: 15 },
+        { intervalo: { inicio: '10000', fim: '19999' }, zona: 'Zona B', frete: 25 },
+        { intervalo: { inicio: '20000', fim: '29999' }, zona: 'Zona C', frete: 35 },
     ];
 
     // Encontre a zona correspondente ao CEP de destino
@@ -26,9 +26,10 @@ function calcularFrete(cepDestino) {
             frete: 0 // Ou um valor padrão
         };
     }
+
+    // const resultadoFrete = calcularFrete(cepDestino);
+    // console.log(`Para o CEP ${cepDestino}, a zona é ${resultadoFrete.zona} e o frete é de $${resultadoFrete.frete}.`);
 }
 
-// Exemplo de uso:
-const cepDestino = '04849'; // Substitua pelo CEP de destino desejado
-const resultadoFrete = calcularFrete(cepDestino);
-console.log(`Para o CEP ${cepDestino}, a zona é ${resultadoFrete.zona} e o frete é de $${resultadoFrete.frete}.`);
+export default CalcularFrete;
+

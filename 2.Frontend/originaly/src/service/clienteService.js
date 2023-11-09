@@ -19,6 +19,22 @@ const ClienteService = {
     },
 
     /**
+     * Retorna um endereço pelo email e ativo
+     * @param idCliente
+     * @returns
+     */
+    getAddress: async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/cliente/getAddress/${email}`);          
+            
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
+    /**
      * Envia um novo cliente para o banco de dados
      * @param {*} dto 
      * @returns 
@@ -96,6 +112,11 @@ const ClienteService = {
         }
     },
 
+    /**
+     * Verifica se o email existe
+     * @param email
+     * @returns
+     */
     verificarEmailExistente: async (email) => {
         try {
             const response = await axios.get(`http://localhost:8080/cliente/verificarEmail/${email}`);

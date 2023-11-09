@@ -15,6 +15,16 @@ const CarrinhoService = {
         }
     },
 
+    save: async (dto) => {
+        try {
+            const response = await axios.post(`http://localhost:8080/carrinho/save`, dto);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
     saveCarrinhoTemporario: async (dto) => {
         try {
             const response = await axios.post(`http://localhost:8080/carrinho/saveCarrinhoTemporario`, dto);          

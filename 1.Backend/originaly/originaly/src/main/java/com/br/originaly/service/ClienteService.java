@@ -211,4 +211,17 @@ public class ClienteService {
                 enderecos
         );
     }
+
+    /**
+     * Retorna o endereço do cliente ativo
+     * @param email
+     * @return
+     * */
+    public Endereco getEnderecoByIdAndActive(String email){
+        Cliente cliente = _clienteRepository.getClientByEmail(email);
+        if(cliente != null){
+            return _clienteRepository.getEnderecoAndActive(cliente.getId(), true);
+        }
+        return null;
+    }
 }

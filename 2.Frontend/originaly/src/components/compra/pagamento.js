@@ -18,6 +18,14 @@ class PaymentForm extends Component {
   };
 
   handlePaymentMethodChange = (event) => {
+    let op = 'pix';
+    localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: op  }));
+
+    if(this.state.cardType === 'debit' || this.state.cardType === 'crédito'){
+      op = 'cartao'
+      localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: op  }));
+    }
+
     this.setState({ paymentMethod: event.target.value });
   };
 
@@ -37,13 +45,19 @@ class PaymentForm extends Component {
   calculateSubtotal = () => {
     const { paymentMethod, cardType, installment } = this.state;
 
+    let subtotalItem = localStorage.getItem("subtotal");
     // Lógica para calcular o subtotal com base nas informações do pagamento
-    let subtotal = 0;
+    let subtotal = subtotalItem;
+    let formartNumber = Number(subtotal).toFixed(2).replace('.', ',')
 
     // Adicione sua lógica aqui para calcular o subtotal com base nas informações de pagamento
 
     this.setState({ subtotal });
   };
+
+  async componentDidMount() {
+    this.calculateSubtotal();
+  }
 
   isPaymentInfoComplete = () => {
     const { paymentMethod, cardType, cardNumber, cardCVC, cardName, cardExpiration } = this.state;
@@ -136,10 +150,10 @@ class PaymentForm extends Component {
 
         {/* Exiba o subtotal em algum lugar na página, por exemplo: */}
         <div>
-          Subtotal: R$ {this.state.subtotal.toFixed(2)}
+          Subtotal: R$ {this.state.subtotal}
         </div>
 
-        <div>
+        {/* <div>
           <button
             onClick={() => {
               if (this.isPaymentInfoComplete()) {
@@ -151,8 +165,8 @@ class PaymentForm extends Component {
             }}
           >
             Avançar
-          </button>
-        </div>
+          </button> */}
+        {/* </div> */}
       </div>
     );
   }

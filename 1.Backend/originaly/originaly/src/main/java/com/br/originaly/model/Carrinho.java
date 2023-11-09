@@ -35,4 +35,11 @@ public class Carrinho {
         this.precoUnitario = precoUnitario;
         this.precoTotal = precoTotal;
     }
+
+    public Carrinho( int idProduto, int quantidade, double precoUnitario, double precoTotal){
+        this.idProduto = idProduto;
+        this.quantidade = quantidade;
+        this.precoUnitario = precoUnitario;
+        this.precoTotal = precoTotal;
+    }
 }
