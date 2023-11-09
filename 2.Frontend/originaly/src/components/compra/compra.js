@@ -9,17 +9,6 @@ import ProductRating from './productRating.js';
 import CarrinhoService from '../../service/carrinhoService.js';
 import CalculadoraService from '../../service/calculadora/calculadoraService.js';
 
-function ProductRating({ rating }) {
-  const roundedRating = Math.round(rating);
-  const stars = Array.from({ length: 5 }, (_, index) => (
-    <span key={index} className={index < roundedRating ? 'star-filled' : 'star-empty'}>
-      ⭐
-    </span>
-  ));
-
-  return <div className="product-rating">{stars}</div>;
-}
-
 function ProductPage() {
   const { productId } = useParams();
   const [product, setProduct] = useState({});
