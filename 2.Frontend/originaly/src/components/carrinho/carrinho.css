@@ -71,3 +71,7 @@ h2 {
 .botao-adicionar:hover {
     background-color: #73576b;
 }
+
+.carrinho-link{
+  cursor: pointer;
+}

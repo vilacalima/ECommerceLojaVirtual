@@ -8,6 +8,8 @@ import { useHistory } from 'react-router-dom';
 import ProductRating from './productRating.js';
 import CarrinhoService from '../../service/carrinhoService.js';
 import CalculadoraService from '../../service/calculadora/calculadoraService.js';
+import Response from '../util/response.js'
+import PadraoHeader from '../header/padraoHeader.js';
 
 function ProductPage() {
   const { productId } = useParams();
@@ -16,6 +18,9 @@ function ProductPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const history = useHistory();
+  const [responseApi, setResponseApi] = useState();
+  const [mostrar, setMostrar] = useState(false);
+  
 
   // Adicionar o estado para a quantidade do produto
   const [quantity, setQuantity] = useState(1);
@@ -78,7 +83,9 @@ function ProductPage() {
         }
 
         const saveCompra = await CarrinhoService.saveCarrinhoTemporario(carrinho);
-        console.log(saveCompra);
+
+        setResponseApi({ isSucessa: saveCompra.isSuccess, message: saveCompra.message})
+        setMostrar(true);
 
       } else {
         console.error('Erro: objeto product está vazio.');
@@ -108,6 +115,7 @@ function ProductPage() {
 
   return (
     <div className="produto-container">
+      <PadraoHeader />
       <Carousel showArrows={true}>
         {Array.isArray(product.file) && product.file.map((imageUrl, index) => (
           <div key={index}>
@@ -116,24 +124,33 @@ function ProductPage() {
         ))}
       </Carousel>
       <div className="product-info1">
-        <h2>{product.nome}</h2>
-        <ProductRating rating={product.avaliacao} />
-        <p>{product.descricao}</p>
-        <p>R$: {product.valor}</p>
-        
-        {/* Botões para ajustar a quantidade */}
-        <div className="quantity-controls">
-          <button onClick={handleDecrementQuantity}>-</button>
-          <span>{quantity}</span>
-          <button onClick={handleIncrementQuantity}>+</button>
+        <div className='compra-item-descricao'>
+          <h3>{product.nome}</h3>
+          <ProductRating rating={product.avaliacao} />
+          <p>{product.descricao}</p>
+          <p>R$: {product.valor}</p>
         </div>
         
-        <button id="adicionar-carrinho-button" onClick={handleAddToCart}>
-          Adicionar ao Carrinho
-        </button>
-        <button id="comprar-button" onClick={handleAddToCart}>
-          {buttonText}
-        </button>
+
+        <div className='compra-item-botao'>
+          <div className="quantity-controls">
+            <button onClick={handleDecrementQuantity}>-</button>
+            <span>{quantity}</span>
+            <button onClick={handleIncrementQuantity}>+</button>
+          </div>
+          
+          <button id="adicionar-carrinho-button" onClick={handleAddToCart}>
+            Adicionar ao Carrinho
+          </button>
+          <button id="comprar-button" onClick={handleAddToCart}>
+            {buttonText}
+          </button>
+        </div>
+        
+        {mostrar && (
+            <Response isSuccess={responseApi.isSuccess} message={responseApi.message} rotaSucess={''} rotaNotSucess={`compra/${product.id}`}/>
+          )}
+       
       </div>
     </div>
   );

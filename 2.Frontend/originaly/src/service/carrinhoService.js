@@ -55,6 +55,16 @@ const CarrinhoService = {
         }
     },
 
+    getPedidoCliente: async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/carrinho/getPedidoCliente/${email}`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
     deleteItemCarrinhoTemporario: async (id) => {
         try {
             const response = await axios.delete(`http://localhost:8080/carrinho/deleteItem/${id}`);

@@ -4,6 +4,7 @@ import com.br.originaly.model.CarrinhoTemporario;
 import com.br.originaly.record.CarrinhoRecord;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
+import com.br.originaly.record.PedidoRecord;
 import com.br.originaly.service.CarrinhoService;
 import com.br.originaly.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,11 @@ public class CarrinhoController {
     @GetMapping("/getCarrinhoTemporario/{email}")
     public List<CarrinhoTemporarioRecord> getCarrinhoTemporario(@PathVariable String email){
         return _carrinhoService.getAllCarrinhoTemporario(email);
+    }
+
+    @GetMapping("/getPedidoCliente/{email}")
+    public List<PedidoRecord> getPedidoCliente(@PathVariable String email){
+        return _carrinhoService.getAllPedido(email);
     }
 
     @GetMapping("/getCountCarrinhoTemporario/{email}")

@@ -47,7 +47,7 @@ function ListarCarrinho() {
     );
     setCarrinho(updatedCarrinho);
 
-    const dto = CarrinhoService.updateCarrinhoTemporario(carrinho);
+    const dto = await CarrinhoService.updateCarrinhoTemporario(carrinho);
 
     if(dto.isSuccess === true){
         setTimeout(() => {
@@ -63,7 +63,7 @@ function ListarCarrinho() {
       );
       
       setCarrinho(updatedCarrinho);
-      CarrinhoService.updateCarrinhoTemporario(carrinho);
+     await CarrinhoService.updateCarrinhoTemporario(carrinho);
     }
   };
   
@@ -113,7 +113,7 @@ function ListarCarrinho() {
               <td>
                 <a>
                   <span
-                    className="link-inativar"
+                    className="carrinho-link"
                     onClick={() => handleDiminuirQuantidadeProduto(item)}>
                     -
                   </span>
@@ -121,7 +121,7 @@ function ListarCarrinho() {
                 <span className="espaco">|</span>
                 <a>
                   <span
-                    className="link-inativar"
+                    className="carrinho-link"
                     onClick={() => handleQuantidadeProduto(item)}>
                     +
                   </span>
@@ -129,7 +129,7 @@ function ListarCarrinho() {
                 <span className="espaco">|</span>
                 <a>
                   <span
-                    className="link-inativar"
+                    className="carrinho-link"
                     onClick={() => handleExcluirItem(item)}>
                     Excluir item
                   </span>

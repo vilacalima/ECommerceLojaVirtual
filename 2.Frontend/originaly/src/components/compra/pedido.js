@@ -10,6 +10,7 @@ import ItensPedido from './itensPedido';
 import PadraoHeader from '../header/padraoHeader';
 import Frete from './frete';
 import CarrinhoService from '../../service/carrinhoService';
+import { useHistory } from 'react-router-dom';
 
 const Pedido = () => {
   const [currentPage, setCurrentPage] = useState("pedido"); // Inicialmente, a página é "pedido"
@@ -19,6 +20,7 @@ const Pedido = () => {
     statusPedido: null,
   });
   const [textButton, setTextButton] = useState("Avançar");
+  const history = useHistory();
 
   const salvarPedido = async () => {
     const clienteJSON = localStorage.getItem("usuario");
@@ -75,7 +77,12 @@ const Pedido = () => {
     } else if (currentPage === "pagamento") {
       return <Pagamento />;
     } else if (currentPage === "finalizar") {
-      salvarPedido();
+      const userToken = localStorage.getItem('usuario');
+      if(userToken === null){
+        history.push('/login');
+      } else {
+        salvarPedido();
+      }
     } 
   };
 

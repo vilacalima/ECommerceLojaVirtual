@@ -2,6 +2,10 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
+import CarrinhoService from '../../service/carrinhoService';
+import './meusPedidos.css';
+import PadraoHeader from '../header/padraoHeader';
+import ItensPedido from '../compra/itensPedido';
 
 class MeusPedidos extends Component {
   constructor() {
@@ -12,33 +16,76 @@ class MeusPedidos extends Component {
   }
 
   componentDidMount() {
-    // Simulando a busca de pedidos (substitua por uma solicitação GET real)
-    const pedidosExemplo = [
-      { numero: 1, data: '01/10/2023', valorTotal: 100.00, status: 'Entregue' },
-      { numero: 2, data: '02/10/2023', valorTotal: 150.00, status: 'Em Processamento' },
-      { numero: 3, data: '03/10/2023', valorTotal: 75.50, status: 'Entregue' },
-    ];
-    this.setState({ pedidos: pedidosExemplo });
+
+    const userToken = localStorage.getItem('usuario');
+    const usuarioParse = JSON.parse(userToken);
+    const email = usuarioParse.email;
+
+    const getAll = async () => {
+      const item = await CarrinhoService.getPedidoCliente(email);
+
+      this.setState({ pedidos: item });
+    }
+
+    getAll();
   }
+
+  detalhesProduto(item) {
+    this.setState({ showModal: true, itensPedidoSelecionado: item.carrinho });
+  }
+
+  fecharModal = () => {
+    // Função para fechar o modal
+    this.setState({ showModal: false, itensPedidoSelecionado: null });
+  };
 
   render() {
     return (
-      <div>
-        <h1>Meus Pedidos</h1>
+      <div className='meus-pedidos-container'>
+
+      <PadraoHeader />
+      
+      <h1>Meus Pedidos</h1>
         
-
-
-        <ul>
-          {this.state.pedidos.map((pedido, index) => (
-            <li key={index}>
-              <div>{pedido.numero}</div>
-              <div>{pedido.data}</div>
-              <div>R$ {pedido.valorTotal.toFixed(2)}</div>
-              <div>{pedido.status}</div>
-              <button onClick={() => this.verDetalhes(pedido)}>Detalhes</button>
-            </li>
+      <table className="tabela-produtos">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Total Pago</th>
+            <th>Ação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.pedidos.map((item) => (
+            <tr key={item.Id}>
+              <td>{item.id}</td>
+              <td>R$ {item.total.toFixed(2)}</td>
+              <td>
+                <a>
+                  <span
+                    className="carrinho-link"
+                    onClick={() => this.detalhesProduto(item)}>
+                    Detalhes
+                  </span>
+                </a>
+              </td>
+            </tr>
           ))}
-        </ul>
+        </tbody>
+      </table>
+
+      {this.state.showModal && (
+        <div className="meus-pedidos-modal">
+          <div className="meus-pedidos-modal-content">
+            <span className="meus-pedidos-close" onClick={this.fecharModal}>
+              &times;
+            </span>
+            <h2>Itens do Pedido</h2>
+            <ItensPedido itens={this.state.itensPedidoSelecionado} />
+          </div>
+        </div>
+      )}
+
       </div>
     );
   }
