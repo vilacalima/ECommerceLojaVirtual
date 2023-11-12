@@ -5,7 +5,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     min-height: 100vh; /* Centraliza verticalmente na página */
   }
   
@@ -37,7 +37,7 @@ body {
   input[type="number"],
   select,
   input[type="file"] {
-    width: 100%; /* Largura de 100% para campos de entrada */
+    /* width: 100%; Largura de 100% para campos de entrada */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;

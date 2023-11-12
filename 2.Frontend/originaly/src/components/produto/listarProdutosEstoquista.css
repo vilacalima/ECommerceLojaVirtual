@@ -61,3 +61,22 @@ h2 {
     background-color: #73576b;
 }
 
+.listar-produto-estoquista-container {
+    margin-top: 150px;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.listar-produto-estoquista-paginacao {
+  width: 250px;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.listar-produto-estoquista-span{
+  width: 100px;
+}
+
