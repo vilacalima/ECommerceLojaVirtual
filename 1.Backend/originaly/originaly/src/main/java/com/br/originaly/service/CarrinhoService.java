@@ -208,16 +208,22 @@ public class CarrinhoService {
         );
     }
 
+    /**
+     * Mapeia o objeto pedidoRecord
+     * @param pedido
+     * @param carrinhoList
+     * @return
+     * */
     @NotNull
     @Contract(value = "_, _, _, _, _ -> new", pure = true)
     private PedidoRecord map(Pedido pedido, List<Carrinho> carrinhoList){
 
         return new PedidoRecord(
                 pedido.getId(),
-                pedido.getOpcaoPagamento(),
+                OpcaoPagamento.getDescricaoFromOrdinal(pedido.getOpcaoPagamento()),
                 pedido.getSubtotal(),
-                pedido.getOpcaoFrete(),
-                pedido.getSituacao(),
+                OpcaoFrete.getDescricaoFromOrdinal(pedido.getOpcaoFrete()),
+                Situacao.getDescricaoFromOrdinal(pedido.getSituacao()),
                 carrinhoList
         );
     }

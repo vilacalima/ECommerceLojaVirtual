@@ -17,9 +17,12 @@ function ListarCarrinho() {
   const [quantidade, setQuantidade] = useState([]);
   const history = useHistory();
 
+
   const loadCarrinho = async (email) => {
     const dto = await CarrinhoService.getCarrinhoTemporario(email)
+    const carrinhoArray = Array.isArray(dto) ? dto : [];
     setCarrinho(dto);
+    calcularSomaTotal(carrinhoArray);
   };
 
   useEffect(() => {
@@ -40,6 +43,15 @@ function ListarCarrinho() {
     }
   }, [pagina, buscaParcial]);
 
+  const calcularSomaTotal = (dto) => {
+    let somaTotal = 0;
+  
+    for (let i = 0; i < dto.length; i++) {
+      somaTotal += dto[i].precoTotal;
+    }
+    
+    setQuantidade(somaTotal);
+  };
   
   const handleQuantidadeProduto = async (item) => {
     const updatedCarrinho = carrinho.map((c) =>
@@ -139,6 +151,9 @@ function ListarCarrinho() {
           ))}
         </tbody>
       </table>
+      <div >
+        <p className='carrinho-valorTotal-tag-p'>Total: R$ {quantidade.toFixed(2)}</p>
+      </div>
       <button onClick={handleFinalizar}>Finalizar Pedido</button>
     </div>
   );

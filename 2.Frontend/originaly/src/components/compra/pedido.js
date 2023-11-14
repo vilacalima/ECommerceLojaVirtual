@@ -90,7 +90,7 @@ const Pedido = () => {
     
     <div className='pedido-container'>
       <PadraoHeader pedidos={false}/>
-      <ItensPedido />
+      {/* <ItensPedido /> */}
       {isModalOpen && (
         <div className="modal">
           {/* ... Conteúdo do modal ... */}

@@ -12,6 +12,8 @@ class MeusPedidos extends Component {
     super();
     this.state = {
       pedidos: [],
+      showModal: false,
+      itensPedidoSelecionado: null,
     };
   }
 
@@ -31,7 +33,7 @@ class MeusPedidos extends Component {
   }
 
   detalhesProduto(item) {
-    this.setState({ showModal: true, itensPedidoSelecionado: item.carrinho });
+    this.setState({ showModal: true, itensPedidoSelecionado: item });
   }
 
   fecharModal = () => {

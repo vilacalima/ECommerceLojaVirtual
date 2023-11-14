@@ -75,3 +75,9 @@ h2 {
 .carrinho-link{
   cursor: pointer;
 }
+
+.carrinho-valorTotal-tag-p{
+  text-align: right;
+  margin-left: 10px;
+}
+
