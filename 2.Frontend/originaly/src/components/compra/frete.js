@@ -19,7 +19,7 @@ function Frete() {
       if (loggedInUser != null){
           const usuarioParse = JSON.parse(loggedInUser);
           
-          const endereco = await ClienteService.getAddress(usuarioParse.email);
+          const endereco = await ClienteService.getAllAddress(usuarioParse.email);
 
           setEnderecos(endereco);
           setLoading(false);
@@ -93,15 +93,21 @@ function Frete() {
     ) : (
       <div>
         {enderecos ? (
-          <div>
-            <h3>Seu Endereço Cadastrado:</h3>
-            <div className="endereco-div">
-              <p>Cep: {enderecos.cep}</p>
-              <p>Rua: {enderecos.rua}</p>
-              <p>Cidade: {enderecos.cidade}</p>
-              <h3>Valor do frete: R${frete.frete}</h3>
+          
+            
+            <div>
+              <label>
+                Forma de pagamento:
+                <select>
+                {/* onChange={this.handlePaymentMethodChange} value={paymentMethod} */}
+                {enderecos.map((item) => (
+                  <option value="pix">Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}</option>
+                ))}
+                </select>
+              </label>
             </div>
-          </div>
+
+          
         ) : (
           <p>Você não tem endereço cadastrado. Adicione um endereço na sua conta.</p>
         )}

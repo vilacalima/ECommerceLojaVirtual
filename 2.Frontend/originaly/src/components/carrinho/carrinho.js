@@ -7,41 +7,16 @@ import './carrinho.css';
 import CarrinhoService from '../../service/carrinhoService';
 import CalculadoraService from '../../service/calculadora/calculadoraService';
 import Pedido from '../compra/pedido';
+import TableCarrinho from './tableCarrinho';
+import Frete from '../compra/frete';
+import Pagamento from "../compra/pagamento";
 
 function ListarCarrinho() {
-  const [buscaParcial, setBuscaParcial] = useState('');
-  const [pagina, setPagina] = useState(1);
-  const [produtosPorPagina, setProdutosPorPagina] = useState(10);
-  const [item, setItem] = useState('');
-  const [carrinho, setCarrinho] = useState([]);
   const [quantidade, setQuantidade] = useState([]);
   const history = useHistory();
 
-
-  const loadCarrinho = async (email) => {
-    const dto = await CarrinhoService.getCarrinhoTemporario(email)
-    const carrinhoArray = Array.isArray(dto) ? dto : [];
-    setCarrinho(dto);
-    calcularSomaTotal(carrinhoArray);
-  };
-
-  useEffect(() => {
-    
-    try {
-        const loggedInUser = localStorage.getItem("usuario");
-        let carrinho = '';
-        if (loggedInUser != null){
-            const usuarioParse = JSON.parse(loggedInUser);
-            carrinho = usuarioParse.email;
-        } else {
-            carrinho = 'Usuario_nao_logado';
-        }
-        
-        loadCarrinho(carrinho);
-    } catch (error) {
-    console.log(error);
-    }
-  }, [pagina, buscaParcial]);
+  const [currentPage, setCurrentPage] = useState("pedido");
+  const [textButton, setTextButton] = useState("Finalizar Pedido");
 
   const calcularSomaTotal = (dto) => {
     let somaTotal = 0;
@@ -53,51 +28,35 @@ function ListarCarrinho() {
     setQuantidade(somaTotal);
   };
   
-  const handleQuantidadeProduto = async (item) => {
-    const updatedCarrinho = carrinho.map((c) =>
-      c.idProduto === item.idProduto ? { ...c, quantidade: c.quantidade + 1, precoTotal:  CalculadoraService.calculatePrecoTotal(c.quantidade, c.precoUnitario)} : c
-    );
-    setCarrinho(updatedCarrinho);
-
-    const dto = await CarrinhoService.updateCarrinhoTemporario(carrinho);
-
-    if(dto.isSuccess === true){
-        setTimeout(() => {
-            window.location.href = '/carrinho';
-        }, 10000);   
-    } 
-  };
-  
-  const handleDiminuirQuantidadeProduto = async (item) => {
-    if (item.quantidade > 0) {
-      const updatedCarrinho = carrinho.map((c) =>
-        c.idProduto === item.idProduto ? { ...c, quantidade: c.quantidade - 1, precoTotal:  CalculadoraService.calculatePrecoTotal(c.quantidade, c.precoUnitario)} : c
-      );
-      
-      setCarrinho(updatedCarrinho);
-     await CarrinhoService.updateCarrinhoTemporario(carrinho);
-    }
-  };
-  
-  const handleExcluirItem = async (item) => {
-    try {
-        const dto = await CarrinhoService.deleteItemCarrinhoTemporario(item.id);
-        
-        if(dto.isSuccess === true){
-            setTimeout(() => {
-                window.location.href = '/carrinho';
-            }, 2000);   
-        } else{
-            window.postMessage("Erro, item não deletado");
-        }
-
-    } catch (error){
-        console.log(error);
-    }
-  };
-
   const handleFinalizar = () => {
     history.push('/pedido');
+  };
+
+  const handleNext = () => {
+    if (currentPage === "pedido") {
+      setCurrentPage("endereco");
+      setTextButton('Avançar');
+    } else if (currentPage === "endereco") {
+      setCurrentPage("pagamento");
+      setTextButton('Finalizar Pedido');
+    } else if (currentPage === 'pagamento'){
+      setCurrentPage("finalizar");
+    }
+  };
+  
+  const renderComponent = () => {
+    if (currentPage === "endereco") {
+      return <Frete />;
+    } else if (currentPage === "pagamento") {
+      return <Pagamento />;
+    } else if (currentPage === "finalizar") {
+      const userToken = localStorage.getItem('usuario');
+      if(userToken === null){
+        history.push('/login');
+      } else {
+        // salvarPedido();
+      }
+    } 
   };
 
   return (
@@ -105,56 +64,12 @@ function ListarCarrinho() {
       <PadraoHeader pedidos={false}/>
       <h2>Itens do Carrinho</h2>
 
-      <table className="tabela-produtos">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Quantidade</th>
-            <th>Preço Unitário</th>
-            <th>Preço Total</th>
-            <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          {carrinho.map((item) => (
-            <tr key={item.emailCliente}>
-              <td>{item.nomeProduto}</td>
-              <td>{item.quantidade}</td>
-              <td>R$ {item.precoUnitario}</td>
-              <td>R$ {item.precoTotal}</td>
-              <td>
-                <a>
-                  <span
-                    className="carrinho-link"
-                    onClick={() => handleDiminuirQuantidadeProduto(item)}>
-                    -
-                  </span>
-                </a>
-                <span className="espaco">|</span>
-                <a>
-                  <span
-                    className="carrinho-link"
-                    onClick={() => handleQuantidadeProduto(item)}>
-                    +
-                  </span>
-                </a>
-                <span className="espaco">|</span>
-                <a>
-                  <span
-                    className="carrinho-link"
-                    onClick={() => handleExcluirItem(item)}>
-                    Excluir item
-                  </span>
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <div >
-        <p className='carrinho-valorTotal-tag-p'>Total: R$ {quantidade.toFixed(2)}</p>
-      </div>
-      <button onClick={handleFinalizar}>Finalizar Pedido</button>
+      <TableCarrinho />
+
+      {/* <button onClick={handleFinalizar}>Finalizar Pedido</button> */}
+
+      {renderComponent()} {/* Renderize o componente apropriado com base na página atual */}
+      <button onClick={handleNext}>{textButton}</button>
     </div>
   );
 }
