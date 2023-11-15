@@ -4,13 +4,17 @@ import './frete.css';
 import axios from 'axios';
 import ClienteService from '../../service/clienteService';
 import CalcularFrete from '../../service/calculadora/calculaCep';
+import Endereco from '../cliente/endereco';
+import CalculaCep from '../../service/calculadora/calculaCep';
 
 function Frete() {
   const [freteSelecionado, setFreteSelecionado] = useState(null);
   const [enderecos, setEnderecos] = useState([]);
+  const [novoEndereco, setNovoEndereco] = useState(false);
   const [loading, setLoading] = useState(true);
   const [clienteLogado, setClienteLogado] = useState(false); // Adicione um estado para verificar se o cliente está logado
   const [frete, setFrete] = useState([]);
+  const [valorFrete, setValorFrete] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,10 +30,13 @@ function Frete() {
           setClienteLogado(true);
           const calc = CalcularFrete(endereco.cep);
 
-          localStorage.setItem("frete", JSON.stringify({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') }));
-          setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });
-          
-          
+          // localStorage.setItem("frete", JSON.stringify({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') }));
+          // setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });          
+
+          if (endereco.length > 0) {
+            // Chama o handlerCalcularFrete com o primeiro endereço da lista
+            handlerCalcularFrete(endereco[0].cep);
+          }
       } 
     };
 
@@ -47,6 +54,16 @@ function Frete() {
       alert('Por favor, escolha uma opção de frete antes de finalizar o pedido.');
     }
   };
+
+  const handlerNovoEndereco = () => {
+    setNovoEndereco(true);
+  };
+
+  const handlerCalcularFrete = (cepRecebido) => {
+    const cep  = CalculaCep(cepRecebido);
+    setValorFrete(cep.frete);
+    localStorage.setItem('ValorFrete', valorFrete);
+  }
 
   return (
     <div className="frete-container">
@@ -93,21 +110,26 @@ function Frete() {
     ) : (
       <div>
         {enderecos ? (
-          
-            
             <div>
               <label>
                 Forma de pagamento:
-                <select>
+                <select onChange={(e) => handlerCalcularFrete(e.target.value)}>
                 {/* onChange={this.handlePaymentMethodChange} value={paymentMethod} */}
                 {enderecos.map((item) => (
-                  <option value="pix">Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}</option>
+                  <option key={item.cep} value={item.cep}>Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}</option>
                 ))}
                 </select>
-              </label>
-            </div>
 
-          
+                <p>Valor do Frete: R$ {valorFrete.toFixed(2)}</p>
+              </label>
+
+              {novoEndereco === true ? (
+                <Endereco />
+              ) : (
+                <p>Deseja inserir um novo endereço ?</p>
+              )}
+              <button onClick={handlerNovoEndereco} >Adicionar novo endereço</button>
+            </div>          
         ) : (
           <p>Você não tem endereço cadastrado. Adicione um endereço na sua conta.</p>
         )}

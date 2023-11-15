@@ -15,6 +15,19 @@ const CalculadoraService = {
     }
 
     return somaTotal;
+  },
+
+  calcularTotalPedido: (frete, pedido) => {
+    let somaTotal = 0;
+
+    // Verifique se frete e pedido são números antes de realizar a adição
+    if (typeof frete === 'number' && typeof pedido === 'number') {
+      somaTotal = frete + pedido;
+    } else {
+      console.error('Os valores de frete e pedido devem ser números.');
+    }
+  
+    return somaTotal;
   }
 };
 

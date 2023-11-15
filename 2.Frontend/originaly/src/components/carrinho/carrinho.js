@@ -54,7 +54,7 @@ function ListarCarrinho() {
       if(userToken === null){
         history.push('/login');
       } else {
-        // salvarPedido();
+        history.push('/checkout');
       }
     } 
   };

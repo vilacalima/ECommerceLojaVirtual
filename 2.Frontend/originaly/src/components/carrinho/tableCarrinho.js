@@ -19,6 +19,8 @@ function TableCarrinho(){
         setCarrinho(dto);
         let total = CalculadoraService.calcularSomaTotal(carrinhoArray)
         setQuantidadePedido(total);
+
+        localStorage.setItem('valorTotalPedidos', total);
     };
 
     useEffect(() => {

@@ -4,6 +4,7 @@ import axios from 'axios';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import './pagamento.css';
+import CalculadoraService from '../../service/calculadora/calculadoraService';
 
 class PaymentForm extends Component {
   state = {
@@ -42,21 +43,17 @@ class PaymentForm extends Component {
     this.setState({ installment: event.target.value });
   };
 
-  calculateSubtotal = () => {
-    const { paymentMethod, cardType, installment } = this.state;
-
-    let subtotalItem = localStorage.getItem("subtotal");
-    // Lógica para calcular o subtotal com base nas informações do pagamento
-    let subtotal = subtotalItem;
-    let formartNumber = Number(subtotal).toFixed(2).replace('.', ',')
-
-    // Adicione sua lógica aqui para calcular o subtotal com base nas informações de pagamento
-
+  calculateSubtotal = (totalFrete, totalPedido) => {
+    const subtotal = CalculadoraService.calcularTotalPedido(totalFrete, totalPedido);
     this.setState({ subtotal });
   };
 
   async componentDidMount() {
-    this.calculateSubtotal();
+    const frete = localStorage.getItem('ValorFrete');
+    const freteJson = JSON.parse(frete);
+    const pedido = localStorage.getItem('valorTotalPedidos');
+    const pedidoJson = JSON.parse(pedido);
+    this.calculateSubtotal(freteJson, pedidoJson);
   }
 
   isPaymentInfoComplete = () => {

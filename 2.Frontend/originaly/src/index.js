@@ -24,6 +24,7 @@ import Pagamento from './components/compra/pagamento';
 import Pedido from './components/compra/pedido';
 import ListarCarrinho from './components/carrinho/carrinho';
 import Frete from './components/compra/frete';
+import Checkout from './components/compra/checkout'
 
 
 
@@ -33,6 +34,7 @@ ReactDOM.render(
       <Route path="/compra/:productId" component={Compra} />
       <Route path="/backoffice" component={Backoffice} />
       <Route path="/carrinho" component={ListarCarrinho} />
+      <Route path="/checkout" component={Checkout} />
       <Route path="/login">
         <LoginUsuario />
       </Route>

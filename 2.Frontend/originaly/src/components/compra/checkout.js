@@ -4,6 +4,7 @@ import Pagamento from "./pagamento";
 
 function Checkout(){
 
+    //Lembrar de continuar daqui
 
     return(
         <div>
