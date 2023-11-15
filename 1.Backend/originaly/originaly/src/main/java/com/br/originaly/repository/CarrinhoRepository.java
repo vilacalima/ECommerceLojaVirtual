@@ -1,9 +1,6 @@
 package com.br.originaly.repository;
 
-import com.br.originaly.model.Carrinho;
-import com.br.originaly.model.CarrinhoTemporario;
-import com.br.originaly.model.Pedido;
-import com.br.originaly.model.Produto;
+import com.br.originaly.model.*;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -112,5 +109,13 @@ public class CarrinhoRepository {
         } else {
             return false;
         }
+    }
+
+    public List<Pedido> getPedidoByIdCliente(int idCliente){
+        return _pedidoRepository.getAllPedidoByIdCliente(idCliente);
+    }
+
+    public List<Carrinho> getAllCarrinho(int idPedido){
+        return _carrinhoRepository.getAllCarrinhoByIdPedido(idPedido);
     }
 }

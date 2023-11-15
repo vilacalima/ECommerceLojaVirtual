@@ -6,11 +6,13 @@ import ProdutoService from '../../service/produtoService';
 import CarrinhoService from  '../../service/carrinhoService';
 import logo from '../../images/logo.jpg';
 import { useHistory, Link } from 'react-router-dom';
+import Backoffice from '../backoffice/backoffice';
 
 function HomePage() {
   const [products, setProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [cartCount, setCartCount] = useState(0); // Adicionado o estado cartCount
+  const [cartCount, setCartCount] = useState(0);
+  const [isAdm, setIsAdm] = useState(false);
 
   const history = useHistory();
   
@@ -41,8 +43,11 @@ function HomePage() {
     let user = '';
     const usuario = localStorage.getItem("usuario");
     const usuarioParse = JSON.parse(usuario);
-    
+
     if(usuarioParse != null){
+      if(usuarioParse.tipo === 'administrador'){
+        setIsAdm(true);
+      }
       user = usuarioParse.email;
     } else{
       user = 'Usuario_nao_logado';
@@ -88,15 +93,20 @@ function HomePage() {
     return grouped;
   };
 
+  const handlerPagAdm = () => {
+    history.push('/backoffice');
+  };
+
   return (
     <div className="home-page">
       <header className="top-information">
         <img src={logo} className="logo" alt="Logo"></img>
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
-          <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a> {/* Adicionado o contador de carrinho */}
-          <a href="/cadastrarCliente"> • Cadastrar</a>
-          {isAuthenticated && <a href='/perfil'> • Perfil</a>}
+          {isAuthenticated && isAdm === false && <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a>} {/* Adicionado o contador de carrinho */}
+          {isAuthenticated && isAdm === false && <a href="/cadastrarCliente"> • Cadastrar</a>}
+          {isAuthenticated && isAdm === false && <a href='/perfil'> • Perfil</a>}
+          {isAuthenticated && isAdm && <Link onClick={handlerPagAdm}> • Administrador</Link>}
           {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}
         </div>
       </header>

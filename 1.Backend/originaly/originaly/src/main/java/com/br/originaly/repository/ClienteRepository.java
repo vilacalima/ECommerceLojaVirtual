@@ -147,4 +147,8 @@ public class ClienteRepository {
         return _enderecoRepository.getEnderecoByIdClienteAndIsEnderecoEntrega(idCliente, isActive);
     }
 
+    public List<Endereco> getAllEnderecoActive(int idCliente, boolean isActive){
+        return _enderecoRepository.getAllEnderecoByIdClienteAndIsEnderecoEntrega(idCliente, isActive);
+    }
+
 }

@@ -25,11 +25,19 @@ public class ProdutoRepository {
         _mostruarioRepository = mostruarioRepository;
     }
 
+    /**
+     * Salva um produto no banco de dados
+     * @param produto
+     * */
     public int saveProduto(Produto produto) {
         Produto newProduto = _produtoRepository.save(produto);
         return produto.getId();
     }
 
+    /**
+     * Atualiza um produto no banco de dados
+     * @param produto
+     * */
     public boolean updateProduto(Produto produto){
         Produto debug = _produtoRepository.findById((long) produto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado"));
@@ -45,20 +53,38 @@ public class ProdutoRepository {
         return debug != null;
     }
 
+    /**
+     * Salva um item do monstruario no banco de dados
+     * @param monstruario
+     * */
     public boolean saveMonstruario(Monstruario monstruario) {
         Monstruario debug = _mostruarioRepository.save(monstruario);
         return debug != null;
     }
 
+    /**
+     * Deleta um item do monstruario pelo id
+     * @param id
+     * */
     public void deleteMonstruarioById(int id) {
          _mostruarioRepository.deleteById((long) id);
     }
 
+    /**
+     * Retorna o id do monstruario pela rota
+     * @param rota
+     * @return idMonstruario
+     * */
     public int getMonstruarioByRota(String rota){
         Monstruario monstruario = _mostruarioRepository.getMonstruarioByRota(rota);
         return monstruario.getId();
     }
 
+    /**
+     * Atualiza um monstruario pelo id e rota
+     * @param id
+     * @param rota
+     * */
     public boolean updateMonstruario(int id, String rota){
         Monstruario debug = _mostruarioRepository.findById((long) id)
                 .orElseThrow(() -> new EntityNotFoundException("Objeto não encontrado"));
@@ -69,11 +95,19 @@ public class ProdutoRepository {
         return debug != null;
     }
 
+    /**
+     * Retorna todos os produtos
+     * @return List<Produto></Produto>
+     * */
     public List<Produto> getAllProduct(){
         Sort sortByUpdateAt = Sort.by(Sort.Direction.DESC, "updateAt");
         return _produtoRepository.findAll(sortByUpdateAt);
     }
 
+    /**
+     * Retorna todos os produtos ativos
+     * @return List<Produto></Produto>
+     * */
     public List<Produto> getAllProductActive(){
         List<Produto> produtos = _produtoRepository.findAll();
         List<Produto> newListprodutos = new ArrayList<>();
@@ -99,6 +133,11 @@ public class ProdutoRepository {
         return newListprodutos;
     }
 
+    /**
+     * Retorna o id do Produto pelo id
+     * @param id
+     * @return idProduto
+     * */
     public int getIdProduct(int id){
         Produto produto =  _produtoRepository.getById((long)id);
         return produto.getId();

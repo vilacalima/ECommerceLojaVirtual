@@ -27,10 +27,11 @@ function LoginUsuario() {
 
   const doLogin = (login) => {
     if (login === 'administrador') {
-      console.log("entrou aqui");
-      history.push('/backoffice', { ativo: false });
+      history.push('/backoffice');
+      localStorage.setItem('isAtivo', true);
     } else if (login === 'estoquista') {
-        history.push(`/backoffice`, { ativo: true });
+      history.push(`/backoffice`);
+      localStorage.setItem('isAtivo', false);
     } else if (login === 'Cliente') {
       history.push(`/perfil`);
     } else {
@@ -72,7 +73,7 @@ function LoginUsuario() {
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-row">
-                <div className="form-column">
+                <div className="login-form-column">
                   <label htmlFor="username">Usuário:</label>
                   <input 
                     type="text" 

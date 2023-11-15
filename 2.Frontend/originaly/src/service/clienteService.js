@@ -35,6 +35,22 @@ const ClienteService = {
     },
 
     /**
+     * Retorna um endereço pelo email e ativo
+     * @param email
+     * @returns
+     */
+    getAllAddress: async (email) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/cliente/getAllAddress/${email}`);          
+            
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
+    /**
      * Envia um novo cliente para o banco de dados
      * @param {*} dto 
      * @returns 

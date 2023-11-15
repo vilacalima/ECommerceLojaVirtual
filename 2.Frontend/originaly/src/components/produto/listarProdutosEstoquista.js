@@ -41,7 +41,7 @@ function ListarProdutos() {
   };
 
   return (
-    <div>
+    <div className='listar-produto-estoquista-container'>
       <PadraoHeader pedidos={false}/>
       <h2>Listagem de Produtos</h2>
 
@@ -51,9 +51,7 @@ function ListarProdutos() {
           placeholder="Buscar produto"
           value={buscaParcial}
           onChange={(e) => setBuscaParcial(e.target.value)}
-        />
-
- 
+        /> 
       </div>
       <table className="tabela-produtos">
         <thead>
@@ -83,14 +81,14 @@ function ListarProdutos() {
           ))}
         </tbody>
       </table>
-      <div className="paginacao">
+      <div className="listar-produto-estoquista-paginacao">
         <button
           onClick={() => handlePaginacao(pagina - 1)}
           disabled={pagina === 1}
         >
           Anterior
         </button>
-        <span>Página {pagina}</span>
+        <span className='listar-produto-estoquista-span'>Página {pagina}</span>
         <button
           onClick={() => handlePaginacao(pagina + 1)}
           disabled={produtos.length < produtosPorPagina}

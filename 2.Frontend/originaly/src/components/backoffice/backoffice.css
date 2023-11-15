@@ -52,4 +52,15 @@
   .button:hover {
     background-color: #0056b3;
   }
+
+.backoffice-container {
+  width: 600px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 150px;
+}
   

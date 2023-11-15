@@ -224,4 +224,12 @@ public class ClienteService {
         }
         return null;
     }
+
+    public List<Endereco> getAllEnderecoByEmail(String email){
+        Cliente cliente = _clienteRepository.getClientByEmail(email);
+        if(cliente != null){
+            return _clienteRepository.getAllEnderecoActive(cliente.getId(), true);
+        }
+        return null;
+    }
 }

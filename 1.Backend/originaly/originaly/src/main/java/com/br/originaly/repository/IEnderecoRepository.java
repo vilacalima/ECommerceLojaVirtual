@@ -13,4 +13,5 @@ import java.util.List;
 public interface IEnderecoRepository extends JpaRepository<Endereco, Long> {
     List<Endereco> getEnderecoByIdCliente(int idCliente);
     Endereco getEnderecoByIdClienteAndIsEnderecoEntrega(int idCliente, boolean isEnderecoEntrega);
+    List<Endereco> getAllEnderecoByIdClienteAndIsEnderecoEntrega(int idCliente, boolean isEnderecoEntrega);
 }

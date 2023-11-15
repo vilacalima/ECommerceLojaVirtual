@@ -4,6 +4,7 @@ import com.br.originaly.model.*;
 import com.br.originaly.record.CarrinhoRecord;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
+import com.br.originaly.record.PedidoRecord;
 import com.br.originaly.repository.CarrinhoRepository;
 import com.br.originaly.repository.ClienteRepository;
 import com.br.originaly.repository.ProdutoRepository;
@@ -107,6 +108,22 @@ public class CarrinhoService {
         return dto;
     }
 
+    public List<PedidoRecord> getAllPedido(String email){
+        Cliente cliente = _clienteRepository.getClientByEmail(email);
+        List<Pedido> pedidoList = _carrinhoRepository.getPedidoByIdCliente(cliente.getId());
+
+        List<PedidoRecord> dto = new ArrayList<>();
+
+        for(Pedido pedido : pedidoList){
+
+            List<Carrinho> carrinhoList = _carrinhoRepository.getAllCarrinho(pedido.getId());
+
+            dto.add(map(pedido, carrinhoList));
+        }
+
+        return dto;
+    }
+
     /**
      * Retorna a quantidade do carrinho
      * */
@@ -188,6 +205,26 @@ public class CarrinhoService {
                 quantidade,
                 precoUnitario,
                 precoTotal
+        );
+    }
+
+    /**
+     * Mapeia o objeto pedidoRecord
+     * @param pedido
+     * @param carrinhoList
+     * @return
+     * */
+    @NotNull
+    @Contract(value = "_, _, _, _, _ -> new", pure = true)
+    private PedidoRecord map(Pedido pedido, List<Carrinho> carrinhoList){
+
+        return new PedidoRecord(
+                pedido.getId(),
+                OpcaoPagamento.getDescricaoFromOrdinal(pedido.getOpcaoPagamento()),
+                pedido.getSubtotal(),
+                OpcaoFrete.getDescricaoFromOrdinal(pedido.getOpcaoFrete()),
+                Situacao.getDescricaoFromOrdinal(pedido.getSituacao()),
+                carrinhoList
         );
     }
 
