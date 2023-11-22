@@ -3,7 +3,6 @@ import axios from 'axios';
 import ProdutoService from '../../service/produtoService';
 import { Link, useHistory } from 'react-router-dom'; 
 import PadraoHeader from '../header/padraoHeader';
-import './carrinho.css';
 import CarrinhoService from '../../service/carrinhoService';
 import CalculadoraService from '../../service/calculadora/calculadoraService';
 import Pedido from '../compra/pedido';

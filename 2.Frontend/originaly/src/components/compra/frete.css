@@ -1,45 +1,41 @@
-/* Frete.css */
 .frete-container {
-    text-align: center;
-  }
+  text-align: center;
+}
   
-  .opcoes-frete label {
-    display: block;
-    background: #f6c9d3; /* Cor de fundo rosa claro */
-    padding: 10px;
-    margin: 20px;
-  }
+.opcoes-frete label {
+  display: block;
+  background: #f6c9d3;
+  padding: 10px;
+  margin: 20px;
+}
+
+.opcoes-frete label:hover {
+  background: #f4a1ac;
+}
   
-  /* Adicione estilos de hover para destacar os rótulos quando o mouse estiver sobre eles */
-  .opcoes-frete label:hover {
-    background: #f4a1ac; /* Cor de fundo rosa mais clara ao passar o mouse */
-  }
+#finalizar-pedido-button {
+  background: #af4c8e; 
+  padding: 10px 20px;
+  margin: 30px;
+  border-radius: 10px;
+  width: 400px;
+  color: white;
+}
   
-  #finalizar-pedido-button {
-    background: #af4c8e; /* Cor de fundo rosa claro para o botão FINALIZAR PEDIDO */
-    padding: 10px 20px;
-    margin: 30px;
-border-radius: 10px;
-    width: 400px;
-    color: white;
-  }
-  
-  #finalizar-pedido-button:hover {
-    background: #af4c8e; /* Cor de fundo rosa mais clara ao passar o mouse sobre o botão */
-  }
-  
-  #login-calcular-frete-button {
-    background: #af4c8e; /* Cor de fundo rosa claro para o botão FINALIZAR PEDIDO */
-    padding: 10px 20px;
-    margin: 30px;
-color: white;
-    width: 400px;
-    border-radius: 10px;
-  
-    
-  }
-  
-  #login-calcular-frete-button:hover {
-    background: #af4c8e; /* Cor de fundo rosa mais clara ao passar o mouse sobre o botão */
-  }
+#finalizar-pedido-button:hover {
+  background: #af4c8e;
+}
+
+#login-calcular-frete-button {
+  background: #af4c8e; 
+  padding: 10px 20px;
+  margin: 30px;
+  color: white;
+  width: 400px;
+  border-radius: 10px;
+}
+
+#login-calcular-frete-button:hover {
+  background: #af4c8e;
+}
   

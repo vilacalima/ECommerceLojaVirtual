@@ -232,4 +232,13 @@ public class ClienteService {
         }
         return null;
     }
+
+    /**
+     * Retorna um endereço pelo id do endereço
+     * @param id
+     * @return
+     * */
+    public Endereco getEnderecoById(int id){
+        return _clienteRepository.getEnderecoById(id);
+    }
 }

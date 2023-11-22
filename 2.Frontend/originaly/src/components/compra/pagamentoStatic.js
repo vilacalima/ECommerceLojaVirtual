@@ -6,10 +6,10 @@ import { Carousel } from 'react-responsive-carousel';
 import './pagamento.css';
 import CalculadoraService from '../../service/calculadora/calculadoraService';
 
-class PaymentForm extends Component {
+class PaymentStatic extends Component {
   state = {
-    paymentMethod: 'pix',
-    cardType: 'debit',
+    paymentMethod: '',
+    cardType: 'Débito',
     cardNumber: '',
     cardCVC: '',
     cardName: '',
@@ -18,35 +18,17 @@ class PaymentForm extends Component {
     subtotal: 0,
   };
 
-  handlePaymentMethodChange = (event) => {
-    // localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: "pix"  }));
-    localStorage.removeItem('opPagamento');
-
-    if(event.target.value === "card"){
-      console.log("entrou aqui")
-      localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: "cartao" }));
-    } else {
-      console.log("entrou aqui no segundo")
-      localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: "pix"  }));
-    }
-
-    this.setState({ paymentMethod: event.target.value });
-  };
-
   handleCardTypeChange = (event) => {
     this.setState({ cardType: event.target.value });
-    localStorage.setItem("dadosCartao", JSON.stringify({ tipoCartao: event.target.value}));
   };
 
   handleInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
-    localStorage.setItem("dadosCartao", JSON.stringify({ [name]: value}));
   };
 
   handleInstallmentChange = (event) => {
     this.setState({ installment: event.target.value });
-    localStorage.setItem("dadosCartao", JSON.stringify({ quantFatura: event.target.value}));
   };
 
   calculateSubtotal = (totalFrete, totalPedido) => {
@@ -55,12 +37,34 @@ class PaymentForm extends Component {
   };
 
   async componentDidMount() {
-    // localStorage.setItem("opPagamento", JSON.stringify({ opPagamento: 'pix'  }));
+    const opPagamento = localStorage.getItem('opPagamento');
+    const opPagamentoJSON = JSON.parse(opPagamento);
+
+    console.log(opPagamentoJSON)
+
+    this.setState({ paymentMethod: opPagamentoJSON.opPagamento });
+    console.log(this.state.paymentMethod)
+    // this.state.paymentMethod = opPagamentoJSON;
+
+    
+
+
+
     const frete = localStorage.getItem('ValorFrete');
     const freteJson = JSON.parse(frete);
     const pedido = localStorage.getItem('valorTotalPedidos');
     const pedidoJson = JSON.parse(pedido);
     this.calculateSubtotal(freteJson, pedidoJson);
+  }
+
+  dadosCartao = () => {
+    const dadosCartao = localStorage.getItem('dadosCartao');
+    const dadosCartaoJSON = JSON.parse(dadosCartao);
+    console.log(dadosCartaoJSON);
+
+    if(dadosCartao > 0){
+      this.setState({ cardType: 'Credito', installment: dadosCartao})
+    }
   }
 
   isPaymentInfoComplete = () => {
@@ -80,7 +84,7 @@ class PaymentForm extends Component {
 
     return (
       <div className='borda'>
-        <div>
+        {/* <div>
           <label>
             Forma de pagamento:
             <select onChange={this.handlePaymentMethodChange} value={paymentMethod}>
@@ -88,7 +92,7 @@ class PaymentForm extends Component {
               <option value="card">Cartão</option>
             </select>
           </label>
-        </div>
+        </div> */}
 
         {paymentMethod === 'pix' && (
           <div>            
@@ -96,8 +100,9 @@ class PaymentForm extends Component {
           </div>
         )}
 
-        {paymentMethod === 'card' && (
+        {paymentMethod === 'cartao' && (
           <div>
+            <p>Tipo de pagamento: {this.state.cardType}</p>
             <label>
               Tipo de cartão:
               <select onChange={this.handleCardTypeChange} value={cardType}>
@@ -152,28 +157,12 @@ class PaymentForm extends Component {
           </div>
         )}
 
-        {/* Exiba o subtotal em algum lugar na página, por exemplo: */}
         <div>
           Subtotal: R$ {this.state.subtotal}
         </div>
-
-        {/* <div>
-          <button
-            onClick={() => {
-              if (this.isPaymentInfoComplete()) {
-                // Avance para a próxima etapa (Validar pedido final)
-                // Coloque sua lógica aqui
-              } else {
-                alert("Preencha as informações de pagamento corretamente.");
-              }
-            }}
-          >
-            Avançar
-          </button> */}
-        {/* </div> */}
       </div>
     );
   }
 }
 
-export default PaymentForm;
+export default PaymentStatic;

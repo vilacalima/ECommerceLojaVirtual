@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import './frete.css';
-import axios from 'axios';
 import ClienteService from '../../service/clienteService';
-import CalcularFrete from '../../service/calculadora/calculaCep';
 import Endereco from '../cliente/endereco';
 import CalculaCep from '../../service/calculadora/calculaCep';
 
@@ -12,8 +9,7 @@ function Frete() {
   const [enderecos, setEnderecos] = useState([]);
   const [novoEndereco, setNovoEndereco] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [clienteLogado, setClienteLogado] = useState(false); // Adicione um estado para verificar se o cliente está logado
-  const [frete, setFrete] = useState([]);
+  const [clienteLogado, setClienteLogado] = useState(false); 
   const [valorFrete, setValorFrete] = useState(0);
 
   useEffect(() => {
@@ -28,15 +24,6 @@ function Frete() {
           setEnderecos(endereco);
           setLoading(false);
           setClienteLogado(true);
-          const calc = CalcularFrete(endereco.cep);
-
-          // localStorage.setItem("frete", JSON.stringify({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') }));
-          // setFrete({ zona: calc.zona, frete: Number(calc.frete).toFixed(2).replace('.', ',') });          
-
-          if (endereco.length > 0) {
-            // Chama o handlerCalcularFrete com o primeiro endereço da lista
-            handlerCalcularFrete(endereco[0].cep);
-          }
       } 
     };
 
@@ -47,28 +34,21 @@ function Frete() {
     setFreteSelecionado(valorFrete);
   };
 
-  const finalizarPedido = () => {
-    if (freteSelecionado) {
-      window.location.href = '/checkout';
-    } else {
-      alert('Por favor, escolha uma opção de frete antes de finalizar o pedido.');
-    }
-  };
-
   const handlerNovoEndereco = () => {
     setNovoEndereco(true);
   };
 
-  const handlerCalcularFrete = (cepRecebido) => {
-    const cep  = CalculaCep(cepRecebido);
+  const handlerEndereco = async (id) => {
+    const endereco = await ClienteService.getEnderecoById(id);
+    const cep  = CalculaCep(endereco.cep);
     setValorFrete(cep.frete);
-    localStorage.setItem('ValorFrete', valorFrete);
-  }
+    localStorage.setItem('InfoFrete', JSON.stringify({ idEndereco: endereco.id, valorFrete: cep.frete }));
+  };
 
   return (
     <div className="frete-container">
       <h2>Escolha o Frete</h2>
-      {clienteLogado ? null : ( // Condicional para mostrar os campos de frete apenas se o cliente não estiver logado
+      {clienteLogado ? null : (
         <div className="opcoes-frete">
           <label>
             <input
@@ -113,11 +93,12 @@ function Frete() {
             <div>
               <label>
                 Forma de pagamento:
-                <select onChange={(e) => handlerCalcularFrete(e.target.value)}>
-                {/* onChange={this.handlePaymentMethodChange} value={paymentMethod} */}
-                {enderecos.map((item) => (
-                  <option key={item.cep} value={item.cep}>Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}</option>
-                ))}
+                <select onChange={(e) => handlerEndereco(e.target.value)}>
+                  {enderecos.map((item) => (
+                    <option key={item.id} value={item.id}>
+                      Id: {item.id} Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}
+                    </option>
+                  ))}
                 </select>
 
                 <p>Valor do Frete: R$ {valorFrete.toFixed(2)}</p>

@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -167,6 +168,40 @@ public class CarrinhoService {
     }
 
     /**
+     * Retorna todos os pedidos ordenados pela data
+     * */
+    public List<PedidoRecord> getAllPedidosOrderByData(){
+        List<Pedido> pedidoList = _carrinhoRepository.getAllPedidoOrderByDate();
+
+        List<PedidoRecord> dto = new ArrayList<>();
+
+        for(Pedido pedido : pedidoList){
+
+            List<Carrinho> carrinhoList = _carrinhoRepository.getAllCarrinho(pedido.getId());
+
+            dto.add(map(pedido, carrinhoList));
+        }
+
+        return dto;
+    }
+
+    /**
+     * Realiza um update na situação do Pedido
+     * @param id
+     * @param situacao
+     * @return
+     * */
+    public MensagemDTO UpdateSituacaoPedido(int id, int situacao){
+
+        try{
+            _carrinhoRepository.UpdateSituacaoPedido(id, situacao); //Fazer o depara da situação
+        } catch (Exception ex){
+            return new MensagemDTO("Erro fazer update no pedido" + ex.toString(), false);
+        }
+        return new MensagemDTO("Pedido atualizado com sucesso", true);
+    }
+
+    /**
      * Mapeia um objeto de pedido
      * @param idCliente
      * @param opcaoPagamento
@@ -183,13 +218,13 @@ public class CarrinhoService {
                 opcaoPagamento,
                 subtotal,
                 opcaoFrete,
-                situacao
+                situacao,
+                new Date()
         );
     }
 
     /**
-     * Mapeia um objeto de carrinho
-     * @param idPedido
+     * Mapeia um objeto de carrinhoW
      * @param idProduto
      * @param quantidade
      * @param precoUnitario
@@ -200,7 +235,6 @@ public class CarrinhoService {
     private Carrinho map(int idProduto, int quantidade, double precoUnitario, double precoTotal){
 
         return new Carrinho(
-//                idPedido,
                 idProduto,
                 quantidade,
                 precoUnitario,
@@ -220,6 +254,7 @@ public class CarrinhoService {
 
         return new PedidoRecord(
                 pedido.getId(),
+                pedido.getData(),
                 OpcaoPagamento.getDescricaoFromOrdinal(pedido.getOpcaoPagamento()),
                 pedido.getSubtotal(),
                 OpcaoFrete.getDescricaoFromOrdinal(pedido.getOpcaoFrete()),

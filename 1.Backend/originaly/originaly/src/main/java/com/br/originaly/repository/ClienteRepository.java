@@ -147,8 +147,24 @@ public class ClienteRepository {
         return _enderecoRepository.getEnderecoByIdClienteAndIsEnderecoEntrega(idCliente, isActive);
     }
 
+    /**
+     * Retorna todos endereço de um cliente pelo idCliente e ativo
+     * @param idCliente
+     * @param isActive
+     * @return
+     * */
     public List<Endereco> getAllEnderecoActive(int idCliente, boolean isActive){
         return _enderecoRepository.getAllEnderecoByIdClienteAndIsEnderecoEntrega(idCliente, isActive);
+    }
+
+    /**
+     * Retorna o endereço de um cliente pelo id
+     * @param id
+     * @return
+     * */
+    public Endereco getEnderecoById(int id){
+        return _enderecoRepository.findById((long) id)
+                .orElseThrow(() -> new EntityNotFoundException("Endereço não encontrado"));
     }
 
 }

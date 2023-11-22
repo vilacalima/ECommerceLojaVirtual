@@ -1,6 +1,7 @@
 package com.br.originaly.controller;
 
 import com.br.originaly.model.CarrinhoTemporario;
+import com.br.originaly.model.Pedido;
 import com.br.originaly.record.CarrinhoRecord;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
@@ -74,5 +75,10 @@ public class CarrinhoController {
     @GetMapping("/getCountCarrinhoTemporario/{email}")
     public long getCountCarrinhoTemporario(@PathVariable String email){
         return _carrinhoService.getCount(email);
+    }
+
+    @GetMapping("/getAllPedidoOrderByDate")
+    public List<PedidoRecord> getAllPedidoOrderByDate(){
+        return _carrinhoService.getAllPedidosOrderByData();
     }
 }

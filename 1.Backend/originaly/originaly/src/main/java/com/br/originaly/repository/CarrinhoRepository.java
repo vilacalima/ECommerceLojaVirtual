@@ -2,10 +2,14 @@ package com.br.originaly.repository;
 
 import com.br.originaly.model.*;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
+import com.br.originaly.record.PedidoRecord;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Repositório de carrinho de compras
@@ -117,5 +121,29 @@ public class CarrinhoRepository {
 
     public List<Carrinho> getAllCarrinho(int idPedido){
         return _carrinhoRepository.getAllCarrinhoByIdPedido(idPedido);
+    }
+
+    /**
+     * Retorna todos os pedidos orenando pela data
+     * @return
+     * */
+    public List<Pedido> getAllPedidoOrderByDate(){
+        return _pedidoRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparing(Pedido::getData))
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Faz um update no pedido pelo id do pedido
+     * @param id
+     * @param situacao
+     * */
+    public void UpdateSituacaoPedido(int id, int situacao){
+        Pedido pedido = _pedidoRepository.findById((long) id)
+                .orElseThrow(() -> new EntityNotFoundException("Pedido não encontrado"));
+
+        pedido.setSituacao(situacao);
+        _pedidoRepository.save(pedido);
     }
 }

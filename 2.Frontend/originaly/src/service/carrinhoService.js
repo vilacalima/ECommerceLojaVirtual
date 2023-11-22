@@ -73,7 +73,20 @@ const CarrinhoService = {
             console.error('Erro ao enviar dados:', error);
             throw error;
         }
-    }
+    },
+
+    /***
+     * Retorna todos os pedidos ordenados pela data 
+     */
+    getAllPedidoOrderByDate: async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/carrinho/getAllPedidoOrderByDate`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
 }
 
 export default CarrinhoService;
