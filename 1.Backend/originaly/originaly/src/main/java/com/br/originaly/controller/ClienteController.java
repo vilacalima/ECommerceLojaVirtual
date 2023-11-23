@@ -81,4 +81,9 @@ public class ClienteController {
     public List<Endereco> getAllAddress(@PathVariable String email){
         return _clienteService.getAllEnderecoByEmail(email);
     }
+
+    @GetMapping("/getAddressById/{id}")
+    public Endereco getAddress(@PathVariable int id){
+        return _clienteService.getEnderecoById(id);
+    }
 }

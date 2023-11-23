@@ -53,6 +53,12 @@ function Backoffice() {
           >
             Lista Produto Estoquista
           </Link>
+          <Link 
+            to="/checarPedidos" 
+            className="button"
+          >
+            Pedidos
+          </Link>
         </div>
       </div>
     </div>

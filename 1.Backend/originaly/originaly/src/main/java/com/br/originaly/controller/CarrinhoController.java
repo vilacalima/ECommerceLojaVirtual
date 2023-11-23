@@ -1,6 +1,7 @@
 package com.br.originaly.controller;
 
 import com.br.originaly.model.CarrinhoTemporario;
+import com.br.originaly.model.Pedido;
 import com.br.originaly.record.CarrinhoRecord;
 import com.br.originaly.record.CarrinhoTemporarioRecord;
 import com.br.originaly.record.MensagemDTO;
@@ -21,12 +22,12 @@ public class CarrinhoController {
     private CarrinhoService _carrinhoService;
 
     @PostMapping("/save")
-    public MensagemDTO save(@RequestBody CarrinhoRecord carrinho){
+    public int save(@RequestBody CarrinhoRecord carrinho) throws Exception {
         try{
             return _carrinhoService.save(carrinho);
         } catch(Exception ex){
             System.out.println(ex.getMessage());
-            return new MensagemDTO("Erro ao salvar dados no carrinho: " + ex.getMessage().toString(), false);
+            throw new Exception("Erro ao salvar dados no carrinho: " + ex.getMessage().toString());
         }
     }
 
@@ -74,5 +75,20 @@ public class CarrinhoController {
     @GetMapping("/getCountCarrinhoTemporario/{email}")
     public long getCountCarrinhoTemporario(@PathVariable String email){
         return _carrinhoService.getCount(email);
+    }
+
+    @GetMapping("/getAllPedidoOrderByDate")
+    public List<PedidoRecord> getAllPedidoOrderByDate(){
+        return _carrinhoService.getAllPedidosOrderByData();
+    }
+
+    @PutMapping("/updateSitucaoPedido/{id}/{situacao}")
+    public MensagemDTO updateSitucaoPedido(@PathVariable int id, @PathVariable String situacao){
+        try{
+            return  _carrinhoService.updateSituacaoPedido(id, situacao);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return new MensagemDTO("Erro ao fazer o update" + ex.getMessage().toString(), false);
+        }
     }
 }

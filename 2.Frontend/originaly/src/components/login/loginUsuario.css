@@ -5,6 +5,26 @@
   height: 100vh;
 }
 
+.login-form-container {
+  background-color: rgba(255, 241, 241, 0.616);
+  padding: 20px;
+  max-width: 600px;
+  width: 300px;
+  height: 350px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-app-main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-section,
 .create-account-section {
   padding: 20px;
@@ -96,8 +116,29 @@
   text-align: center;
 }
 
-.login-form-column{
-  width: 150px;
+.login-form-column input, .login-form-column select {
+  width: 200px;
+    border-radius: 4px;
+    box-shadow: none;
+    font-size: 14px;
+    color: #333;
+}
+input[type="text"], textarea, input[type="number"], select, input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
 
+.login-button {
+  padding: 10px 20px !important; 
+  margin: 5px !important;
+  background-color: #af4c8e !important;
+  color: white !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-size: 16px !important;
+  border-radius: 5px !important;
+  align-items: center !important;
 }
 

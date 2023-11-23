@@ -1,4 +1,28 @@
 /* Estilos para a página de cadastro de cliente */
+.form-container-cadastrar-cliente{
+  background-color: rgba(255, 241, 241, 0.616);
+  padding: 20px;
+  width: 400px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.div-cadastrar-cliente{
+  width: 300px;
+}
+
+.input-div-cadastrar-cliente{
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #f4ccccfb;
+  border-radius: 4px;
+}
+
 .cadastrar-cliente {
     display: flex;
     flex-direction: column;

@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class CarrinhoService {
      * Salva dados de um pedido no banco de dados
      * @param carrinho
      * */
-    public MensagemDTO save(CarrinhoRecord carrinho){
+    public int save(CarrinhoRecord carrinho) throws Exception {
         Cliente cliente = _clienteRepository.getClientByEmail(carrinho.emailCliente());
         int idCliente = _clienteRepository.getIdClient(cliente.getId());
 
@@ -46,10 +47,10 @@ public class CarrinhoService {
             List<CarrinhoTemporario> carrinhoTemporario= _carrinhoRepository.getCarrinhoTemporario(cliente.getEmail());
 
             if(!opcaoPagamento(carrinho.opcaoPagamento()))
-                return new MensagemDTO("forma de pagamento invalido", false);
+                throw new Exception("forma de pagamento invalido");
 
             if(!opcaoFrete(carrinho.opcaoFrete()))
-                return new MensagemDTO("opção de frete invalido", false);
+                throw new Exception("opção de frete invalido");
 
             double subtotal = 0;
 
@@ -66,14 +67,15 @@ public class CarrinhoService {
                 }
             }
 
-            _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
+            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
             deleteAllCarrinhoTemporario(cliente.getId());
+
+            return idPedido;
 
             //Lembrar de atualizar o produto tirando a quantidade
         } else{
-            return new MensagemDTO("Erro ao encontrar um cliente no banco de dados", true);
+            throw new Exception("Erro ao encontrar um cliente no banco de dados");
         }
-        return new MensagemDTO("Pedido salvo com sucesso", true);
     }
 
     /**
@@ -167,6 +169,40 @@ public class CarrinhoService {
     }
 
     /**
+     * Retorna todos os pedidos ordenados pela data
+     * */
+    public List<PedidoRecord> getAllPedidosOrderByData(){
+        List<Pedido> pedidoList = _carrinhoRepository.getAllPedidoOrderByDate();
+
+        List<PedidoRecord> dto = new ArrayList<>();
+
+        for(Pedido pedido : pedidoList){
+
+            List<Carrinho> carrinhoList = _carrinhoRepository.getAllCarrinho(pedido.getId());
+
+            dto.add(map(pedido, carrinhoList));
+        }
+
+        return dto;
+    }
+
+    /**
+     * Realiza um update na situação do Pedido
+     * @param id
+     * @param opSituacao
+     * @return
+     * */
+    public MensagemDTO updateSituacaoPedido(int id, String opSituacao){
+
+        try{
+            _carrinhoRepository.UpdateSituacaoPedido(id, Situacao.getDescricaoFromDescricao(opSituacao));
+        } catch (Exception ex){
+            return new MensagemDTO("Erro fazer update no pedido" + ex.toString(), false);
+        }
+        return new MensagemDTO("Pedido atualizado com sucesso", true);
+    }
+
+    /**
      * Mapeia um objeto de pedido
      * @param idCliente
      * @param opcaoPagamento
@@ -183,13 +219,13 @@ public class CarrinhoService {
                 opcaoPagamento,
                 subtotal,
                 opcaoFrete,
-                situacao
+                situacao,
+                new Date()
         );
     }
 
     /**
-     * Mapeia um objeto de carrinho
-     * @param idPedido
+     * Mapeia um objeto de carrinhoW
      * @param idProduto
      * @param quantidade
      * @param precoUnitario
@@ -200,7 +236,6 @@ public class CarrinhoService {
     private Carrinho map(int idProduto, int quantidade, double precoUnitario, double precoTotal){
 
         return new Carrinho(
-//                idPedido,
                 idProduto,
                 quantidade,
                 precoUnitario,
@@ -220,6 +255,7 @@ public class CarrinhoService {
 
         return new PedidoRecord(
                 pedido.getId(),
+                pedido.getData(),
                 OpcaoPagamento.getDescricaoFromOrdinal(pedido.getOpcaoPagamento()),
                 pedido.getSubtotal(),
                 OpcaoFrete.getDescricaoFromOrdinal(pedido.getOpcaoFrete()),

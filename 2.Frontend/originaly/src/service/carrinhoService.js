@@ -45,6 +45,21 @@ const CarrinhoService = {
         }
     },
 
+    /**
+     * Atualiza a situação de um pedido
+     * @param id
+     * @param situacao
+     */
+    updateSitucaoPedido: async (id, situacao) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/carrinho/updateSitucaoPedido/${id}/${situacao}`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
     getCarrinhoTemporario: async (email) => {
         try {
             const response = await axios.get(`http://localhost:8080/carrinho/getCarrinhoTemporario/${email}`);          
@@ -73,7 +88,20 @@ const CarrinhoService = {
             console.error('Erro ao enviar dados:', error);
             throw error;
         }
-    }
+    },
+
+    /***
+     * Retorna todos os pedidos ordenados pela data 
+     */
+    getAllPedidoOrderByDate: async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/carrinho/getAllPedidoOrderByDate`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
 }
 
 export default CarrinhoService;

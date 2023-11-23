@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Date;
+
+
 @Entity
 @Table(name = "pedido")
 @Data
@@ -27,12 +30,15 @@ public class Pedido {
     private int opcaoFrete;
     @Column(name = "situacao")
     private int situacao;
+    @Column(name = "data")
+    private Date data;
 
-    public Pedido(int id, int opPagamento, double total, int frete, int situacaoVenda){
+    public Pedido(int id, int opPagamento, double total, int frete, int situacaoVenda, Date data){
         this.idCliente = id;
         this.opcaoPagamento = opPagamento;
         this.subtotal = total;
         this.opcaoFrete = frete;
         this.situacao = situacaoVenda;
+        this.data = data;
     }
 }

@@ -1,6 +1,16 @@
 .perfil-card-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 150px;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  margin-top: 150px !important;
+}
+
+.perfil-card {
+  background-color: rgba(255, 241, 241, 0.616);
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  margin-left: 15px;
+  width: 350px;
 }

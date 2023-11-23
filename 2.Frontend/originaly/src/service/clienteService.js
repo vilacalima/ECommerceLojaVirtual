@@ -96,6 +96,21 @@ const ClienteService = {
     },
 
     /**
+     * Retorna Um objeto de Cliente do banco de dados
+     * @param {*} id
+     * @returns 
+     */
+    getEnderecoById: async (id) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/cliente/getAddressById/${id}`);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
+    /**
      * Envia um novo endereço para o banco de dados
      * @param {*} idCliente 
      * @param {*} dto 
