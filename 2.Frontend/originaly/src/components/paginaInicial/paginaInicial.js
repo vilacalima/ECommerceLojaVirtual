@@ -47,6 +47,8 @@ function HomePage() {
     if(usuarioParse != null){
       if(usuarioParse.tipo === 'administrador'){
         setIsAdm(true);
+      } else if(usuarioParse.tipo === 'estoquista'){
+        setIsAdm(true);
       }
       user = usuarioParse.email;
     } else{
@@ -104,7 +106,7 @@ function HomePage() {
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
           {isAuthenticated && isAdm === false && <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a>} {/* Adicionado o contador de carrinho */}
-          {isAuthenticated && isAdm === false && <a href="/cadastrarCliente"> • Cadastrar</a>}
+          {isAuthenticated === false && isAdm === false && <a href="/cadastrarCliente"> • Cadastrar</a>}
           {isAuthenticated && isAdm === false && <a href='/perfil'> • Perfil</a>}
           {isAuthenticated && isAdm && <Link onClick={handlerPagAdm}> • Administrador</Link>}
           {isAuthenticated && <Link onClick={handleLogout}> • Logout</Link>}

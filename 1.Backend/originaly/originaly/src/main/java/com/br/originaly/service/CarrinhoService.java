@@ -39,7 +39,7 @@ public class CarrinhoService {
      * Salva dados de um pedido no banco de dados
      * @param carrinho
      * */
-    public MensagemDTO save(CarrinhoRecord carrinho){
+    public int save(CarrinhoRecord carrinho) throws Exception {
         Cliente cliente = _clienteRepository.getClientByEmail(carrinho.emailCliente());
         int idCliente = _clienteRepository.getIdClient(cliente.getId());
 
@@ -47,10 +47,10 @@ public class CarrinhoService {
             List<CarrinhoTemporario> carrinhoTemporario= _carrinhoRepository.getCarrinhoTemporario(cliente.getEmail());
 
             if(!opcaoPagamento(carrinho.opcaoPagamento()))
-                return new MensagemDTO("forma de pagamento invalido", false);
+                throw new Exception("forma de pagamento invalido");
 
             if(!opcaoFrete(carrinho.opcaoFrete()))
-                return new MensagemDTO("opção de frete invalido", false);
+                throw new Exception("opção de frete invalido");
 
             double subtotal = 0;
 
@@ -67,14 +67,15 @@ public class CarrinhoService {
                 }
             }
 
-            _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
+            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
             deleteAllCarrinhoTemporario(cliente.getId());
+
+            return idPedido;
 
             //Lembrar de atualizar o produto tirando a quantidade
         } else{
-            return new MensagemDTO("Erro ao encontrar um cliente no banco de dados", true);
+            throw new Exception("Erro ao encontrar um cliente no banco de dados");
         }
-        return new MensagemDTO("Pedido salvo com sucesso", true);
     }
 
     /**
@@ -188,13 +189,13 @@ public class CarrinhoService {
     /**
      * Realiza um update na situação do Pedido
      * @param id
-     * @param situacao
+     * @param opSituacao
      * @return
      * */
-    public MensagemDTO UpdateSituacaoPedido(int id, int situacao){
+    public MensagemDTO updateSituacaoPedido(int id, String opSituacao){
 
         try{
-            _carrinhoRepository.UpdateSituacaoPedido(id, situacao); //Fazer o depara da situação
+            _carrinhoRepository.UpdateSituacaoPedido(id, Situacao.getDescricaoFromDescricao(opSituacao));
         } catch (Exception ex){
             return new MensagemDTO("Erro fazer update no pedido" + ex.toString(), false);
         }

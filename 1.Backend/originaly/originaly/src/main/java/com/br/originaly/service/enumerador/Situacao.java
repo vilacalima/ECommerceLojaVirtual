@@ -22,4 +22,13 @@ public enum Situacao {
         }
         return null; // ou lançar uma exceção se o número não for encontrado
     }
+
+    public static int getDescricaoFromDescricao(String opcao) {
+        for (Situacao meuEnum : values()) {
+            if (meuEnum.getDescricao().equals(opcao)) {
+                return meuEnum.ordinal();
+            }
+        }
+        return 00; // ou lançar uma exceção se o número não for encontrado
+    }
 }

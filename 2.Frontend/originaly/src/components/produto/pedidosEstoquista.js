@@ -44,9 +44,14 @@ class PedidosEstoquista extends Component {
   };
 
   handleSelecaoChange = (id, valorSelecionado) => {
+    const update = async () => {
+      await CarrinhoService.updateSitucaoPedido(id, valorSelecionado);
+    }
     this.setState((prevState) => ({
       selecao: { ...prevState.selecao, [id]: valorSelecionado },
     }));
+
+    update();
   };
 
   render() {

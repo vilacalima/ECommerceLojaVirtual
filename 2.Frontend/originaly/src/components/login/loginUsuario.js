@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import LoginService from '../../service/loginService';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import './loginUsuario.css';
 
 function LoginUsuario() {
   // const user = new LoginRecord(event.target.username.value, event.target.password.value);
@@ -68,18 +69,17 @@ function LoginUsuario() {
 
       <div className="app">
 
-        <main className="app-main">
-          <div className="form-container">
+        <main className="login-app-main">
+          <div className="login-form-container">
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
               <div className="form-row">
                 <div className="login-form-column">
                   <label htmlFor="username">Usuário:</label>
                   <input 
-                    type="text" 
+                    // type="text" 
                     id="username" 
                     name="username" 
-                    className='login-caixa-text'
                     value={user.email}
                     onChange={(e) => setUser({ ...user, email: e.target.value })}
                     required 
@@ -87,7 +87,7 @@ function LoginUsuario() {
                 </div>
               </div>
               <div className="form-row">
-                <div className="form-column">
+                <div className="login-form-column">
                   <label htmlFor="password">Senha:</label>
                   <input 
                     type="password" 
@@ -99,7 +99,7 @@ function LoginUsuario() {
                   />
                 </div>
               </div>
-              <button type="submit">Entrar</button>
+              <button className='login-button' type="submit">Entrar</button>
             </form>
           </div>
         </main>

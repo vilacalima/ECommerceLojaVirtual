@@ -173,15 +173,15 @@ class CadastroCliente extends Component {
 
   render() {
     return (
-      <div className="form-container">
+      <div className="form-container-cadastrar-cliente">
         <h1>Cadastrar Cliente</h1>
         <form onSubmit={this.handleSubmit}>
           {/* Campos de dados pessoais */}
-          <div>
+          <div className='div-cadastrar-cliente'>
             <label>Nome:</label>
-            <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} required />
+            <input className='input-div-cadastrar-cliente' type="text" name="nome" value={this.state.nome} onChange={this.handleChange} required />
           </div>
-          <div>
+          <div className='div-cadastrar-cliente'>
             <label>CPF:</label>
             <input type="text" name="cpf" value={this.state.cpf} onChange={this.handleChange} required />
           </div>
