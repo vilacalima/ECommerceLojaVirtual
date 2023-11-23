@@ -4,12 +4,13 @@ import CompEndereco from "../carrinho/compEndereco";
 import PaymentStatic from "../compra/pagamentoStatic";
 import CarrinhoService from '../../service/carrinhoService';
 import BoxResponse from "../util/boxResponse";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function Checkout(){
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [mensagem, setMensagem] = useState([]);
+    const [mensagem, setMensagem] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     const handlerSalvarPedido = async () => {
         const clienteJSON = localStorage.getItem("usuario");
@@ -34,15 +35,35 @@ function Checkout(){
     
         const save = await CarrinhoService.save(dto);
 
-        setMensagem("Pedido salvo com sucesso, Id Pedido: " + save);
+        const m = `Pedido salvo com sucesso, Id Pedido: ${save}`;
+
+        console.log(m)
+        setMensagem(m);
         setIsAuthenticated(true);
         
+
+        console.log(mensagem);
+        
+        setTimeout(() => {
+          setShowModal(true);
+        }, 1000);
     
         // if (save.isSucess){
         //   window.onmessage("Pedido Salvo com sucesso");
         //   setTimeout(() => {
         //   }, 1000);
         // }
+    };
+
+    useEffect(() => {
+      
+        
+      
+      console.log(mensagem);
+    }, [mensagem]);
+    
+    const fecharModal = () => {
+      setShowModal(false);
     };
 
     return(
@@ -57,7 +78,17 @@ function Checkout(){
 
             <button onClick={handlerSalvarPedido}>Finalizar Pedido</button>
 
-            {isAuthenticated && <BoxResponse itens={mensagem} /> }
+            {showModal && (
+              <div className="meus-pedidos-modal">
+                <div className="meus-pedidos-modal-content">
+                  <span className="meus-pedidos-close" onClick={fecharModal}>
+                    &times;
+                  </span>
+                  <BoxResponse itens={mensagem} />
+                </div>
+              </div>
+            )}
+            {/* {isAuthenticated && <BoxResponse itens={mensagem} /> } */}
         </div>
     );
 }

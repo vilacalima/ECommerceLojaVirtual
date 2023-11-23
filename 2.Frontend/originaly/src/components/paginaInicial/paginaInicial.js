@@ -105,6 +105,7 @@ function HomePage() {
         <img src={logo} className="logo" alt="Logo"></img>
         <div className="user-section">
           <a href="/login"> • 👤 Login</a>
+          {isAuthenticated === false && isAdm === false && <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a>} 
           {isAuthenticated && isAdm === false && <a href="/carrinho"> • 🛒 Carrinho ({cartCount})</a>} {/* Adicionado o contador de carrinho */}
           {isAuthenticated === false && isAdm === false && <a href="/cadastrarCliente"> • Cadastrar</a>}
           {isAuthenticated && isAdm === false && <a href='/perfil'> • Perfil</a>}
