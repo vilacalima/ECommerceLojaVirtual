@@ -67,7 +67,7 @@ public class CarrinhoService {
                 }
             }
 
-            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
+            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.AGUARDANDO_PAGAMENTO.ordinal()));
             deleteAllCarrinhoTemporario(cliente.getId());
 
             return idPedido;

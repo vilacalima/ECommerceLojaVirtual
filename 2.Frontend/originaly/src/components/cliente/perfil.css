@@ -14,3 +14,20 @@
   margin-left: 15px;
   width: 350px;
 }
+
+.perfil-input-text {
+  padding: 8px !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px !important;
+  width: 300px !important;
+}
+
+.perfil-card-2{
+    background-color: rgba(255, 241, 241, 0.616);
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    margin-left: 15px;
+    width: 800px;
+}

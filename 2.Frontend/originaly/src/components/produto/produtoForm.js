@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './produtoForm.css';
 import axios from 'axios';
+import PadraoHeader from '../header/padraoHeader';
 
 function ProdutoForm() {
 
@@ -122,10 +123,10 @@ function ProdutoForm() {
   };
 
   return (
-    <div className="container">
-      <button className="home-button" onClick={() => history.push(`/home/${true}`)}>
-        home
-      </button>
+    <div className="produto-container">
+
+      <PadraoHeader />
+      
       <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

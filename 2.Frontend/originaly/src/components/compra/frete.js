@@ -92,8 +92,9 @@ function Frete() {
         {enderecos ? (
             <div>
               <label>
-                Forma de pagamento:
+                Endereco para envio:
                 <select onChange={(e) => handlerEndereco(e.target.value)}>
+                  <option>Selecione</option>
                   {enderecos.map((item) => (
                     <option key={item.id} value={item.id}>
                       Id: {item.id} Cep: {item.cep} Rua: {item.rua} Numero: {item.numero}

@@ -1,0 +1,9 @@
+.pedidos-estoquista-container {
+  margin: 0 auto;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+  text-align: center;
+  flex-direction: column;
+}

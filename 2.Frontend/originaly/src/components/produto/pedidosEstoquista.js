@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import CarrinhoService from '../../service/carrinhoService';
-import '../cliente/meusPedidos.css';
+import './pedidosEstoquista.css';
 import PadraoHeader from '../header/padraoHeader';
 import ItensPedidoEstoquista from './itensPedidoEstoquista';
 
@@ -56,11 +56,11 @@ class PedidosEstoquista extends Component {
 
   render() {
     return (
-      <div className='meus-pedidos-container'>
+      <div className='pedidos-estoquista-container'>
 
       <PadraoHeader />
       
-      <h1>Meus Pedidos</h1>
+      <h1>Pedidos</h1>
         
       <table className="tabela-produtos">
         <thead>
@@ -93,9 +93,12 @@ class PedidosEstoquista extends Component {
                 onChange={(e) => this.handleSelecaoChange(item.id, e.target.value)}
               >
                 <option value="">Selecione...</option>
-                <option value="Cadastrado">Cadastrado</option>
-                <option value="Cancelado">Cancelado</option>
-                <option value="Finalizado">Finalizado</option>
+                <option value="Aguardando Pagamento">Aguardando Pagamento</option>
+                <option value="Pagamento Rejeitado">Pagamento Rejeitado</option>
+                <option value="Pagamento com Sucesso">Pagamento com Sucesso</option>
+                <option value="Aguardando Retirada">Aguardando Retirada</option>
+                <option value="Em trânsito">Em trânsito</option>
+                <option value="Entregue">Entregue</option>
               </select>
             </td>
             </tr>

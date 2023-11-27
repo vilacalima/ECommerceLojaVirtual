@@ -49,7 +49,8 @@ function ListarCarrinho() {
     } else if (currentPage === "pagamento") {
       return <Pagamento />;
     } else if (currentPage === "finalizar") {
-      const userToken = localStorage.getItem('usuario');
+      let userToken = localStorage.getItem('usuario');
+      
       if(userToken === null){
         history.push('/login');
       } else {

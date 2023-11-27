@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
 import axios from 'axios';
 import NovaImagem from './novaImagem';
+import PadraoHeader from '../header/padraoHeader';
 
 function EditarProduto() {
   const { productId } = useParams();
@@ -107,7 +108,8 @@ function EditarProduto() {
 
 
   return (
-    <div className="container">
+    <div className="produto-container">
+      <PadraoHeader />
       <h2>Editar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

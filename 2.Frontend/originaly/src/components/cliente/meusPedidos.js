@@ -45,48 +45,48 @@ class MeusPedidos extends Component {
     return (
       <div className='meus-pedidos-container'>
 
-      <PadraoHeader />
-      
-      <h1>Meus Pedidos</h1>
+        <PadraoHeader />
         
-      <table className="tabela-produtos">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Total Pago</th>
-            <th>Ação</th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.state.pedidos.map((item) => (
-            <tr key={item.Id}>
-              <td>{item.id}</td>
-              <td>R$ {item.total.toFixed(2)}</td>
-              <td>
-                <a>
-                  <span
-                    className="carrinho-link"
-                    onClick={() => this.detalhesProduto(item)}>
-                    Detalhes
-                  </span>
-                </a>
-              </td>
+        <h1>Meus Pedidos</h1>
+          
+        <table className="tabela-produtos">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Total Pago</th>
+              <th>Ação</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {this.state.pedidos.map((item) => (
+              <tr key={item.Id}>
+                <td>{item.id}</td>
+                <td>R$ {item.total.toFixed(2)}</td>
+                <td>
+                  <a>
+                    <span
+                      className="carrinho-link"
+                      onClick={() => this.detalhesProduto(item)}>
+                      Detalhes
+                    </span>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-      {this.state.showModal && (
-        <div className="meus-pedidos-modal">
-          <div className="meus-pedidos-modal-content">
-            <span className="meus-pedidos-close" onClick={this.fecharModal}>
-              &times;
-            </span>
-            <h2>Itens do Pedido</h2>
-            <ItensPedido itens={this.state.itensPedidoSelecionado} />
+        {this.state.showModal && (
+          <div className="meus-pedidos-modal">
+            <div className="meus-pedidos-modal-content">
+              <span className="meus-pedidos-close" onClick={this.fecharModal}>
+                &times;
+              </span>
+              <h2>Itens do Pedido</h2>
+              <ItensPedido itens={this.state.itensPedidoSelecionado} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
       </div>
     );

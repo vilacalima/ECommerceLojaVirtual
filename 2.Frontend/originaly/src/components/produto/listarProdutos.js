@@ -81,9 +81,10 @@ function ListarProdutos() {
   );
 
   return (
-    <div>
+    <div className="listar-produtos-container">
       <PadraoHeader pedidos={false}/>
-      <h2>Listagem de Produtos</h2>
+      
+      <h2 className='listar-produtos-h2'>Listagem de Produtos</h2>
 
       <div className="filtro">
         <input
