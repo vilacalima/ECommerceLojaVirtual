@@ -16,7 +16,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService _usuario;
-
+/***
+ * 
+ *  Função para criar novo Usuario
+ *  URL /novoUsuario
+ *  Recebe RequestBody com os dados do novo Usuario 
+ */
     @PostMapping("/novoUsuario")
     public MensagemDTO novoUsuario(@RequestBody Usuario dto) throws SQLException {
 
@@ -31,6 +36,13 @@ public class UsuarioController {
         }
         return mensagem;
     }
+
+/***
+ * 
+ *  Função para atualizar Usuario
+ *  URL /atualizarUsuario
+ *  Recebe RequestBody com os dados do Usuario 
+ */
 
     @PutMapping("/atualizarUsuario")
     public MensagemDTO atualizarUsuario(@RequestBody Usuario dto){
@@ -47,6 +59,13 @@ public class UsuarioController {
         return mensagem;
     }
 
+    /***
+ * 
+ *  Função para atualizar status do usuario
+ *  URL /usuarioAtivo
+ *  Recebe id e novo estado 
+ */ 
+
     @PutMapping("/usuarioAtivo/{id}/{isActive}")
     public MensagemDTO usuarioAtivo(@PathVariable int id, @PathVariable boolean isActive){
         MensagemDTO mensagem = null;
@@ -61,10 +80,23 @@ public class UsuarioController {
         return mensagem;
     }
 
+        /***
+ * 
+ *  Função para buscar usuario por ID
+ *  URL /getUusarioById
+ *  Recebe id 
+ */ 
+
     @GetMapping("/getUsuarioById/{id}")
     public Usuario getUsuarioById(@PathVariable int id){
         return _usuario.getUsuarioById(id);
     }
+
+        /***
+ * 
+ *  Função para listar usuario
+ *  URL /getUsuario
+ */ 
 
     @GetMapping("/getUsuario")
     public List<Usuario> getUsuario(){
