@@ -42,28 +42,33 @@ function TableCarrinho(){
       }, []);
 
     const handleQuantidadeProduto = async (item) => {
-        const updatedCarrinho = carrinho.map((c) =>
-          c.idProduto === item.idProduto ? { ...c, quantidade: c.quantidade + 1, precoTotal:  CalculadoraService.calculatePrecoTotal(c.quantidade, c.precoUnitario)} : c
-        );
-        setCarrinho(updatedCarrinho);
-    
-        const dto = await CarrinhoService.updateCarrinhoTemporario(carrinho);
-    
-        if(dto.isSuccess === true){
-            setTimeout(() => {
-                window.location.href = '/carrinho';
-            }, 10000);   
-        } 
-      };
+        if (item.quantidade >= 0) {
+
+            const quantidade = item.quantidade + 1;
+            const id = item.id;
+
+            const dto = await CarrinhoService.updateQuantidadeCarrinhoTemporario(id, quantidade);
+            if(dto.isSuccess === true){
+                setTimeout(() => {
+                    window.location.href = '/carrinho';
+                }, 10);   
+            } 
+        }
+    };
       
       const handleDiminuirQuantidadeProduto = async (item) => {
+        
         if (item.quantidade > 0) {
-          const updatedCarrinho = carrinho.map((c) =>
-            c.idProduto === item.idProduto ? { ...c, quantidade: c.quantidade - 1, precoTotal:  CalculadoraService.calculatePrecoTotal(c.quantidade, c.precoUnitario)} : c
-          );
-          
-          setCarrinho(updatedCarrinho);
-         await CarrinhoService.updateCarrinhoTemporario(carrinho);
+
+            const quantidade = item.quantidade - 1;
+            const id = item.id;
+
+            const dto = await CarrinhoService.updateQuantidadeCarrinhoTemporario(id, quantidade);
+            if(dto.isSuccess === true){
+                setTimeout(() => {
+                    window.location.href = '/carrinho';
+                }, 10);   
+            } 
         }
       };
       

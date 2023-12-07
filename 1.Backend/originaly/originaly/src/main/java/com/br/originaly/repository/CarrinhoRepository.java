@@ -64,6 +64,26 @@ public class CarrinhoRepository {
     }
 
     /**
+     * Atualiza o email no carrinho temporário
+     * @param id
+     * @param email
+     * */
+    public void updateEmailCarrinhoTemporario(int id, String email){
+        try{
+
+            CarrinhoTemporario carrinhoTemporario = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            carrinhoTemporario.setEmailCliente(email);
+            _carrinhoTemporarioRepository.save(carrinhoTemporario);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+
+    /**
      * Retorna a quantidade do carrinho
      */
     public long getCountCarrinhoTemporario(String emailCliente){
@@ -85,6 +105,46 @@ public class CarrinhoRepository {
                 updateItem.setPrecoTotal(item.getPrecoTotal());
                 _carrinhoTemporarioRepository.save(updateItem);
             }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
+     * Atualiza um item do carrinho temporario no banco de dados
+     * @param id
+     * @param quantidade
+     * @param precoUnitario
+     * @param precoTotal
+     */
+    public void updateQuantidadeCarrinhoTemporario(int id, int quantidade, double precoUnitario, double precoTotal){
+        try{
+
+            CarrinhoTemporario updateItem = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            updateItem.setQuantidade(quantidade);
+            updateItem.setPrecoUnitario(precoUnitario);
+            updateItem.setPrecoTotal(precoTotal);
+            _carrinhoTemporarioRepository.save(updateItem);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
+     * Retorna um item do carrinho temporario no banco de dados
+     * @param id
+     */
+    public CarrinhoTemporario getCarrinhoTemporarioById(int id){
+        try{
+
+            CarrinhoTemporario updateItem = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            return updateItem;
+
         } catch (Exception ex) {
             throw ex;
         }

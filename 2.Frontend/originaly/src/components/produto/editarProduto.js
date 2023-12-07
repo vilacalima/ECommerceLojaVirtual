@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import './produtoForm.css'; // Reutilizamos o CSS do formulário de cadastro
 import axios from 'axios';
 import NovaImagem from './novaImagem';
+import PadraoHeader from '../header/padraoHeader';
 
 function EditarProduto() {
   const { productId } = useParams();
@@ -107,82 +108,85 @@ function EditarProduto() {
 
 
   return (
-    <div className="container">
-      <h2>Editar Produto</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Nome do Produto:</label>
-          <input
-            type="text"
-            id="name"
-            name="nome"
-            value={product.nome}
-            onChange={handleInputChange}
-            maxLength="200"
-            required
-          />
-          {errors.name && <div className="error">{errors.name}</div>}
-        </div>
+    <div className='listar-produtos-container'>
+      <PadraoHeader />
+      <div className="salvar-produto-container">
+        <h2>Editar Produto</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">Nome do Produto:</label>
+            <input
+              type="text"
+              id="name"
+              name="nome"
+              value={product.nome}
+              onChange={handleInputChange}
+              maxLength="200"
+              required
+            />
+            {errors.name && <div className="error">{errors.name}</div>}
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="description">Descrição do Produto:</label>
-          <textarea
-            id="description"
-            name="descricao"
-            value={product.descricao}
-            onChange={handleInputChange}
-            maxLength="2000"
-            required
-          ></textarea>
-          {errors.description && <div className="error">{errors.description}</div>}
-        </div>
+          <div className="form-group">
+            <label htmlFor="description">Descrição do Produto:</label>
+            <textarea
+              id="description"
+              name="descricao"
+              value={product.descricao}
+              onChange={handleInputChange}
+              maxLength="2000"
+              required
+            ></textarea>
+            {errors.description && <div className="error">{errors.description}</div>}
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="rating">Avaliação do Produto:</label>
-          <input
-            type="number"
-            id="rating"
-            name="avaliacao"
-            step="0.5"
-            min="0.5"
-            max="5"
-            value={product.avaliacao}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="rating">Avaliação do Produto:</label>
+            <input
+              type="number"
+              id="rating"
+              name="avaliacao"
+              step="0.5"
+              min="0.5"
+              max="5"
+              value={product.avaliacao}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="price">Preço do Produto:</label>
-          <input
-            type="number"
-            id="price"
-            name="valor"
-            step="0.01"
-            value={product.valor}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
+          <div className="form-group">
+            <label htmlFor="price">Preço do Produto:</label>
+            <input
+              type="number"
+              id="price"
+              name="valor"
+              step="0.01"
+              value={product.valor}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
 
-        <div className="form-group">
-          <label htmlFor="stock">Quantidade em Estoque:</label>
-          <input
-            type="number"
-            id="stock"
-            name="quantidade"
-            step="1"
-            value={product.quantidade}
-            onChange={handleInputChange}
-            required
-          />
-        </div>        
-        <button type="submit">Salvar Alterações</button>
-        <button type="button" onClick={handleCancelar}>Cancelar</button>
-      </form>
+          <div className="form-group">
+            <label htmlFor="stock">Quantidade em Estoque:</label>
+            <input
+              type="number"
+              id="stock"
+              name="quantidade"
+              step="1"
+              value={product.quantidade}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <button type="submit">Salvar Alterações</button>
+          <button type="button" onClick={handleCancelar}>Cancelar</button>
+        </form>
 
-      <NovaImagem id={productId}/>
-    </div>
+        <NovaImagem id={productId}/>
+      </div>
+    </div>  
   );
 }
 

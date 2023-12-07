@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,6 +55,8 @@ public class CarrinhoService {
 
             double subtotal = 0;
 
+            subtotal += carrinho.valorFrete();
+
             List<Carrinho> saveNewCarrinho = new ArrayList<>();
 
             for (CarrinhoTemporario dto : carrinhoTemporario) {
@@ -67,7 +70,7 @@ public class CarrinhoService {
                 }
             }
 
-            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.CADASTRADO.ordinal()));
+            int idPedido = _carrinhoRepository.saveCarrinho(saveNewCarrinho, map(cliente.getId(), carrinho.opcaoPagamento(), subtotal, map(carrinho.opcaoFrete()), Situacao.AGUARDANDO_PAGAMENTO.ordinal(), carrinho.idEndereco(), carrinho.valorFrete()));
             deleteAllCarrinhoTemporario(cliente.getId());
 
             return idPedido;
@@ -119,8 +122,8 @@ public class CarrinhoService {
         for(Pedido pedido : pedidoList){
 
             List<Carrinho> carrinhoList = _carrinhoRepository.getAllCarrinho(pedido.getId());
-
-            dto.add(map(pedido, carrinhoList));
+            Endereco endereco = _clienteRepository.getEnderecoById(pedido.getIdEndereco());
+            dto.add(map(pedido, carrinhoList, endereco));
         }
 
         return dto;
@@ -140,6 +143,25 @@ public class CarrinhoService {
     public MensagemDTO updateCarrinhoTemporario(List<CarrinhoTemporario> carrinhoTemporario){
         try{
             _carrinhoRepository.updateCarrinhoTemporario(carrinhoTemporario);
+        } catch (Exception ex){
+            throw ex;
+        }
+        return new MensagemDTO("Item atualizado no carrinho temporário", true);
+    }
+
+    /**
+     * Atualiza um item no carrinho temporário
+     * @param id
+     * @param quantidade
+     * */
+    public MensagemDTO updateQuantidadeCarrinhoTemporario(int id, int quantidade){
+        try{
+            CarrinhoTemporario carrinhoTemporario = _carrinhoRepository.getCarrinhoTemporarioById(id);
+            Produto produto = _produtoRepository.getProductById(carrinhoTemporario.getIdProduto());
+
+            double subtotal = produto.getValor() * quantidade;
+
+            _carrinhoRepository.updateQuantidadeCarrinhoTemporario(id, quantidade, produto.getValor(), subtotal);
         } catch (Exception ex){
             throw ex;
         }
@@ -179,8 +201,9 @@ public class CarrinhoService {
         for(Pedido pedido : pedidoList){
 
             List<Carrinho> carrinhoList = _carrinhoRepository.getAllCarrinho(pedido.getId());
+            Endereco endereco = _clienteRepository.getEnderecoById(pedido.getIdEndereco());
 
-            dto.add(map(pedido, carrinhoList));
+            dto.add(map(pedido, carrinhoList, endereco));
         }
 
         return dto;
@@ -203,6 +226,19 @@ public class CarrinhoService {
     }
 
     /**
+     * Atualiza os itens do carrinho temporário
+     * @param email
+     * */
+    public void updateCarrinhoTemporario(String email){
+        List<CarrinhoTemporario> carrinhoTemporarioList = _carrinhoRepository.getCarrinhoTemporario("Usuario_nao_logado");
+        if(carrinhoTemporarioList != null){
+            for(CarrinhoTemporario carrinhoTemporario : carrinhoTemporarioList){
+                _carrinhoRepository.updateEmailCarrinhoTemporario(carrinhoTemporario.getId(), email);
+            }
+        }
+    }
+
+    /**
      * Mapeia um objeto de pedido
      * @param idCliente
      * @param opcaoPagamento
@@ -212,7 +248,7 @@ public class CarrinhoService {
      * */
     @NotNull
     @Contract(value = "_, _, _, _, _ -> new", pure = true)
-    private Pedido map(int idCliente, int opcaoPagamento, double subtotal, int opcaoFrete, int situacao){
+    private Pedido map(int idCliente, int opcaoPagamento, double subtotal, int opcaoFrete, int situacao, int idEndereco, double valorFrete){
 
         return new Pedido(
                 idCliente,
@@ -220,7 +256,9 @@ public class CarrinhoService {
                 subtotal,
                 opcaoFrete,
                 situacao,
-                new Date()
+                new Date(),
+                idEndereco,
+                valorFrete
         );
     }
 
@@ -251,8 +289,7 @@ public class CarrinhoService {
      * */
     @NotNull
     @Contract(value = "_, _, _, _, _ -> new", pure = true)
-    private PedidoRecord map(Pedido pedido, List<Carrinho> carrinhoList){
-
+    private PedidoRecord map(Pedido pedido, List<Carrinho> carrinhoList, Endereco endereco){
         return new PedidoRecord(
                 pedido.getId(),
                 pedido.getData(),
@@ -260,6 +297,8 @@ public class CarrinhoService {
                 pedido.getSubtotal(),
                 OpcaoFrete.getDescricaoFromOrdinal(pedido.getOpcaoFrete()),
                 Situacao.getDescricaoFromOrdinal(pedido.getSituacao()),
+                pedido.getValorFrete(),
+                endereco,
                 carrinhoList
         );
     }

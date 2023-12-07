@@ -2,6 +2,7 @@ import TableCarrinho from "./tableCarrinho";
 import PadraoHeader from "../header/padraoHeader";
 import CompEndereco from "../carrinho/compEndereco";
 import PaymentStatic from "../compra/pagamentoStatic";
+import Pagamento from "../compra/pagamento";
 import CarrinhoService from '../../service/carrinhoService';
 import BoxResponse from "../util/boxResponse";
 import { useEffect, useState } from "react";
@@ -16,21 +17,26 @@ function Checkout(){
         const clienteJSON = localStorage.getItem("usuario");
         const freteJSON = localStorage.getItem("frete");
         const pagamentoJSON = localStorage.getItem("opPagamento");
+        const infoFreteJson = localStorage.getItem('InfoFrete');
     
         const cliente = JSON.parse(clienteJSON);
         const frete = JSON.parse(freteJSON);
         const pagamento = JSON.parse(pagamentoJSON);
+        const infoFrete = JSON.parse(infoFreteJson);
     
+        console.log(pagamento);
         let pag = 0;
-        if(pagamento.opcaoPagamento === 'cartao'){
+        if(pagamento.opPagamento === 'cartao'){
+          console.log("entrou aqui");
           pag = 1;
         }
     
         const dto = {
           emailCliente: cliente.email,
           opcaoPagamento: pag,
-          opcaoFrete: frete.zona,
-          valorFrete: frete.frete
+          opcaoFrete: infoFrete.tipoFrete,
+          valorFrete: infoFrete.valorFrete,
+          idEndereco: infoFrete.idEndereco,
         }
     
         const save = await CarrinhoService.save(dto);
@@ -74,7 +80,8 @@ function Checkout(){
             <h3>Endereço</h3>
             <CompEndereco />
             <h3>Forma de Pagamento</h3>
-            <PaymentStatic />
+            <Pagamento />
+            {/* <PaymentStatic /> */}
 
             <button onClick={handlerSalvarPedido}>Finalizar Pedido</button>
 

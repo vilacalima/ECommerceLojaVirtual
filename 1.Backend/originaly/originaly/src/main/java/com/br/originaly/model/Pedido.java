@@ -32,13 +32,19 @@ public class Pedido {
     private int situacao;
     @Column(name = "data")
     private Date data;
+    @Column(name = "valor_frete")
+    private double valorFrete;
+    @Column(name = "id_endereco")
+    private int idEndereco;
 
-    public Pedido(int id, int opPagamento, double total, int frete, int situacaoVenda, Date data){
+    public Pedido(int id, int opPagamento, double total, int frete, int situacaoVenda, Date data, int idEndereco, double valorFrete){
         this.idCliente = id;
         this.opcaoPagamento = opPagamento;
         this.subtotal = total;
         this.opcaoFrete = frete;
         this.situacao = situacaoVenda;
         this.data = data;
+        this.idEndereco = idEndereco;
+        this.valorFrete = valorFrete;
     }
 }

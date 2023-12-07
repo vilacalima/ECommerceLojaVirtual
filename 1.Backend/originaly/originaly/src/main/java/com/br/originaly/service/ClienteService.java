@@ -1,5 +1,6 @@
 package com.br.originaly.service;
 
+import com.br.originaly.model.CarrinhoTemporario;
 import com.br.originaly.model.Produto;
 import com.br.originaly.record.ClienteRecord;
 import com.br.originaly.record.EnderecoRecord;
@@ -7,6 +8,7 @@ import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Cliente;
 import com.br.originaly.model.Endereco;
 import com.br.originaly.record.UpdateClienteRecord;
+import com.br.originaly.repository.CarrinhoRepository;
 import com.br.originaly.repository.ClienteRepository;
 import com.br.originaly.validator.Cryptography;
 import com.br.originaly.validator.ValidaCPF;
@@ -25,6 +27,7 @@ public class ClienteService {
     private final ValidaEmail _validaEmail;
     private final ValidaCPF _validaCpf;
     private final ValidaString _validaString;
+    private final CarrinhoService _carrinhoService;
     private MensagemDTO mensagemDTO;
 
     @Autowired
@@ -32,12 +35,14 @@ public class ClienteService {
                           Cryptography cryptography,
                           ValidaEmail validaEmail,
                           ValidaCPF validaCPF,
-                          ValidaString validaString){
+                          ValidaString validaString,
+                          CarrinhoService carrinhoService){
         _clienteRepository = clienteRepository;
         _cryptography = cryptography;
         _validaEmail = validaEmail;
         _validaCpf = validaCPF;
         _validaString = validaString;
+        _carrinhoService = carrinhoService;
     }
 
     /**
@@ -64,14 +69,13 @@ public class ClienteService {
             if(_clienteRepository.getClientByCpf(cliente.cpf()) != null)
                 return new MensagemDTO("O CPF já consta na base.",false);
 
-            //nome do cliente tem que ter maid de duas palavras no minimo 3 letras cada
+            //nome do cliente tem que ter mais de duas palavras no minimo 3 letras cada
             if(_validaString.validateText(cliente.nome()) == false)
                 return new MensagemDTO("Erro ao validar nome do cliente, verifique requisitos de nome.",false);
 
             //encripitar senha
             String senha = _cryptography.encryptPassword(cliente.senha());
 
-            //Salvar cliente no banco de dadosreturn new MensagemDTO("O CPF já consta na base.",false);
             Cliente newCliente = new Cliente(cliente.nome(), cpf, cliente.email(), cliente.telefone(), cliente.dataNasc(), cliente.sexo().ordinal(), senha);
 
             int idCliente = _clienteRepository.saveCliente(newCliente);
@@ -94,6 +98,9 @@ public class ClienteService {
 
                     _clienteRepository.saveEndereco(newEndereco);
                 }
+
+                //Verifica se existe um item no carrinho temporario se tiver altera para o cliente
+                _carrinhoService.updateCarrinhoTemporario(cliente.email());
             } else{
                 return new MensagemDTO("Erro! Cliente não cadastrado na base", false);
             }
@@ -103,6 +110,11 @@ public class ClienteService {
         return new MensagemDTO("Cliente Cadastrado com sucesso !", true);
     }
 
+    /**
+     * Atualiza um cliente no banco de dados
+     * @param cliente
+     * @return
+     * */
     public MensagemDTO updateDadosPessoais(UpdateClienteRecord cliente){
         Cliente dto = _clienteRepository.getClientByEmail(cliente.email());
         //validar se endereço existe na base

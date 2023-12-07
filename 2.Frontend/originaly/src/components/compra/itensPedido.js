@@ -46,11 +46,23 @@ function ItensPedido(props) {
   return (
     <div className='borda'>
       <div>
-        <p className='meus-pedidos-tag-p'>Tipo Frete: {itens.frete}</p>
+      <h4 className='meus-pedidos-tag-h4'>Informações do Pagamento: </h4>
+        {/* <p className='meus-pedidos-tag-p'>Tipo Frete: {itens.frete}</p> */}
         <p className='meus-pedidos-tag-p'>Opção de Pagamento: {itens.opPagamento}</p>
-        <p className='meus-pedidos-tag-p'>Situação: {itens.situacaoVenda}</p>        
+        <p className='meus-pedidos-tag-p'>Situação: {itens.situacaoVenda}</p>    
       </div>
 
+      
+        <div>
+          <h4 className='meus-pedidos-tag-h4'>Informações do Frete: </h4>
+
+          <p className='meus-pedidos-tag-p'>CEP: {itens.endereco.cep} Rua: {itens.endereco.rua} Número: {itens.endereco.numero}</p>
+          <p className='meus-pedidos-tag-p'>Bairro: {itens.endereco.bairro} Cidade: {itens.endereco.cidade} Complemento: {itens.endereco.complemento}</p>
+
+          <p className='meus-pedidos-tag-p'>Valor frete: R${itens.valorFrete.toFixed(2)}</p>
+        </div>
+      
+        <h4 className='meus-pedidos-tag-h4'>Informações do Produto: </h4>
       <table className="tabela-produtos">
         <thead>
           <tr>

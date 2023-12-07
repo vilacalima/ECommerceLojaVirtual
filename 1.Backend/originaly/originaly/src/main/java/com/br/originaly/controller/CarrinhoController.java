@@ -52,6 +52,16 @@ public class CarrinhoController {
         }
     }
 
+    @PutMapping("/updateQuantidadeCarrinho/{id}/{quantidade}")
+    public MensagemDTO updateQuantidadeCarrinho(@PathVariable int id, @PathVariable int quantidade){
+        try{
+            return _carrinhoService.updateQuantidadeCarrinhoTemporario(id, quantidade);
+        } catch(Exception ex){
+            System.out.println(ex.getMessage());
+            return new MensagemDTO("Erro ao atualizar dados no carrinho: " + ex.getMessage().toString(), false);
+        }
+    }
+
     @DeleteMapping("/deleteItem/{id}")
     public MensagemDTO deleteItem(@PathVariable int id){
         try{

@@ -63,7 +63,7 @@ function ListaUsuarios() {
   const filteredUsers = Array.isArray(users) ? users.filter(user => user.nome.toLowerCase().includes(searchTerm)) : [];
 
   return (
-    <div>
+    <div className='listar-usuario-container'>
       <PadraoHeader pedidos={false}/>
       <h2>Procurar Usuário</h2>
 

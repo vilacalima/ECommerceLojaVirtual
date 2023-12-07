@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import './editarCliente.css';
 import { Link, BrowserRouter } from 'react-router-dom';
 import PadraoHeader from '../header/padraoHeader';
+import './perfil.css';
+import Endereco from './endereco';
 
 class Perfil extends Component {
   constructor() {
@@ -35,7 +37,8 @@ class Perfil extends Component {
       cadastradoComSucesso: false,
       erroNoCadastro: false,
       enderecoPadraoIndex: 0, // Índice do endereço padrão
-      enderecosBanco: []
+      enderecosBanco: [],
+      adicionarNovoEndereco: false
     };
   }
 
@@ -187,6 +190,10 @@ class Perfil extends Component {
     
   };
 
+  handlerAdicionarNovoEndereco = () => {
+    this.setState({ adicionarNovoEndereco: true });
+  }
+
   render() {
     return (
       <div className="perfil-form-container">
@@ -196,11 +203,11 @@ class Perfil extends Component {
         <div className="card-container"> {/* Aplicando a classe card-container */}
             {/* Campos de dados pessoais */}
           <form onSubmit={this.handleSubmitDadosPessoais}>
-            <div className='card'>
+            <div className='perfil-card'>
               <h2>Dados Pessoais:</h2>
               <div>
                 <label>Nome:</label>
-                <input type="text" name="nome" value={this.state.nome} onChange={this.handleChange} required />
+                <input className='perfil-input-text' type='text' name="nome" value={this.state.nome} onChange={this.handleChange} required />
               </div>
               <div>
                 <h4>CPF: {this.state.cpf}</h4>
@@ -213,154 +220,50 @@ class Perfil extends Component {
               </div>
               <div>
                 <label>Data de nascimento:</label>
-                <input type="date" name="dataNascimento" value={this.state.dataNascimento} onChange={this.handleChange} required />
+                <input className='perfil-input-text' type="date" name="dataNascimento" value={this.state.dataNascimento} onChange={this.handleChange} required />
               </div>
               <div>
                 <label>Senha:</label>
-                <input type="password" name="senha" value={this.state.senha} onChange={this.handleChange} required />
+                <input className='perfil-input-text' type="password" name="senha" value={this.state.senha} onChange={this.handleChange} required />
               </div>
 
               <button type="submit">Salvar</button>
             </div>
           </form>
           
-
-          <div className='card'>
-            <h2>Meus Endereços:</h2>
-            { this.state.enderecosBanco.map((endereco, index) => (
-              <div key={index}>
-                <h4>Endereço {index + 1}:</h4>
-                <div>
-                  <h4>CEP: {endereco.cep}</h4>
-                </div>
-                <div>
-                  <h4>Rua: {endereco.rua}</h4>
-                </div>
-                <div>
-                  <h4>Número: {endereco.numero}</h4>
-                </div>
-                <div>
-                  <h4>Complemento: {endereco.complemento}</h4>
-                </div>
-                <div>
-                  <h4>Bairro: {endereco.bairro}</h4>
-                </div>
-                <div>
-                  <h4>Cidade: {endereco.cidade}</h4>
-                </div>
-                {/* Adicione qualquer outra informação que você deseja exibir para cada endereço */}
-              </div>
-            ))}
+          <div className='perfil-card-2'>
+          <h2>Meus Endereços:</h2>
+          <table className="tabela-produtos">
+                <thead>
+                <tr>
+                    <th>CEP</th>
+                    <th>Rua</th>
+                    <th>Número</th>
+                    <th>Complemento</th>
+                    <th>Bairro</th>
+                    <th>Estado</th>
+                </tr>
+                </thead>
+                <tbody>
+                {this.state.enderecosBanco.map((item) => (
+                    <tr key={item.id}>
+                    <td>{item.cep}</td>
+                    <td>{item.rua}</td>
+                    <td>{item.numero}</td>
+                    <td>{item.complemento}</td>
+                    <td>{item.bairro}</td>
+                    <td>{item.cidade}</td>
+                    </tr>
+                ))}
+                </tbody>
+            </table>
+            <button onClick={this.handlerAdicionarNovoEndereco}>Adicionar novo Endereço</button>
+            {this.state.adicionarNovoEndereco === true ? (
+              <Endereco />
+            ) : (
+              null // ou outro conteúdo, se necessário
+            )}
           </div>
-          {/* Campos de endereço */}
-          <form onSubmit={this.handleSubmit}>
-          <div className='card'>
-          {this.state.enderecos.map((endereco, index) => (
-            <div key={index}>
-              <h2>Endereço {index + 1}</h2>
-              <div>
-                <label>CEP:</label>
-                <input
-                  type="text"
-                  name={`cep[${index}]`}
-                  value={endereco.cep}
-                  onChange={(e) => this.handleEnderecoChange(index, 'cep', e.target.value)}
-                  onBlur={(e) => this.validarCEP(e.target.value, index)} // Adicione o onBlur para validar o CEP quando sair do campo
-                  required
-                />
-              </div>
-              <div>
-                <label>Logradouro:</label>
-                <input
-                  type="text"
-                  name={`rua[${index}]`}
-                  value={endereco.rua}
-                  onChange={(e) => this.handleEnderecoChange(index, 'rua', e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Número:</label>
-                <input
-                  type="text"
-                  name={`numero[${index}]`}
-                  value={endereco.numero}
-                  onChange={(e) => this.handleEnderecoChange(index, 'numero', e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Complemento:</label>
-                <input
-                  type="text"
-                  name={`complemento[${index}]`}
-                  value={endereco.complemento}
-                  onChange={(e) => this.handleEnderecoChange(index, 'complemento', e.target.value)}
-                />
-              </div>
-              <div>
-                <label>Bairro:</label>
-                <input
-                  type="text"
-                  name={`bairro[${index}]`}
-                  value={endereco.bairro}
-                  onChange={(e) => this.handleEnderecoChange(index, 'bairro', e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>Cidade:</label>
-                <input
-                  type="text"
-                  name={`cidade[${index}]`}
-                  value={endereco.cidade}
-                  onChange={(e) => this.handleEnderecoChange(index, 'cidade', e.target.value)}
-                  required
-                />
-              </div>
-              <div>
-                <label>UF:</label>
-                <input
-                  type="text"
-                  name={`uf[${index}]`}
-                  value={endereco.uf}
-                  onChange={(e) => this.handleEnderecoChange(index, 'uf', e.target.value)}
-                  required
-                />
-              </div>
-
-              <button type="button" onClick={() => this.definirComoPadrao(index)}>
-                Definir como Padrão
-              </button>
-              {index > 0 && (
-                <div>
-                  <label>Endereço Padrão:</label>
-                  <input
-                    type="radio"
-                    name="isEnderecoPadrao"
-                    value={index}
-                    onChange={this.handleChange}
-                    checked={this.state.enderecoPadraoIndex === index}
-                  />
-                </div>
-              )}
-            </div>
-          ))}
-          <button type="button" onClick={this.adicionarEndereco}>
-            Adicionar Endereço
-          </button>
-
-          <button type="submit">Cadastrar</button>
-          {this.state.cadastradoComSucesso && (
-            <div className="mensagem sucesso">Cadastrado com sucesso!</div>
-          )}
-          {this.state.erroNoCadastro && (
-            <div className="mensagem erro">Erro no cadastro. Tente novamente.</div>
-          )}
-          </div>
-          
-        </form>
-
         </div>
       </div>
     );

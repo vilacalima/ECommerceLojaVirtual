@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ClienteService  from '../../service/clienteService';
 import { useParams } from 'react-router-dom';
-import './editarCliente.css';
+import './perfil.css';
 import { Link, BrowserRouter } from 'react-router-dom';
-import PadraoHeader from '../header/padraoHeader';
+
 
 class Endereco extends Component {
   constructor() {
@@ -195,11 +195,13 @@ class Endereco extends Component {
           
           <form onSubmit={this.handleSubmit}>
           <div className='card'>
+          <h3>Novo Endereço</h3>
           {this.state.enderecos.map((endereco, index) => (
             <div key={index}>
               <div>
                 <label>CEP:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`cep[${index}]`}
                   value={endereco.cep}
@@ -211,6 +213,7 @@ class Endereco extends Component {
               <div>
                 <label>Logradouro:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`rua[${index}]`}
                   value={endereco.rua}
@@ -221,6 +224,7 @@ class Endereco extends Component {
               <div>
                 <label>Número:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`numero[${index}]`}
                   value={endereco.numero}
@@ -231,6 +235,7 @@ class Endereco extends Component {
               <div>
                 <label>Complemento:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`complemento[${index}]`}
                   value={endereco.complemento}
@@ -240,6 +245,7 @@ class Endereco extends Component {
               <div>
                 <label>Bairro:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`bairro[${index}]`}
                   value={endereco.bairro}
@@ -250,6 +256,7 @@ class Endereco extends Component {
               <div>
                 <label>Cidade:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`cidade[${index}]`}
                   value={endereco.cidade}
@@ -260,6 +267,7 @@ class Endereco extends Component {
               <div>
                 <label>UF:</label>
                 <input
+                  className='perfil-input-text'
                   type="text"
                   name={`uf[${index}]`}
                   value={endereco.uf}

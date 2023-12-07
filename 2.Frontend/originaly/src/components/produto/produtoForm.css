@@ -1,22 +1,25 @@
-body {
+/* body {
     font-family: Arial, sans-serif;
     background-color: #ccc; /* Fundo com transparência em #ccc */
-    margin: 0;
+    /* margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    justify-content: center; */
     /* align-items: center; */
-    min-height: 100vh; /* Centraliza verticalmente na página */
-  }
+    /* min-height: 100vh; Centraliza verticalmente na página */
+  /* } */ 
   
-  .container {
-    width: 100%; /* Largura de 100% da tela */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
-  }
+.salvar-produto-container {
+  width: 500px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  flex-direction: column;
+}
   
   h2 {
     text-align: center;
@@ -37,10 +40,10 @@ body {
   input[type="number"],
   select,
   input[type="file"] {
-    /* width: 100%; Largura de 100% para campos de entrada */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 300px;
   }
   
   textarea {
@@ -62,10 +65,12 @@ body {
     cursor: pointer;
     margin-right: 10px;
     margin-top: 20px;
+    width: 300px;
   }
   
   button[type="submit"] {
     background-color: #af4c8e;
+    width: 300px;
   }
   
   button:hover {
@@ -106,6 +111,7 @@ body {
   padding: 5px 10px;
   cursor: pointer;
   font-size: 12px;
+  width: 140px;
 }
 
 /* Estilo para a miniatura selecionada */

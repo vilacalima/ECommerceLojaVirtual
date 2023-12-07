@@ -5,6 +5,7 @@ import { cpf as cpfValidator } from 'cpf-cnpj-validator';
 import UsuarioService from '../../service/usuarioService';
 import axios from 'axios';
 import './cadastroUsuario.css';
+import PadraoHeader from '../header/padraoHeader';
 
 function App() {
   const [cpfValue, setCpfValue] = useState('');
@@ -68,9 +69,10 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className="listar-usuario-container">
+      <PadraoHeader pedidos={false}/>
       <main className="app-main">
-        <div className="form-container">
+        <div className="alterar-usuario-form-container">
           <h2>Cadastrar usuário</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-row">
@@ -108,10 +110,10 @@ function App() {
             <div className="form-row">
               <div className="form-column">
                 <label>Tipo de Usuário:</label>
-                <div>
+                {/* <div>
                   <input type="radio" id="tipoCliente" name="tipoUsuario" value="cliente" />
                   <label htmlFor="tipoCliente">Cliente</label>
-                </div>
+                </div> */}
                 <div>
                   <input type="radio" id="tipoFuncionario" name="tipoUsuario" value="estoquista" />
                   <label htmlFor="tipoFuncionario">Estoquista</label>

@@ -1,21 +1,28 @@
 body{
-
-    background-image: url('../../images/background-image.jpg');
-    background-color: #f7d4e8; /* Cor de fundo rose */
-    display: flex;
-    /* flex-direction: column; */
-     /* height: 100vh; */
-     background-size: cover;
-     background-repeat: no-repeat;
-    position: relative;
-    text-align: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  background-image: url('../../images/background-image.jpg');
+  background-color: #f7d4e8;
+  display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
+
+.listar-usuario-container {
+  margin: 0 auto;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+  text-align: center;
+  flex-direction: column;
+}
+
 
 table {
     border-collapse: collapse;

@@ -5,60 +5,64 @@ import axios from 'axios';
 import PadraoHeader from '../header/padraoHeader';
 
 function Backoffice() {
-  // const { ativo } = useParams();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  // Em algum componente dentro da rota "/home"
-  // const ativo = props.ativo;
   const history = useHistory();
 
   useEffect(() => {
     const userToken = localStorage.getItem('usuario');
     const ativoFromStorage = localStorage.getItem('isAtivo');
-    console.log(ativoFromStorage);
-    if (userToken == null) {
-      history.push(`/login`);
+  
+    if (userToken === null || ativoFromStorage === null) {
+      history.push('/login');
     } else {
-      // console.log(ativo);
-      setIsButtonDisabled(ativoFromStorage);
+      console.log(ativoFromStorage);
+      const isAtivo = ativoFromStorage === 'true';
+      setIsButtonDisabled(isAtivo);
+      console.log(isAtivo)
     }
   }, [history]);
 
   return (
     <div className="backoffice-container">
-      <PadraoHeader />
-      <div className="home-content">
+      <PadraoHeader />  
+      <div className="backoffice-content">
         <h2>Bem-vindo à Página Inicial</h2>
         <div className="home-links">
-        {isButtonDisabled === false&& 
+        {isButtonDisabled &&  (
           <Link
+            className="button"
             to="/listarUsuarios"
-            className={`button ${!isButtonDisabled ? 'disabled' : ''}`}
-            // onClick={(e) => e.preventDefault()}
+            // className={`button ${isButtonDisabled ? 'disabled' : ''}`}
           >
             Lista Usuário Admin
           </Link>
-        }
-        {isButtonDisabled === false && 
+        )}
+        {console.log(isButtonDisabled)}
+        {isButtonDisabled && (
           <Link
+            className="button"
             to="/listarProdutos"
-            className={`button ${!isButtonDisabled ? 'disabled' : ''}`}
-            // onClick={(e) => e.preventDefault()}
+            // className={`button ${isButtonDisabled ? 'disabled' : ''}`}
           >
             Lista Produto
           </Link>
-        }
+        )}
+        {!isButtonDisabled && (
           <Link 
             to="/listarProdutosEstoquista" 
             className="button"
           >
             Lista Produto Estoquista
           </Link>
+        )}
+        {!isButtonDisabled && (
           <Link 
             to="/checarPedidos" 
             className="button"
           >
             Pedidos
           </Link>
+        )}
         </div>
       </div>
     </div>
