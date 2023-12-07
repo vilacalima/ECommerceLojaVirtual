@@ -1,8 +1,6 @@
 package com.br.originaly.controller;
 
-import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.UsuarioDTO;
-import com.br.originaly.dto.UsuarioUpdateDTO;
+import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Usuario;
 import com.br.originaly.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,14 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService _usuario;
-
+/***
+ * 
+ *  Função para criar novo Usuario
+ *  URL /novoUsuario
+ *  Recebe RequestBody com os dados do novo Usuario 
+ */
     @PostMapping("/novoUsuario")
-    public MensagemDTO novoUsuario(@RequestBody UsuarioDTO dto) throws SQLException {
+    public MensagemDTO novoUsuario(@RequestBody Usuario dto) throws SQLException {
 
         MensagemDTO mensagem = null;
 
@@ -34,8 +37,15 @@ public class UsuarioController {
         return mensagem;
     }
 
+/***
+ * 
+ *  Função para atualizar Usuario
+ *  URL /atualizarUsuario
+ *  Recebe RequestBody com os dados do Usuario 
+ */
+
     @PutMapping("/atualizarUsuario")
-    public MensagemDTO atualizarUsuario(@RequestBody UsuarioUpdateDTO dto){
+    public MensagemDTO atualizarUsuario(@RequestBody Usuario dto){
 
         MensagemDTO mensagem = null;
 
@@ -48,6 +58,13 @@ public class UsuarioController {
         }
         return mensagem;
     }
+
+    /***
+ * 
+ *  Função para atualizar status do usuario
+ *  URL /usuarioAtivo
+ *  Recebe id e novo estado 
+ */ 
 
     @PutMapping("/usuarioAtivo/{id}/{isActive}")
     public MensagemDTO usuarioAtivo(@PathVariable int id, @PathVariable boolean isActive){
@@ -63,10 +80,23 @@ public class UsuarioController {
         return mensagem;
     }
 
+        /***
+ * 
+ *  Função para buscar usuario por ID
+ *  URL /getUusarioById
+ *  Recebe id 
+ */ 
+
     @GetMapping("/getUsuarioById/{id}")
     public Usuario getUsuarioById(@PathVariable int id){
         return _usuario.getUsuarioById(id);
     }
+
+        /***
+ * 
+ *  Função para listar usuario
+ *  URL /getUsuario
+ */ 
 
     @GetMapping("/getUsuario")
     public List<Usuario> getUsuario(){

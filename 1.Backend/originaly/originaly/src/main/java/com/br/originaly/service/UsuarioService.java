@@ -1,11 +1,9 @@
 package com.br.originaly.service;
 
-import com.br.originaly.dto.MensagemDTO;
-import com.br.originaly.dto.UsuarioDTO;
-import com.br.originaly.dto.UsuarioUpdateDTO;
+import com.br.originaly.record.MensagemDTO;
 import com.br.originaly.model.Usuario;
-import com.br.originaly.repository.IUsuarioRepository;
 import com.br.originaly.repository.UsuarioRepository;
+import com.br.originaly.validator.Cryptography;
 import com.br.originaly.validator.ValidaCPF;
 import com.br.originaly.validator.ValidaEmail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,29 +18,33 @@ public class UsuarioService {
     private final ValidaCPF _validarCPF;
     private final ValidaEmail _validarEmail;
     private final UsuarioRepository _usuarioRepository;
+    private final Cryptography _cryptography;
     private MensagemDTO mensagem;
 
     @Autowired
-    public UsuarioService(ValidaCPF validaCPF, ValidaEmail validaEmail, UsuarioRepository usuarioRepository){
+    public UsuarioService(ValidaCPF validaCPF, ValidaEmail validaEmail, UsuarioRepository usuarioRepository, Cryptography cryptography){
         _validarCPF = validaCPF;
         _validarEmail = validaEmail;
         _usuarioRepository = usuarioRepository;
+        _cryptography = cryptography;
     }
 
-    public MensagemDTO inserirUsuario(UsuarioDTO dto) throws SQLException {
+    public MensagemDTO inserirUsuario(Usuario dto) throws SQLException {
 
-        String cpf = _validarCPF.repleaceCpf(dto.cpf());
+        String cpf = _validarCPF.repleaceCpf(dto.getCpf());
 
         if(_validarCPF.validarCPF(cpf) == false){
             mensagem = new MensagemDTO("O CPF é invalido.",false);
             return mensagem;
         }
-        if(_validarEmail.emailValidator(dto.email()) == false){
+        if(_validarEmail.emailValidator(dto.getEmail()) == false){
             mensagem = new MensagemDTO("O email é invalido.",false);
             return mensagem;
         }
 
-        Usuario novoUsuario = new Usuario(dto.nome(), cpf, dto.email(), dto.ativo(), dto.grupo(), dto.senha());
+        String senha = _cryptography.encryptPassword(dto.getSenha());
+
+        Usuario novoUsuario = new Usuario(dto.getNome(), cpf, dto.getEmail(), dto.isAtivo(), dto.getGrupo().toLowerCase(), senha);
 
         if(_usuarioRepository.save(novoUsuario)){
             mensagem = new MensagemDTO("Usuario inserido com Sucesso",true);
@@ -73,16 +75,18 @@ public class UsuarioService {
      * Atualiza um Usuario no banco de dados
      * @param request AdministradorDTO
      * */
-    public MensagemDTO updateUsuario(UsuarioUpdateDTO request) throws SQLException {
+    public MensagemDTO updateUsuario(Usuario request) throws SQLException {
 
-        String cpf = _validarCPF.repleaceCpf(request.cpf());
+        String cpf = _validarCPF.repleaceCpf(request.getCpf());
 
         if(_validarCPF.validarCPF(cpf) == false) {
             mensagem = new MensagemDTO("O CPF é invalido.",false);
             return mensagem;
         }
 
-        Usuario usuario = new Usuario(request.id(), request.nome(), cpf, request.email(), request.ativo(), request.grupo(), request.senha());
+        String senha = _cryptography.encryptPassword(request.getSenha());
+
+        Usuario usuario = new Usuario(request.getId(), request.getNome(), cpf, request.getEmail(), request.isAtivo(), request.getGrupo(), senha);
 
         if(_usuarioRepository.update(usuario)){
             mensagem = new MensagemDTO("Cadastro do usuario atualizado com Sucesso",true);

@@ -1,0 +1,127 @@
+/* Estilos do Cabeçalho */
+.top-information {
+  background-color: #f4ccccfb !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+  color: #fff !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 10px 75px !important;
+}
+
+.logo {
+  max-width: 100% ;
+  max-height: 200px; /* Defina a altura máxima desejada */
+  width: 165px;
+  height: 150px;
+}
+
+.logo {
+  font-size: 24px;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.user-section a {
+  color: rgba(14, 14, 14, 0.423);
+  text-decoration: none;
+  margin-right: 20px; /* Ajuste conforme necessário */
+  font-size: 18px; /* Ajuste conforme necessário */
+}
+
+/* Estilos do Conteúdo Principal */
+.pagina-inicial-cards {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Permite que os cartões quebrem para a próxima linha */
+  justify-content: center;
+}
+
+/* Estilos dos Cards */
+.product-card {
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f4ccccfb;
+  text-align: center;
+  margin-bottom: 20px; /* Espaço entre os cards */
+  width: calc(25% - 20px); /* Layout de 3 cards por coluna */
+  display: inline-block;
+  box-sizing: border-box;
+  margin-right: 10px;
+}
+
+.product-card img {
+  max-width: 100%;
+  max-height: 200px; /* Defina a altura máxima desejada */
+  width: 200px;
+  height: 200px;
+}
+
+.pagina-inicial-detail-button {
+  background-color: #be84b3;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.pagina-inicial-detail {
+  height: 70px;
+  width: 240px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  /* padding: 5px 10px; */
+  border-radius: 5px;
+  /* margin-top: 20px; */
+  transition: background-color 0.3s;
+}
+
+.detail-button:hover {
+  background-color: #be84b355;
+}
+
+/* Estilos do Rodapé */
+.footer {
+  background-color: #f4ccccfb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  color: rgba(14, 14, 14, 0.423);
+  padding: 20px 0;
+  text-align: center;
+}
+
+.social-icons a {
+  margin: 0 10px;
+  color: rgba(14, 14, 14, 0.423);
+  text-decoration: none;
+}
+
+/* Estilos para Links */
+a {
+  color: rgba(14, 14, 14, 0.423);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  /* Estilos para telas menores (exemplo: smartphones) */
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Estilos para telas médias (exemplo: tablets) */
+}
+
+@media (min-width: 1025px) {
+  /* Estilos para telas maiores (exemplo: desktops) */
+}
+

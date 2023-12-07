@@ -1,0 +1,148 @@
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #ccc; /* Fundo com transparência em #ccc */
+    /* margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center; */
+    /* align-items: center; */
+    /* min-height: 100vh; Centraliza verticalmente na página */
+  /* } */ 
+  
+.salvar-produto-container {
+  width: 500px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: transparent;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  flex-direction: column;
+}
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+    width: 100%; /* Largura de 100% para campos de formulário */
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+  }
+  
+  input[type="text"],
+  textarea,
+  input[type="number"],
+  select,
+  input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 300px;
+  }
+  
+  textarea {
+    height: 100px;
+  }
+  
+  .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  button {
+    background-color: #af4c8e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 20px;
+    width: 300px;
+  }
+  
+  button[type="submit"] {
+    background-color: #af4c8e;
+    width: 300px;
+  }
+  
+  button:hover {
+    background-color: #555;
+  }
+  /* CSS para a container de imagens */
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espaço entre as miniaturas */
+}
+
+/* Estilo para cada miniatura de imagem */
+.image {
+  position: relative;
+  max-width: 150px; /* Largura máxima da miniatura */
+  border: 1px solid #ddd;
+  padding: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease-in-out;
+  height: auto;
+}
+
+/* Estilo para a imagem em si */
+.image img {
+  width: 100%;
+  height: auto;
+}
+
+/* Estilo para o botão "Marcar como 1" */
+.image button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  width: 140px;
+}
+
+/* Estilo para a miniatura selecionada */
+.image.selected {
+  transform: scale(1.1); /* Efeito de escala quando selecionada */
+  border-color: #007bff; /* Cor da borda quando selecionada */
+}
+
+/* seu-estilo.css */
+.image-row {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Isso alinha as colunas à esquerda e à direita */
+}
+
+.image-column {
+  flex-basis: calc(10% - 10px); /* 50% de largura com algum espaço entre as colunas */
+  margin-bottom: 20px; 
+  /* text-align: center; Centraliza o botão e a imagem */
+}
+
+.image-column img {
+  display: block; /* Garante que a imagem ocupa a largura completa da coluna */
+}
+
+.image-column button {
+  margin-top: 10px; /* Espaçamento superior entre a imagem e o botão "Excluir" */
+}
+
+
+
+
+  

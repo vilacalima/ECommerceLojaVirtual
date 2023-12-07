@@ -1,0 +1,112 @@
+.perfil-form-container {
+  /* background-color: rgba(255, 241, 241, 0.616); */
+  padding: 20px;
+  /* max-width: 1300px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 90px;
+}
+
+/* Estilos para a página de cadastro de cliente */
+.editar-cliente {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Ajusta o espaçamento entre os cards */
+}
+
+.editar-header {
+  background-color: #0149da;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.editar-main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editar-form-container {
+  background-color: rgba(201, 74, 156, 0.272);
+  padding: 30px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.editar-form-container h2 {
+  color: #6e6565;
+  margin-bottom: 20px;
+}
+
+.editar-form-container button {
+  display: flex;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.editar-form-row {
+  margin-bottom: 10px;
+}
+
+.editar-form-column {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 10px; /* Reduzido o espaço entre os campos */
+}
+
+/* Estilos para os cards de Dados Pessoais e Endereços */
+.card {
+  background-color: rgba(255, 241, 241, 0.616);
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  margin-left: 15px;
+  width: 350px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card h2 {
+  color: #6e6565;
+  margin-bottom: 20px;
+}
+
+.card label {
+  font-weight: bold;
+}
+
+/* Estilos para o botão "Confirmar" */
+.editar-botao-confirmar {
+  background-color: #af4c8e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.editar-botao-confirmar:hover {
+  background-color: #bb1c6c;
+}
+
+

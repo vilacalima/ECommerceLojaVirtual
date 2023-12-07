@@ -1,0 +1,41 @@
+.header-container {
+    position: fixed !important;
+    top: 0;
+    width: 100% !important;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 30px;
+}
+.header-container.hidden {
+    top: -100px; /* Mova o cabeçalho para cima para escondê-lo */
+}
+
+/* Estilos do Cabeçalho */
+.header-top-information {
+    background-color: #f4ccccfb !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+    color: #fff !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 5px 20px !important;
+}
+
+.header-logo {
+    max-width: 100% ;
+    max-height: 200px; /* Defina a altura máxima desejada */
+    width: 100px;
+    height: 100px;
+}
+
+.header-user-section {
+    display: flex;
+    align-items: center;
+}
+
+.header-user-section a {
+color: rgba(14, 14, 14, 0.423);
+text-decoration: none;
+margin-right: 20px; /* Ajuste conforme necessário */
+font-size: 18px; /* Ajuste conforme necessário */
+}

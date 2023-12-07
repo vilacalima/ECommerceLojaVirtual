@@ -1,0 +1,115 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+
+.app-header {
+  background-color: #0149da;
+  padding: 20px;
+  color: white;
+  text-align: center;
+}
+
+.app-main {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.form-column {
+  margin-bottom: 10px;
+}
+
+.form-column label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-column input,
+.form-column select {
+  width: 280px;
+  padding: 8px;
+  border: none;
+  background-color: #f2f2f2;
+  border-radius: 4px;
+  box-shadow: none;
+  font-size: 14px;
+  color: #333;
+}
+
+.form-column .radio-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.form-column .radio-group label {
+  margin-bottom: 0;
+}
+
+.form-column input[type="radio"],
+.form-column input[type="checkbox"] {
+  display: none;
+}
+
+.form-column input[type="radio"] + label,
+.form-column input[type="checkbox"] + label {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  padding-left: 24px;
+  font-size: 14px;
+}
+
+.form-column input[type="radio"] + label:before,
+.form-column input[type="checkbox"] + label:before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 1px;
+}
+
+.form-column input[type="radio"]:checked + label:before,
+.form-column input[type="checkbox"]:checked + label:before {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+button[type="submit"] {
+  /* ... outras configurações ... */
+}
+
+/* Estilos para a mensagem de sucesso */
+.success-message {
+  position: fixed;
+  top: 50%; /* Coloca a mensagem no centro verticalmente */
+  left: 50%; /* Coloca a mensagem no centro horizontalmente */
+  transform: translate(-50%, -50%); /* Centraliza a mensagem no meio da tela */
+  background-color: #af4c8e; /* Cor de fundo verde (ou a cor desejada) */
+  color: white; /* Cor do texto */
+  padding: 15px; /* Espaçamento interno */
+  border-radius: 5px; /* Cantos arredondados */
+  z-index: 1000; /* Garante que a mensagem esteja acima de outros elementos */
+  /* display: none; Inicialmente, a mensagem está oculta */
+}
+
+
+.app-footer {
+  background-color: #282c34;
+  padding: 10px;
+  color: white;
+  text-align: center;
+}

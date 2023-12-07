@@ -1,0 +1,101 @@
+/* Estilos para a página de cadastro de cliente */
+.form-container-cadastrar-cliente{
+  background-color: rgba(255, 241, 241, 0.616);
+  padding: 20px;
+  width: 400px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+}
+
+.div-cadastrar-cliente{
+  width: 300px;
+}
+
+.input-div-cadastrar-cliente{
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #f4ccccfb;
+  border-radius: 4px;
+}
+
+.cadastrar-cliente {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+  
+  .cadastrar-header {
+    background-color: #0149da;
+    padding: 20px;
+    color: white;
+    text-align: center;
+  }
+  
+  .cadastrar-main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cadastrar-form-container {
+    background-color: rgba(201, 74, 156, 0.272);
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cadastrar-form-container h2 {
+    color: #6e6565;
+    margin-bottom: 20px;
+  }
+  
+  .cadastrar-form-container button {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+  
+  .cadastrar-form-row {
+    margin-bottom: 10px;
+  }
+  
+  .cadastrar-form-column {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 100px;
+  }
+  
+  .cadastrar-footer {
+    background-color: #282c34;
+    padding: 10px;
+    color: white;
+    text-align: center;
+  }
+  
+  .cadastrar-botao-confirmar {
+    background-color: #af4c8e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cadastrar-botao-confirmar:hover {
+    background-color: #bb1c6c;
+  }
+  

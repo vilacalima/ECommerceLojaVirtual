@@ -1,43 +1,51 @@
 package com.br.originaly.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
+@Table(name = "usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int Id;
-    private String Nome;
+    public int id;
+    @Column(name = "nome")
+    private String nome;
     @Column(name = "cpf")
-    private String Cpf;
-    private String Email;
-    private boolean Ativo;
-    private String Grupo;
-    private String Senha;
+    private String cpf;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "ativo")
+    private boolean ativo;
+    @Column(name = "grupo")
+    private String grupo;
+    @Column(name = "senha")
+    private String senha;
 
     /**
      * Objeto que instancia um perfil de Usuario
      * */
-    public Usuario(String nome, String cpf, String email, boolean ativo, String grupo, String senha) {
-        Nome = nome;
-        Cpf = cpf;
-        Email = email;
-        Ativo = ativo;
-        Grupo = grupo;
-        Senha = senha;
+    public Usuario(String _nome, String _cpf, String _email, boolean _ativo, String _grupo, String _senha) {
+        nome = _nome;
+        cpf = _cpf;
+        email = _email;
+        ativo = _ativo;
+        grupo = _grupo;
+        senha = _senha;
     }
 
     /**
      * Objeto que instancia um perfil de Usuario
      * */
-    public Usuario(int id, String nome, String cpf, String email, boolean ativo, String grupo, String senha) {
-        Id = id;
-        Nome = nome;
-        Cpf = cpf;
-        Email = email;
-        Ativo = ativo;
-        Grupo = grupo;
-        Senha = senha;
+    public Usuario(int _id, String _nome, String _cpf, String _email, boolean _ativo, String _grupo, String _senha) {
+        id = _id;
+        nome = _nome;
+        cpf = _cpf;
+        email = _email;
+        ativo = _ativo;
+        grupo = _grupo;
+        senha = _senha;
     }
 
     /**
@@ -46,20 +54,4 @@ public class Usuario {
     public Usuario() {
 
     }
-
-    public int getId() { return Id; }
-    public void setId(int id) { Id = id; }
-    public String getNome() { return Nome; }
-    public void setNome(String nome) { Nome = nome; }
-    public String getCpf() { return Cpf; }
-    public void setCpf(String cpf) { Cpf = cpf; }
-    public String getEmail() { return Email; }
-    public void setEmail(String email) { Email = email; }
-    public boolean getAtivo() { return Ativo; }
-    public void setAtivo(boolean ativo) { Ativo = ativo; }
-    public String getGrupo() { return Grupo; }
-    public void setGrupo(String grupo) { Grupo = grupo; }
-    public boolean isAtivo() { return Ativo; }
-    public String getSenha() { return Senha; }
-    public void setSenha(String senha) { Senha = senha; }
 }

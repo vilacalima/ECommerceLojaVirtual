@@ -1,0 +1,83 @@
+/* pagamento.css */
+
+/* Estilize o contêiner principal */
+
+
+/* Estilos para o componente ProductPage */
+/* .div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: #f4ccccfb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+} */
+
+.borda {
+  text-align: center;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid #09060636;
+  border-radius: 8px;
+  /* max-width: 700px; */
+  width: 500px;
+}
+  
+  /* Estilize os rótulos e seletores */
+  label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #f4ccccfb;
+    border-radius: 4px;
+  }
+  
+  /* Estilize os campos de entrada */
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #f4ccccfb;
+    border-radius: 4px;
+  }
+  
+  /* Estilize o botão de próxima etapa */
+  button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #af4c8e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #af4c8e;
+  }
+  
+  /* Estilize a área do QR Code (você pode adicionar um estilo adequado ao QR Code) */
+  .pagamento-p {
+    padding: 5%;
+    border: 1px solid #0c0b0b;
+    border-radius: 10px;
+    background-color: #ffffff98;
+  }
+  
+  
+  /* Adicione um estilo específico para o cartão de crédito */
+  div[data-card="credit"] {
+    background-color: #121111;
+    padding: 10px;
+    border: 1px solid #100d0d;
+    border-radius: 4px;
+  }
+  

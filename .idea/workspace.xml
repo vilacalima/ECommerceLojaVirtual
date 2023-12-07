@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="043ac24f-27f9-4218-bf4d-83ba85c103ab" name="Changes" comment="" />
+    <list default="true" id="043ac24f-27f9-4218-bf4d-83ba85c103ab" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/2.Frontend/originaly/src/compra.js" beforeDir="false" afterPath="$PROJECT_DIR$/2.Frontend/originaly/src/compra.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/2.Frontend/originaly/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/2.Frontend/originaly/src/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +19,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
   <component name="ProjectId" id="2UFUcB6lDWkZXe8c5rvpX05rrTw" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -25,7 +31,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/isabe/OneDrive/Documentos/FACULDADE 4 SEM/Projeto/ECommerceLojaVirtual"
+    "last_opened_file_path": "C:/Users/cerqu/OneDrive/Área de Trabalho/ECommerceLojaVirtual/1.Backend/originaly/originaly"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -38,5 +44,16 @@
       <updated>1692534898384</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
