@@ -64,6 +64,26 @@ public class CarrinhoRepository {
     }
 
     /**
+     * Atualiza o email no carrinho temporário
+     * @param id
+     * @param email
+     * */
+    public void updateEmailCarrinhoTemporario(int id, String email){
+        try{
+
+            CarrinhoTemporario carrinhoTemporario = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            carrinhoTemporario.setEmailCliente(email);
+            _carrinhoTemporarioRepository.save(carrinhoTemporario);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+
+    /**
      * Retorna a quantidade do carrinho
      */
     public long getCountCarrinhoTemporario(String emailCliente){

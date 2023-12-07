@@ -114,7 +114,7 @@ function HomePage() {
         </div>
       </header>
 
-      <main>
+      <div className='pagina-inicial-cards'>
         <div className="row">
           {groupProducts(products).map((productGroup, index) => (
             <div className="col" key={index}>
@@ -132,7 +132,7 @@ function HomePage() {
             </div>
           ))}
         </div>
-      </main>
+      </div>
 
       <footer className="footer">
         <div className="footer-content">

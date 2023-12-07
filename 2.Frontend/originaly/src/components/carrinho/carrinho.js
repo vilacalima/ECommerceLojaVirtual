@@ -34,7 +34,7 @@ function ListarCarrinho() {
   const handleNext = () => {
     if (currentPage === "pedido") {
       setCurrentPage("endereco");
-      setTextButton('Avançar');
+      setTextButton('Finalizar Pedido');
     } else if (currentPage === "endereco") {
       setCurrentPage("pagamento");
       setTextButton('Finalizar Pedido');
@@ -47,15 +47,25 @@ function ListarCarrinho() {
     if (currentPage === "endereco") {
       return <Frete />;
     } else if (currentPage === "pagamento") {
-      return <Pagamento />;
-    } else if (currentPage === "finalizar") {
       let userToken = localStorage.getItem('usuario');
       
       if(userToken === null){
         history.push('/login');
-      } else {
+      } else{
         history.push('/checkout');
       }
+
+      return <Pagamento />;
+    } else if (currentPage === "finalizar") {
+      history.push('/checkout');
+
+      // let userToken = localStorage.getItem('usuario');
+      
+      // if(userToken === null){
+      //   history.push('/login');
+      // } else {
+        
+      // }
     } 
   };
 

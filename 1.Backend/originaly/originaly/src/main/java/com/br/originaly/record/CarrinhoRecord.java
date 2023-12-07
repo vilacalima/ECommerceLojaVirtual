@@ -6,5 +6,7 @@ import java.util.List;
 
 public record CarrinhoRecord(String emailCliente,
                              int opcaoPagamento,
-                             String opcaoFrete) {
+                             String opcaoFrete,
+                             double valorFrete,
+                             int idEndereco) {
 }

@@ -35,7 +35,7 @@
 
 .form-column input,
 .form-column select {
-  width: 100%;
+  width: 280px;
   padding: 8px;
   border: none;
   background-color: #f2f2f2;

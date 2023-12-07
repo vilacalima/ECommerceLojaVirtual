@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './produtoForm.css';
 import axios from 'axios';
 import PadraoHeader from '../header/padraoHeader';
+import BoxResponse from '../util/boxResponse';
 
 function ProdutoForm() {
 
@@ -15,6 +16,9 @@ function ProdutoForm() {
     images: [],
     filePrimary: null,
   });
+
+  const [mensagem, setMensagem] = useState("");
+  const [showModal, setShowModal] = useState(false);
   
   const [errors, setErrors] = useState({});
 
@@ -101,6 +105,9 @@ function ProdutoForm() {
             },
           }
         );
+
+        setMensagem(response.data.message.toString());
+        setShowModal(true);
         console.log(response.data);
       } catch (error) {
         console.error('Erro ao enviar dados para a controller:', error);
@@ -122,11 +129,15 @@ function ProdutoForm() {
     // Se o usuário não confirmar, permanece na página
   };
 
-  return (
-    <div className="produto-container">
+  const fecharModal = () => {
+    setShowModal(false);
+  };
 
+  return (
+    <div className='listar-produtos-container'>
       <PadraoHeader />
       
+      <div className="salvar-produto-container">
       <h2>Cadastrar Produto</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
@@ -239,6 +250,18 @@ function ProdutoForm() {
         <button type="submit">Salvar Produto</button>
         <button type="button" onClick={handleCancelar}>Cancelar</button>
       </form>
+
+      {showModal && (
+          <div className="meus-pedidos-modal">
+            <div className="meus-pedidos-modal-content">
+              <span className="meus-pedidos-close" onClick={fecharModal}>
+                &times;
+              </span>
+              <BoxResponse itens={mensagem} />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

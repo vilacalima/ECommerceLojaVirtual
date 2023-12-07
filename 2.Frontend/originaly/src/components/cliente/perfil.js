@@ -203,7 +203,7 @@ class Perfil extends Component {
         <div className="card-container"> {/* Aplicando a classe card-container */}
             {/* Campos de dados pessoais */}
           <form onSubmit={this.handleSubmitDadosPessoais}>
-            <div className='card'>
+            <div className='perfil-card'>
               <h2>Dados Pessoais:</h2>
               <div>
                 <label>Nome:</label>

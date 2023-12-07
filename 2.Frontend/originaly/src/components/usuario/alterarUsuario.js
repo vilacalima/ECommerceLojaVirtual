@@ -4,6 +4,8 @@ import UsuarioService from '../../service/usuarioService';
 import './alterarUsuario.css';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import PadraoHeader from '../header/padraoHeader';
+import BoxResponse from '../util/boxResponse';
 
 function AlterarUsuario() {
   const { userId } = useParams();
@@ -13,6 +15,9 @@ function AlterarUsuario() {
   const [newCpf, setCpf] = useState('');
   const history = useHistory();
   
+  const [mensagem, setMensagem] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
   const [userData, setUserData] = useState({
     id: null,
     nome: '',
@@ -68,10 +73,16 @@ function AlterarUsuario() {
   const sendUserData = async (userData) => {    
     try {
       const response = await axios.put("http://localhost:8080/api/atualizarUsuario", userData);
+      setMensagem(response.data.message.toString());
+      setShowModal(true);
       console.log('Dados enviados com sucesso:', response.data);
     } catch (error) {
       console.error('Erro ao enviar dados:', error);
     }
+  };
+
+  const fecharModal = () => {
+    setShowModal(false);
   };
  
   const handleSubmit = (event) => {
@@ -97,9 +108,11 @@ function AlterarUsuario() {
   };
 
   return (
-    <div className="app">
+    <div className="listar-usuario-container">
+      <PadraoHeader pedidos={false}/>
+
       <main className="app-main">
-        <div className="form-container">
+        <div className="alterar-usuario-form-container">
           <h2>Alterar usuário</h2>
           <form onSubmit={handleSubmit}>
 
@@ -142,7 +155,7 @@ function AlterarUsuario() {
               <div className="form-row">
                 <div className="form-column">
                   <label>Tipo de Usuário:</label>
-                  <div>
+                  {/* <div>
                     <input 
                       type="radio" 
                       id="tipoCliente" 
@@ -151,7 +164,7 @@ function AlterarUsuario() {
                       disabled={true}
                       checked={userData.grupo === 'cliente'} />
                     <label htmlFor="tipoCliente">Cliente</label>
-                  </div>
+                  </div> */}
                   <div>
                     <input 
                       type="radio" 
@@ -205,7 +218,16 @@ function AlterarUsuario() {
         </div>
       </main>
 
-      
+      {showModal && (
+        <div className="meus-pedidos-modal">
+          <div className="meus-pedidos-modal-content">
+            <span className="meus-pedidos-close" onClick={fecharModal}>
+              &times;
+            </span>
+            <BoxResponse itens={mensagem} />
+          </div>
+        </div>
+      )}
     </div>
   );
 } export default AlterarUsuario;

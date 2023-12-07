@@ -156,3 +156,15 @@
   left: -0.4em; /* Ajusta a posição horizontal para exibir metade da estrela */
   top: 0; /* Alinha verticalmente com as outras estrelas */
 }
+
+.compra-button-mais{
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #af4c8e;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  width: 10px;
+}

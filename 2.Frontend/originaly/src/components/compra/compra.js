@@ -134,17 +134,17 @@ function ProductPage() {
 
         <div className='compra-item-botao'>
           <div className="quantity-controls">
-            <button onClick={handleDecrementQuantity}>-</button>
+            <button className='compra-button-mais' onClick={handleDecrementQuantity}>-</button>
             <span>{quantity}</span>
-            <button onClick={handleIncrementQuantity}>+</button>
+            <button className='compra-button-mais' onClick={handleIncrementQuantity}>+</button>
           </div>
           
           <button id="adicionar-carrinho-button" onClick={handleAddToCart}>
             Adicionar ao Carrinho
           </button>
-          <button id="comprar-button" onClick={handleAddToCart}>
+          {/* <button id="comprar-button" onClick={handleAddToCart}>
             {buttonText}
-          </button>
+          </button> */}
         </div>
         
         {mostrar && (

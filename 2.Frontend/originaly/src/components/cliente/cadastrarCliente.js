@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ClienteService  from '../../service/clienteService';
 import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
+import PadraoHeader from '../header/padraoHeader';
+import './cadastrarCliente.css';
 
 class CadastroCliente extends Component {
   constructor() {
@@ -174,6 +176,7 @@ class CadastroCliente extends Component {
   render() {
     return (
       <div className="form-container-cadastrar-cliente">
+        <PadraoHeader />
         <h1>Cadastrar Cliente</h1>
         <form onSubmit={this.handleSubmit}>
           {/* Campos de dados pessoais */}

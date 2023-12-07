@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import LoginService from '../../service/loginService';
-import Cookies from 'js-cookie';
-import axios from 'axios';
+
 import './loginUsuario.css';
+import BoxResponse from '../util/boxResponse';
 
 function LoginUsuario() {
-  // const user = new LoginRecord(event.target.username.value, event.target.password.value);
   const [user, setUser] = useState({
     email: '',
     senha: '',
   });
+
+  const [mensagem, setMensagem] = useState("");
+  const [showModal, setShowModal] = useState(false);
     
   const history = useHistory();
 
@@ -19,10 +21,6 @@ function LoginUsuario() {
     const loggedInUser = localStorage.getItem("usuario");
     if (loggedInUser) {
       doLogin(loggedInUser);
-      // const foundUser = JSON.parse(loggedInUser);
-      // setUsuario(foundUser);
-
-      // doLogin(loggedInUser);
     }
   }, []);
 
@@ -36,7 +34,9 @@ function LoginUsuario() {
     } else if (login === 'Cliente') {
       history.push(`/perfil`);
     } else {
-      window.postMessage('Sem premissão');
+      setMensagem("Usuário sem permissão ou não existe");
+      setShowModal(true);
+      // window.postMessage('Sem premissão');
     } 
   };
 
@@ -63,6 +63,10 @@ function LoginUsuario() {
       console.error('Erro ao enviar login:', error);
     }
 
+  };
+
+  const fecharModal = () => {
+    setShowModal(false);
   };
   
     return (
@@ -101,9 +105,21 @@ function LoginUsuario() {
               </div>
               <button className='login-button' type="submit">Entrar</button>
             </form>
+            <p>Ainda não está cadastrado ?</p>
+            <a href="/cadastrarCliente">Cadastre-se</a>
           </div>
         </main>
 
+        {showModal && (
+          <div className="meus-pedidos-modal">
+            <div className="meus-pedidos-modal-content">
+              <span className="meus-pedidos-close" onClick={fecharModal}>
+                &times;
+              </span>
+              <BoxResponse itens={mensagem} />
+            </div>
+          </div>
+        )}
 
       </div>
     );

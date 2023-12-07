@@ -53,7 +53,9 @@ class MeusPedidos extends Component {
           <thead>
             <tr>
               <th>Id</th>
+              <th>Data</th>
               <th>Total Pago</th>
+              <th>Status</th>
               <th>Ação</th>
             </tr>
           </thead>
@@ -61,7 +63,9 @@ class MeusPedidos extends Component {
             {this.state.pedidos.map((item) => (
               <tr key={item.Id}>
                 <td>{item.id}</td>
+                <td>{item.dataCompra.substring(0, 10)}</td>
                 <td>R$ {item.total.toFixed(2)}</td>
+                <td>{item.situacaoVenda}</td>
                 <td>
                   <a>
                     <span

@@ -1,6 +1,7 @@
 package com.br.originaly.service;
 
 import com.br.originaly.record.LoginRecord;
+import com.br.originaly.repository.CarrinhoRepository;
 import com.br.originaly.repository.ClienteRepository;
 import com.br.originaly.repository.UsuarioRepository;
 import com.br.originaly.validator.Cryptography;
@@ -15,14 +16,15 @@ public class LoginService {
     private final UsuarioRepository _usuarioRepository;
     private final ClienteRepository _clienteRepository;
     private final Cryptography _cryptography;
+    private final CarrinhoService _carrinhoService;
 
     @Autowired
-    public LoginService(ValidaEmail _validarEmail, UsuarioRepository _usuarioRepository, ClienteRepository clienteRepository, Cryptography cryptography) {
+    public LoginService(ValidaEmail _validarEmail, UsuarioRepository _usuarioRepository, ClienteRepository clienteRepository, Cryptography cryptography, CarrinhoService carrinhoService) {
         this._validarEmail = _validarEmail;
         this._usuarioRepository = _usuarioRepository;
         _clienteRepository = clienteRepository;
         _cryptography = cryptography;
-
+        _carrinhoService = carrinhoService;
     }
 
     /**
@@ -40,8 +42,11 @@ public class LoginService {
 
         if(group == null){
             group = _clienteRepository.getLogin(login.email(), senha);
-            if(group == null)
+            if(group == null){
                 return "Usuário não encontrado";
+            } else{
+                _carrinhoService.updateCarrinhoTemporario(login.email());
+            }
         }
         return group;
     }
