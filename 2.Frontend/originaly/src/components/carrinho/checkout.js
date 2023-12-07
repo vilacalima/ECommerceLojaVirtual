@@ -24,8 +24,10 @@ function Checkout(){
         const pagamento = JSON.parse(pagamentoJSON);
         const infoFrete = JSON.parse(infoFreteJson);
     
+        console.log(pagamento);
         let pag = 0;
-        if(pagamento.opcaoPagamento === 'cartao'){
+        if(pagamento.opPagamento === 'cartao'){
+          console.log("entrou aqui");
           pag = 1;
         }
     

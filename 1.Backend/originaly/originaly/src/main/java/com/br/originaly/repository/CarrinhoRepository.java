@@ -111,6 +111,46 @@ public class CarrinhoRepository {
     }
 
     /**
+     * Atualiza um item do carrinho temporario no banco de dados
+     * @param id
+     * @param quantidade
+     * @param precoUnitario
+     * @param precoTotal
+     */
+    public void updateQuantidadeCarrinhoTemporario(int id, int quantidade, double precoUnitario, double precoTotal){
+        try{
+
+            CarrinhoTemporario updateItem = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            updateItem.setQuantidade(quantidade);
+            updateItem.setPrecoUnitario(precoUnitario);
+            updateItem.setPrecoTotal(precoTotal);
+            _carrinhoTemporarioRepository.save(updateItem);
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
+     * Retorna um item do carrinho temporario no banco de dados
+     * @param id
+     */
+    public CarrinhoTemporario getCarrinhoTemporarioById(int id){
+        try{
+
+            CarrinhoTemporario updateItem = _carrinhoTemporarioRepository.findById((long) id)
+                    .orElseThrow(() -> new EntityNotFoundException("Item não encontrado"));
+
+            return updateItem;
+
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    /**
      * Deleta um pedido no banco de dados
      * @param email
      */

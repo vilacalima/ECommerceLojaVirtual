@@ -150,6 +150,25 @@ public class CarrinhoService {
     }
 
     /**
+     * Atualiza um item no carrinho temporário
+     * @param id
+     * @param quantidade
+     * */
+    public MensagemDTO updateQuantidadeCarrinhoTemporario(int id, int quantidade){
+        try{
+            CarrinhoTemporario carrinhoTemporario = _carrinhoRepository.getCarrinhoTemporarioById(id);
+            Produto produto = _produtoRepository.getProductById(carrinhoTemporario.getIdProduto());
+
+            double subtotal = produto.getValor() * quantidade;
+
+            _carrinhoRepository.updateQuantidadeCarrinhoTemporario(id, quantidade, produto.getValor(), subtotal);
+        } catch (Exception ex){
+            throw ex;
+        }
+        return new MensagemDTO("Item atualizado no carrinho temporário", true);
+    }
+
+    /**
      * Deleta todos os itens do carrinho temporário
      * @param id
      * */

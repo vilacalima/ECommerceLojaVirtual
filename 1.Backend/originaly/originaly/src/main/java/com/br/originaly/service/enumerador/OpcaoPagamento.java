@@ -2,7 +2,7 @@ package com.br.originaly.service.enumerador;
 
 public enum OpcaoPagamento {
     PIX("PIX"),
-    CARTAO("Cartão de crédito");
+    CARTAO("Cartão");
 
     private String descricao;
     OpcaoPagamento(String descricao) {

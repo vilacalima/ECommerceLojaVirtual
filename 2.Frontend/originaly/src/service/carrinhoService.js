@@ -45,6 +45,16 @@ const CarrinhoService = {
         }
     },
 
+    updateQuantidadeCarrinhoTemporario: async (id, quantidade) => {
+        try {
+            const response = await axios.put(`http://localhost:8080/carrinho/updateQuantidadeCarrinho/${id}/${quantidade}`, id, quantidade);          
+            return response.data;
+        } catch (error) {
+            console.error('Erro ao enviar dados:', error);
+            throw error;
+        }
+    },
+
     /**
      * Atualiza a situação de um pedido
      * @param id
