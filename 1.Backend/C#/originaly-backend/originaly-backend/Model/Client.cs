@@ -4,7 +4,7 @@ using originaly_backend.Enum;
 
 namespace originaly_backend.Model
 {
-    public class Client : Login
+    public class Client : Address : Login
     {
         public int ID { get; set; }
         public string Name { get; set; }
