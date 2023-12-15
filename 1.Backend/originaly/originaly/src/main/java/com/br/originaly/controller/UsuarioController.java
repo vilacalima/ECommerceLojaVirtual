@@ -16,12 +16,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService _usuario;
-/***
- * 
- *  Função para criar novo Usuario
- *  URL /novoUsuario
- *  Recebe RequestBody com os dados do novo Usuario 
- */
+    /***
+     *
+     *  Função para criar novo Usuario
+     *  URL /novoUsuario
+     *  Recebe RequestBody com os dados do novo Usuario
+     */
     @PostMapping("/novoUsuario")
     public MensagemDTO novoUsuario(@RequestBody Usuario dto) throws SQLException {
 

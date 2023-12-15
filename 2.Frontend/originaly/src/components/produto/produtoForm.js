@@ -22,7 +22,9 @@ function ProdutoForm() {
   
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
+  const 
+  
+  handleInputChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };

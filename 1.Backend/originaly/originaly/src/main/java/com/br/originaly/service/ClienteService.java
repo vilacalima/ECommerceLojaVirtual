@@ -93,7 +93,7 @@ public class ClienteService {
                                                         endereco.getCep(),
                                                         endereco.isFaturamento(),
                                                         endereco.isEnderecoPadrao(),
-                                                        endereco.isEnderecoEntrega(),
+                                                        true,
                                                        true);
 
                     _clienteRepository.saveEndereco(newEndereco);
