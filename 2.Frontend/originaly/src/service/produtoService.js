@@ -1,10 +1,11 @@
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const ProdutoService = {
 
     getProdutoById: async (productId) => {
         try{
-            const response = await axios.get(`http://localhost:8080/api/product/getProductById/${productId}`)
+            const response = await axios.get(`${backendUrl}api/product/getProductById/${productId}`)
             return response.data;
         } catch (error){
             console.error('Erro ao receber dados: ', error);
@@ -14,7 +15,7 @@ const ProdutoService = {
 
     getImage: async (productId) => {
         try{
-            const response = await axios.get(`http://localhost:8080/api/product/getImage/${productId}`)
+            const response = await axios.get(`${backendUrl}api/product/getImage/${productId}`)
             return response.data;
         } catch (error){
             console.error('Erro ao receber dados: ', error);
@@ -24,7 +25,7 @@ const ProdutoService = {
 
     getAllProduct: async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/product/getAllProduct');
+            const response = await axios.get(`${backendUrl}api/product/getAllProduct`);
             return response.data;
         } catch (error) {
             console.error('Erro ao receber dados: ', error);
@@ -34,7 +35,7 @@ const ProdutoService = {
 
     getAllProductAndImage: async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/product/getAllProductAndImage');
+            const response = await axios.get(`${backendUrl}api/product/getAllProductAndImage`);
             return response.data;
         } catch (error) {
             console.error('Erro ao receber dados: ', error);
@@ -43,7 +44,7 @@ const ProdutoService = {
     },
 
     isActive: async (productId, isChecked) => {
-        const url = `http://localhost:8080/api/product/produtoAtivo/${productId}/${isChecked}`;
+        const url = `${backendUrl}api/product/produtoAtivo/${productId}/${isChecked}`;
 
         const response = await fetch(url, {
             method: 'PUT',
@@ -55,7 +56,7 @@ const ProdutoService = {
     updateImage: async (formData) =>{
         try {
             const response = await axios.put(
-              'http://localhost:8080/api/product/updateImage',
+                `${backendUrl}api/product/updateImage`,
               formData,
               {
                 headers: {

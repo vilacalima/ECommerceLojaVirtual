@@ -1,10 +1,11 @@
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const UsuarioService = {
 
     newUser: async (userData) => {
         try{
-            const response = await axios.post('http://localhost:8080/api/novoUsuario', userData);
+            const response = await axios.post(`${backendUrl}api/novoUsuario`, userData);
             return response.data;
         } catch (error){
             console.error('Erro ao enviar dados:', error);
@@ -13,7 +14,7 @@ const UsuarioService = {
 
     getUserById: async (userId) => {
         try{
-            const response = await axios.get(`http://localhost:8080/api/getUsuarioById/${userId}`)
+            const response = await axios.get(`${backendUrl}api/getUsuarioById/${userId}`)
             return response.data;
         } catch (error){
             console.error('Erro ao receber dados: ', error);
@@ -23,7 +24,7 @@ const UsuarioService = {
 
     getAllUser: async () => {
         try {
-            const response = await axios.get('http://localhost:8080/api/getUsuario');
+            const response = await axios.get(`${backendUrl}api/getUsuario`);
             return response.data;
         } catch (error) {
             console.error('Erro ao receber dados: ', error);
@@ -33,7 +34,7 @@ const UsuarioService = {
 
     isChecked: async (userId, isChecked) => {
         try {
-            const url = `http://localhost:8080/api/usuarioAtivo/${userId}/${isChecked}`;
+            const url = `${backendUrl}api/usuarioAtivo/${userId}/${isChecked}`;
 
             const response = await fetch(url, {
                 method: 'PUT',
