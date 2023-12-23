@@ -1,4 +1,5 @@
 import axios from 'axios';
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const CarrinhoService = {
     
@@ -7,7 +8,7 @@ const CarrinhoService = {
     */
     getCount: async (email) => {
         try{
-            const response = await axios.get(`http://localhost:8080/carrinho/getCountCarrinhoTemporario/${email}`);          
+            const response = await axios.get(`${backendUrl}carrinho/getCountCarrinhoTemporario/${email}`);          
             return response.data;
         } catch (error){
             console.error('Erro ao receber dados:', error);
@@ -17,7 +18,7 @@ const CarrinhoService = {
 
     save: async (dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/carrinho/save`, dto);          
+            const response = await axios.post(`${backendUrl}carrinho/save`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -27,7 +28,7 @@ const CarrinhoService = {
 
     saveCarrinhoTemporario: async (dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/carrinho/saveCarrinhoTemporario`, dto);          
+            const response = await axios.post(`${backendUrl}carrinho/saveCarrinhoTemporario`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -37,7 +38,7 @@ const CarrinhoService = {
 
     updateCarrinhoTemporario: async (dto) => {
         try {
-            const response = await axios.put(`http://localhost:8080/carrinho/updateCarrinhoTemporario`, dto);          
+            const response = await axios.put(`${backendUrl}carrinho/updateCarrinhoTemporario`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -47,7 +48,7 @@ const CarrinhoService = {
 
     updateQuantidadeCarrinhoTemporario: async (id, quantidade) => {
         try {
-            const response = await axios.put(`http://localhost:8080/carrinho/updateQuantidadeCarrinho/${id}/${quantidade}`, id, quantidade);          
+            const response = await axios.put(`${backendUrl}carrinho/updateQuantidadeCarrinho/${id}/${quantidade}`, id, quantidade);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -62,7 +63,7 @@ const CarrinhoService = {
      */
     updateSitucaoPedido: async (id, situacao) => {
         try {
-            const response = await axios.put(`http://localhost:8080/carrinho/updateSitucaoPedido/${id}/${situacao}`);          
+            const response = await axios.put(`${backendUrl}carrinho/updateSitucaoPedido/${id}/${situacao}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -72,7 +73,7 @@ const CarrinhoService = {
 
     getCarrinhoTemporario: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/carrinho/getCarrinhoTemporario/${email}`);          
+            const response = await axios.get(`${backendUrl}carrinho/getCarrinhoTemporario/${email}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -82,7 +83,7 @@ const CarrinhoService = {
 
     getPedidoCliente: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/carrinho/getPedidoCliente/${email}`);          
+            const response = await axios.get(`${backendUrl}carrinho/getPedidoCliente/${email}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -92,7 +93,7 @@ const CarrinhoService = {
 
     deleteItemCarrinhoTemporario: async (id) => {
         try {
-            const response = await axios.delete(`http://localhost:8080/carrinho/deleteItem/${id}`);
+            const response = await axios.delete(`${backendUrl}carrinho/deleteItem/${id}`);
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -105,7 +106,7 @@ const CarrinhoService = {
      */
     getAllPedidoOrderByDate: async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/carrinho/getAllPedidoOrderByDate`);          
+            const response = await axios.get(`${backendUrl}carrinho/getAllPedidoOrderByDate`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);

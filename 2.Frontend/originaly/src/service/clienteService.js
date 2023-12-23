@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const ClienteService = {
 
@@ -10,7 +10,7 @@ const ClienteService = {
      */
     getCep: async (cep) => {
         try {
-            const response = await axios.post(`http://localhost:8080/cep/${cep}`);          
+            const response = await axios.post(`${backendUrl}cep/${cep}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -25,7 +25,7 @@ const ClienteService = {
      */
     getAddress: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/cliente/getAddress/${email}`);          
+            const response = await axios.get(`${backendUrl}cliente/getAddress/${email}`);          
             
             return response.data;
         } catch (error) {
@@ -41,7 +41,7 @@ const ClienteService = {
      */
     getAllAddress: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/cliente/getAllAddress/${email}`);          
+            const response = await axios.get(`${backendUrl}cliente/getAllAddress/${email}`);          
             
             return response.data;
         } catch (error) {
@@ -57,7 +57,7 @@ const ClienteService = {
      */
     newCLiente: async (dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/cliente/create`, dto);          
+            const response = await axios.post(`${backendUrl}cliente/create`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -72,7 +72,7 @@ const ClienteService = {
      */
     updateDadosPessoais: async (dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/cliente/updateDadosPessoais`, dto);          
+            const response = await axios.post(`${backendUrl}cliente/updateDadosPessoais`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -87,7 +87,7 @@ const ClienteService = {
      */
     getClientByEmail: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/cliente/getCliente/${email}`);          
+            const response = await axios.get(`${backendUrl}cliente/getCliente/${email}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -102,7 +102,7 @@ const ClienteService = {
      */
     getEnderecoById: async (id) => {
         try {
-            const response = await axios.get(`http://localhost:8080/cliente/getAddressById/${id}`);          
+            const response = await axios.get(`${backendUrl}cliente/getAddressById/${id}`);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -118,7 +118,7 @@ const ClienteService = {
      */
     newAddress: async (email, dto) => {
         try {
-            const response = await axios.post(`http://localhost:8080/cliente/newAddress/${email}`, dto);          
+            const response = await axios.post(`${backendUrl}cliente/newAddress/${email}`, dto);          
             return response.data;
         } catch (error) {
             console.error('Erro ao enviar dados:', error);
@@ -133,7 +133,7 @@ const ClienteService = {
      */
     removeCliente: async (idCliente) => {
         try {
-          const response = await axios.put(`http://localhost:8080/cliente/deleteClient/${idCliente}`);
+          const response = await axios.put(`${backendUrl}cliente/deleteClient/${idCliente}`);
           console.log('Dados enviados com sucesso: ', response.data);
             
           return response.data;
@@ -150,7 +150,7 @@ const ClienteService = {
      */
     verificarEmailExistente: async (email) => {
         try {
-            const response = await axios.get(`http://localhost:8080/cliente/verificarEmail/${email}`);
+            const response = await axios.get(`${backendUrl}cliente/verificarEmail/${email}`);
             console.log('Dados enviados com sucesso: ', response.data);
 
             return response.data;
